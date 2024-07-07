@@ -1,0 +1,17 @@
+import { NodeMessage } from 'Plugins/NodeAPI/NodeMessage';
+
+export class NodeModifyMessage extends NodeMessage {
+
+    id: number;
+    info: string;
+
+    constructor(id: number, info: string) {
+        super();
+        this.id = id;
+        this.info = info;
+        Object.defineProperty(this, 'type', {
+            value: 'NodeModifyMessage',
+            writable: false
+        });
+    }
+}
