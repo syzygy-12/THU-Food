@@ -24,9 +24,5 @@ libraryDependencies ++= Seq(
   "org.apache.pdfbox" % "pdfbox" % "2.0.24",  // Replace "2.0.24" with the latest version available
   "ch.qos.logback" % "logback-classic" % "1.2.10", // SLF4J Backend Implementation
   "joda-time" % "joda-time" % "2.12.7", // Use the latest version available
-  "org.tpolecat" %% "doobie-core" % "1.0.0-M5",
-  "org.tpolecat" %% "doobie-hikari" % "1.0.0-M5",
-  "org.tpolecat" %% "doobie-postgres" % "1.0.0-M5",  // 使用 PostgreSQL
-  "org.tpolecat" %% "doobie-specs2" % "1.0.0-M5"
 )
 scalacOptions ++= Seq("-feature", "-language:implicitConversions")

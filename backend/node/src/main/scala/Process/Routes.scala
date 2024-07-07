@@ -31,6 +31,11 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "NodeNumberQueryMessage" =>
+        IO(decode[NodeNumberQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NodeNumberQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }
