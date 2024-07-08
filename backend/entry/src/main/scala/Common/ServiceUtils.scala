@@ -6,7 +6,6 @@ import cats.effect.IO
 import com.comcast.ip4s.Port
 import org.http4s.Uri
 
-
 object ServiceUtils{
   def getURI(serviceCode: String): IO[Uri] =
     IO.fromEither(Uri.fromString(
@@ -17,7 +16,6 @@ object ServiceUtils{
     Port.fromInt(portMap(serviceCode)).getOrElse(
       throw new IllegalArgumentException(s"Invalid port for serviceCode: $serviceCode")
     )
-
 
   def serviceName(serviceCode: String): String = {
     val fullName = fullNameMap(serviceCode)
@@ -36,4 +34,5 @@ object ServiceUtils{
   lazy val serviceFullName: String = fullNameMap(serviceCode)
   lazy val serviceShortName: String = serviceName(serviceCode)
   lazy val schemaName: String = serviceName(serviceCode)
+  lazy val tableName:String=s"${schemaName}_info"
 }

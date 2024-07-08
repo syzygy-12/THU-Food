@@ -4,8 +4,7 @@ import { TextField, Button, Container, Typography, Box, Dialog, DialogActions, D
 import axios, { isAxiosError } from 'axios';
 import { API } from 'Plugins/CommonUtils/API';
 import { UserLoginMessage } from 'Plugins/UserAPI/UserLoginMessage';
-import background from '../../images/stlogin1.jpg';
-import { Node } from 'Plugins/NodeAPI/NodeExecution'  // 导入背景图片
+import background from '../../images/stlogin1.jpg'
 
 export function UserLogin() {
     const history = useHistory();

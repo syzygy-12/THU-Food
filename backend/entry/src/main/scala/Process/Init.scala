@@ -1,23 +1,40 @@
 package Process
 
 import Common.API.{API, PlanContext, TraceID}
-import Global.{ServerConfig, ServiceCenter}
-import Common.DBAPI.{initSchema, writeDB}
-import Common.ServiceUtils.schemaName
+import Global.ServerConfig
+import Common.DBAPI.{initSchema, readDBBoolean, writeDB}
+import Common.Object.SqlParameter
+import Common.ServiceUtils.{schemaName, tableName}
 import cats.effect.IO
 import io.circe.generic.auto.*
-import org.http4s.client.Client
+import Utils.EntryCreateUtils.entryCreate
 
 import java.util.UUID
 
 object Init {
-  def init(config:ServerConfig):IO[Unit]=
-    given PlanContext=PlanContext(traceID = TraceID(UUID.randomUUID().toString),0)
-    for{
+  def init(config: ServerConfig): IO[Unit] = {
+    given PlanContext = PlanContext(traceID = TraceID(UUID.randomUUID().toString), 0)
+    for {
       _ <- API.init(config.maximumClientConnection)
+      _ <- IO(println(schemaName))
       _ <- initSchema(schemaName)
-      _ <- writeDB(s"CREATE TABLE IF NOT EXISTS ${schemaName}.user_name (user_name TEXT, password TEXT)", List())
-      _ <- writeDB(s"CREATE TABLE IF NOT EXISTS ${schemaName}.doctor_rec (doctor_name TEXT, patient_name TEXT)", List())
+      _ <- writeDB(
+        s"""
+           |CREATE TABLE IF NOT EXISTS ${schemaName}.${tableName} (
+           |  id SERIAL PRIMARY KEY,
+           |  node JSON,
+           |  name TEXT
+           |)
+           |""".stripMargin, List()
+      )
+      checkRootExists <- readDBBoolean(s"SELECT EXISTS(SELECT 1 FROM ${schemaName}.${tableName} WHERE id = ?)",
+        List(SqlParameter("Int", Integer.toString(1)))
+      )
+      _ <- if (!checkRootExists) {
+          entryCreate()
+        } else {
+          IO.unit
+        }
     } yield ()
-
+  }
 }

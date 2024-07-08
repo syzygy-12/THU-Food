@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box, Grid, Card, CardContent, Toolbar, AppBar } from '@mui/material';
-import {
-    Node,
-    getNodeById,
-    createNode,
-    createLinkedNode,
-    deleteNode,
-} from 'Plugins/NodeAPI/NodeExecution' // 导入封装后的函数
+import { deleteNode, getNodeById, createSon } from 'Plugins/EntryAPI/NodeExecution' // 导入封装后的函数
+import { Node } from 'Plugins/Models/Entry';
+import { testEntry } from 'Plugins/EntryAPI/EntryExecution'
+import { SmallCard } from 'Components/SmallCard/SmallCard'
 
 interface RouteParams {
     id: string;
@@ -17,33 +14,29 @@ export function ExplorePage() {
     const params = useParams<RouteParams>();
     const history = useHistory();
     const [currentNode, setNode] = useState<Node | null>(null);
+    const [CardList, setCardList] = useState<SmallCard | null>(null);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [entryExists, setEntryExists] = useState<boolean>(null);
 
     const username = localStorage.getItem('username') || '';
 
-    const currentNodeId: number = Number(params.id);
-    console.log("currentNodeId :", currentNodeId)
+    const currentEntryId: number = Number(params.id);
 
     const fetchData = async () => {
-        setIsLoading(true); // 开始加载
-        const result = await getNodeById(currentNodeId);
-        if (!result) {
-            if (currentNodeId === 0) {
-                const rootNode: Node = { id: 0, son: [], fatherId: undefined, entryId: undefined };
-                await createNode(0, rootNode);
-                setNode(rootNode); // 设置根节点
-            } else {
-                console.log("节点不存在！");
-            }
-        } else {
-            setNode(result); // 设置获取到的节点
-        }
-        setIsLoading(false); // 完成加载
+        setIsLoading(true);
+        const entryTestResult = await testEntry(currentEntryId)// 开始加载
+        setEntryExists(entryTestResult);
+        if (entryTestResult)
+            setNode(await getNodeById(currentEntryId));
+        setIsLoading(false);
     };
 
     useEffect(() => {
         fetchData();
-    }, [currentNodeId]);
+    }, [currentEntryId]);
+
+    useEffect(() => {
+    }, [currentNode]);
 
     const handleNavigation = (path: string) => {
         history.push(path);
@@ -51,29 +44,25 @@ export function ExplorePage() {
 
     const handleCreateAndUpdate = async (event: React.FormEvent) => {
         event.preventDefault();
-        if (currentNode) {
-            await createLinkedNode(currentNodeId, currentNode);
-            const updatedNode = await getNodeById(currentNodeId);
-            setNode(updatedNode);
-        }
+        await createSon(currentEntryId, currentNode);
+        window.location.reload(); // 刷新页面
     };
 
     const handleDelete = async () => {
-        const fatherId = currentNode?.fatherId;
-        if (fatherId != undefined) {
-            await deleteNode(currentNodeId, fatherId);
+        const fatherId = currentNode.fatherId;
+        if (fatherId != 0) {
+            await deleteNode(currentEntryId, fatherId);
             history.push(`/explore/${fatherId}`); // 重定向到父节点页面
         } else {
             console.log("Error: 无法删除根目录！");
-            //setResponseMessage(`Error: 无法删除根目录！`);
         }
     };
 
     if (isLoading)
         return <div>Loading...</div>; // 在加载期间显示的内容
 
-    console.log('currentNodeId:', currentNodeId);
-    console.log('currentNode:', currentNode);
+    if (!entryExists)
+        return <div>页面不存在!</div>; // 如果节点不存在，则显示错误信息
 
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -107,15 +96,15 @@ export function ExplorePage() {
             <Container sx={{ mt: 8, mb: 2 }}>
                 <Button variant="contained" onClick={handleCreateAndUpdate} sx={{ ml: 2 }}>创建节点</Button>
                 <Button variant="contained" color="error" onClick={handleDelete} sx={{ ml: 2 }}>删除节点</Button>
-                <>目前ID: {currentNodeId}  </>
+                <>目前ID: {currentEntryId}  </>
 
-                <Button variant="contained" onClick={() => handleNavigation(`/info/${currentNodeId}`) }>介绍</Button>
+                <Button variant="contained" onClick={() => handleNavigation(`/info/${currentEntryId}`) }>介绍</Button>
                 <Grid container spacing={2} sx={{ mt: 4 }}>
                     {currentNode.son.map((sonNode) => (
                         <Grid item xs={12} sm={6} md={4} key={sonNode}>
                             <Card onClick={() => handleNavigation(`/explore/${sonNode}`)} sx={{ cursor: 'pointer' }}>
                                 <CardContent>
-                                    <Typography variant="h6">儿子ID: {sonNode}</Typography>
+                                    <Typography variant="h6">ID: {sonNode}</Typography>
                                 </CardContent>
                             </Card>
                         </Grid>

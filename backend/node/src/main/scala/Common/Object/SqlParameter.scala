@@ -22,6 +22,7 @@ object SqlParameter {
         case "boolean" => SqlParameter("Boolean", value)
         case "datetime" => SqlParameter("DateTime", value)
         case "json" => SqlParameter("Json", value) // Add case for Json
+        case "int[]" => SqlParameter("Int[]", value) // Add case for "Array"
         // Add more type cases as needed
         case _ => throw new Exception("Unsupported data type")
       }

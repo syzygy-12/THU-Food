@@ -33,7 +33,7 @@ object Server extends IOApp:
 
 
   def run(args: List[String]): IO[ExitCode] =
-    Utils.readConfig(args.headOption.getOrElse("server_config.json"))
+    ProcessUtils.readConfig(args.headOption.getOrElse("server_config.json"))
       .flatMap { config =>
         (for {
           client <- EmberClientBuilder.default[IO].withMaxTotal(config.maximumClientConnection)

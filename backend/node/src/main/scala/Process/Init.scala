@@ -2,7 +2,8 @@ package Process
 
 import Common.API.{API, PlanContext, TraceID}
 import Global.{ServerConfig, ServiceCenter}
-import Common.DBAPI.{initSchema, writeDB}
+import Common.DBAPI.{initSchema, readDBBoolean, writeDB}
+import Common.Object.SqlParameter
 import Common.ServiceUtils.schemaName
 import cats.effect.IO
 import io.circe.generic.auto.*
@@ -26,6 +27,24 @@ object Init {
            |)
            |""".stripMargin, List()
       )
+<<<<<<< Updated upstream
+=======
+      checkNodeExists <- readDBBoolean(s"SELECT EXISTS(SELECT 1 FROM ${schemaName}.node_info WHERE id = ?)",
+        List(SqlParameter("Int", Integer.toString(1)))
+      )
+      _ <- if (!checkNodeExists) {
+          writeDB(
+            s"INSERT INTO ${schemaName}.node_info (\"fatherId\", son, \"entryId\") VALUES (?, CAST(? AS INTEGER[]), ?)",
+            List(
+              SqlParameter("Int", "0"),
+              SqlParameter("String", "{}"),
+              SqlParameter("Int", "0")
+            )
+          )
+        } else {
+          IO.unit
+        }
+>>>>>>> Stashed changes
     } yield ()
   }
 }

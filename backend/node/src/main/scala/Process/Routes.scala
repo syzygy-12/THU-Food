@@ -13,8 +13,6 @@ import org.http4s.dsl.io.*
 
 object Routes {
   private def executePlan(messageType: String, str: String): IO[String] =
-    println(str)
-    println("sdsdsds")
     messageType match {
       case "NodeIdQueryMessage" =>
         IO(decode[NodeIdQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NodeIdQueryMessage")))

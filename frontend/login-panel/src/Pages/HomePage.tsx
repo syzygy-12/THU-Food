@@ -75,11 +75,14 @@ export function HomePage() {
                         <Typography variant="h5">滚动广告</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                        <Button variant="contained" color="primary" onClick={() => handleNavigation('/explore/0')}>
+                        <Button variant="contained" color="primary" onClick={() => handleNavigation('/explore/1')}>
                             探索美食
                         </Button>
                         <Button variant="contained" color="secondary" onClick={() => handleNavigation('/recommendations')}>
                             随机推荐
+                        </Button>
+                        <Button variant="contained" color="secondary" onClick={() => handleNavigation('/test')}>
+                            测试界面
                         </Button>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
