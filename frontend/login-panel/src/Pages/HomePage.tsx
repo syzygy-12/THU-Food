@@ -12,12 +12,18 @@ import {
 export function HomePage() {
     const history = useHistory();
     const [username, setUsername] = useState('');
+    const [userId, setUserId] = useState('');
 
     useEffect(() => {
         // 假设在登录后用户名被存储在本地存储中
         const storedUsername = localStorage.getItem('username');
+        const storedUserId = localStorage.getItem('userId');
+
         if (storedUsername) {
             setUsername(storedUsername);
+        }
+        if (storedUserId) {
+            setUserId(storedUserId);
         }
     }, []);
 
@@ -48,7 +54,7 @@ export function HomePage() {
                         }}
                     />
                     <Typography variant="h6" component="div">
-                        欢迎 {username}
+                        欢迎 {username} UID: {userId}
                     </Typography>
                 </Toolbar>
             </AppBar>

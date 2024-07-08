@@ -11,21 +11,25 @@ import org.http4s.client.Client
 import java.util.UUID
 
 object Init {
-  def init(config: ServerConfig): IO[Unit] = {
-    given PlanContext = PlanContext(traceID = TraceID(UUID.randomUUID().toString), 0)
+  def init(config:ServerConfig):IO[Unit]=
+    given PlanContext=PlanContext(traceID = TraceID(UUID.randomUUID().toString),0)
     for {
       _ <- API.init(config.maximumClientConnection)
       _ <- initSchema(schemaName)
       _ <- writeDB(
         s"""
-           |CREATE TABLE IF NOT EXISTS ${schemaName}.node_info (
+           |CREATE SCHEMA IF NOT EXISTS "${schemaName}";
+           |""".stripMargin, List()
+      )
+      _ <- writeDB(
+        s"""
+           |CREATE TABLE IF NOT EXISTS "${schemaName}".user_info (
            |  id SERIAL PRIMARY KEY,
-           |  "fatherId" INT,
-           |  son INT[],
-           |  "entryId" INT
+           |  username TEXT,
+           |  password TEXT,
+           |  authority INT
            |)
            |""".stripMargin, List()
       )
     } yield ()
-  }
 }

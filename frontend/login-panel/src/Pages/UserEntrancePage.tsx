@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import axios, { isAxiosError } from 'axios';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { Container, Button, Box, Typography, Paper, List, ListItem, ListItemText } from '@mui/material';
-import { API } from 'Plugins/CommonUtils/API';
-import background from '../../images/main1.jpg';  // 导入背景图片
+import { Container, Button, Box, Typography } from '@mui/material';
+import background from '../../images/stlogin1.jpg';  // 导入背景图片
 
-export function Main() {
+export function UserEntrance({ title }: { title: string }) {
     const history = useHistory();
 
     return (
@@ -18,7 +16,7 @@ export function Main() {
             justifyContent: 'center',
             alignItems: 'center'
         }}>
-            <Container component="main" maxWidth="md" sx={{
+            <Container component="main" maxWidth="xs" sx={{
                 backgroundColor: 'rgba(255, 255, 255, 0.8)',
                 padding: '2rem',
                 borderRadius: '8px'
@@ -32,27 +30,35 @@ export function Main() {
                     }}
                 >
                     <Typography component="h1" variant="h5">
-                        欢迎
+                        {title}
                     </Typography>
                     <Button
                         fullWidth
                         variant="contained"
                         color="primary"
                         sx={{ mt: 3, mb: 2 }}
-                        onClick={() => history.push('/user-entrance')}
+                        onClick={() => history.push('/user-login')}
                     >
-                        我是用户
+                        登录
                     </Button>
                     <Button
                         fullWidth
                         variant="contained"
                         color="secondary"
                         sx={{ mt: 3, mb: 2 }}
-                        onClick={() => history.push('/home')}
+                        onClick={() => history.push('/user-register')}
                     >
-                        我是游客
+                        注册
                     </Button>
-
+                    <Button
+                        fullWidth
+                        variant="contained"
+                        color="info"
+                        sx={{ mt: 3, mb: 2 }}
+                        onClick={() => history.push('/')}
+                    >
+                        主菜单
+                    </Button>
                 </Box>
             </Container>
         </div>
