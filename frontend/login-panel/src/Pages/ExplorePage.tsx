@@ -45,7 +45,7 @@ export function ExplorePage() {
     const handleCreateAndUpdate = async (event: React.FormEvent) => {
         event.preventDefault();
         await createSon(currentEntryId, currentNode);
-        window.location.reload(); // 刷新页面
+        fetchData();
     };
 
     const handleDelete = async () => {
