@@ -24,6 +24,16 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "UserPasswordChangeMessage" =>
+        IO(decode[UserPasswordChangeMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for UserPasswordChangeMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "UserAuthorityChangeMessage" =>
+        IO(decode[UserAuthorityChangeMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for UserAuthorityChangeMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

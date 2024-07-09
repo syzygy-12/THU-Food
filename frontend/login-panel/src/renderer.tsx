@@ -21,7 +21,6 @@ const Layout = () => {
                 <Route path="/home" exact component={HomePage} />
                 <Route path="/explore/:id" exact component={ExplorePage} />
                 <Route path="/info/:id" exact component={InfoPage} />
-                <Route path="/image/:id" exact component={Image} />
                 <Route path="/test" exact component={TestPage} />
             </Switch>
         </HashRouter>

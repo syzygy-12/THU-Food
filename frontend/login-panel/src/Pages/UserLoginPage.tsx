@@ -1,58 +1,25 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import axios, { isAxiosError } from 'axios';
-import { API } from 'Plugins/CommonUtils/API';
-import { UserLoginMessage } from 'Plugins/UserAPI/UserLoginMessage';
 import background from '../../images/stlogin1.jpg'
+import { userLogin } from 'Plugins/UserAPI/UserExecution'
 
 export function UserLogin() {
     const history = useHistory();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [responseMessage, setResponseMessage] = useState<string | null>(null);
     const [open, setOpen] = useState(false);
 
-    const sendPostRequest = async (message: API) => {
-        try {
-            const response = await axios.post(message.getURL(), JSON.stringify(message), {
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            console.log('Response status:', response.status);
-            console.log('Response body:', response.data);
-            const result = JSON.parse(response.data);
-
-            if (result.valid) {
-                setResponseMessage("StudentLogin successful!");
-                localStorage.setItem('username', username); // 将用户名存储在本地存储中
-                localStorage.setItem('userId', result.id);
-                localStorage.setItem('userAuthority', result.authority);
-                history.push('/home');
-            } else if (!result.valid) {
-                setResponseMessage("Invalid user");
-                setOpen(true); // 显示弹窗
-            }
-        } catch (error) {
-            if (isAxiosError(error)) {
-                if (error.response && error.response.data) {
-                    setResponseMessage(`Error: ${error.response.data.error}`);
-                    console.error('Error sending request:', error.response.data);
-                } else {
-                    setResponseMessage(`Error: ${error.message}`);
-                    console.error('Error sending request:', error.message);
-                }
-            } else {
-                setResponseMessage('Unexpected error occurred.');
-                console.error('Unexpected error:', error);
-            }
-        }
-    };
-
-    const handleLogin = (event: React.FormEvent) => {
+    const handleLogin = async (event: React.FormEvent) => {
         event.preventDefault();
-        const message = new UserLoginMessage(username, password);
-        sendPostRequest(message);
+        const result = await userLogin(username, password);
+        if (result.valid) {
+            localStorage.setItem('username', username); // 将用户名存储在本地存储中
+            localStorage.setItem('userId', result.id.toString());
+            history.push('/home');
+        } else if (!result.valid) {
+            setOpen(true); // 显示弹窗
+        }
     };
 
     const handleClose = () => {

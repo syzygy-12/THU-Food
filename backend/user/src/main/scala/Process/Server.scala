@@ -15,7 +15,6 @@ import org.http4s.client.Client
 import java.nio.channels.ClosedChannelException
 import scala.concurrent.duration.*
 
-
 object Server extends IOApp:
   given logger: Logger[IO] = Slf4jLogger.getLogger[IO]
 

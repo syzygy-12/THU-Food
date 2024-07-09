@@ -1,15 +1,20 @@
 import axios, { isAxiosError } from 'axios'
 import { API } from 'Plugins/CommonUtils/API'
 
-export const errorReport = async (error: any) => {
-    if (isAxiosError(error)) {
+function handleErrorResponse(error: any)  {
+    if (axios.isAxiosError(error)) {
         if (error.response && error.response.data) {
-            console.error('Error sending request:', error.response.data);
+            const errorMessage = error.response.data.error || error.response.data;
+            if (typeof errorMessage === 'string') {
+                throw errorMessage;
+            } else {
+                console.log(`Error: ${JSON.stringify(errorMessage)}`);
+            }
         } else {
-            console.error('Error sending request:', error.message);
+            console.log(`Error: ${error.message}`);
         }
     } else {
-        console.error('Unexpected error:', error);
+        console.log('Unexpected error occurred.');
     }
 }
 
@@ -22,6 +27,6 @@ export const sendPostRequest = async (message: API): Promise<any> => {
         console.log('Response body:', response.data);
         return response.data; // 返回响应数据
     } catch (error) {
-        errorReport(error);
+        handleErrorResponse(error);
     }
 };

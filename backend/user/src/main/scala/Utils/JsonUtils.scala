@@ -1,6 +1,5 @@
 package Utils
 
-import Utils.NodeUtils.jsonToNode
 import cats.effect.IO
 import io.circe.Json
 import io.circe.parser.{decode, parse}

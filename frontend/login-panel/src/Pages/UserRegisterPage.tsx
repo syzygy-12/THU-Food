@@ -1,57 +1,26 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
-import axios, { isAxiosError } from 'axios';
-import { API } from 'Plugins/CommonUtils/API';
-import { UserRegisterMessage } from 'Plugins/UserAPI/UserRegisterMessage';
-import background from '../../images/stlogin1.jpg';  // 导入背景图片
+import background from '../../images/stlogin1.jpg';
+import { userRegister } from 'Plugins/UserAPI/UserExecution'  // 导入背景图片
 
 export function UserRegister() {
     const history = useHistory();
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [authority, setAuthority] = useState(0);
     const [responseMessage, setResponseMessage] = useState<string | null>(null);
     const [open, setOpen] = useState(false);
 
-    const sendPostRequest = async (message: API) => {
-        try {
-            const response = await axios.post(message.getURL(), JSON.stringify(message), {
-                headers: { 'Content-Type': 'application/json' },
-            });
-            console.log('Response status:', response.status);
-            console.log('Response body:', response.data);
-            if (response.status === 200) {
-                // 注册成功后跳转到主菜单
-                setResponseMessage("Registration successful!");
-                history.push('/');
-            }
-        } catch (error) {
-            if (isAxiosError(error)) {
-                if (error.response && error.response.data) {
-                    const errorMessage = error.response.data.error || error.response.data;
-                    if (typeof errorMessage === 'string' && errorMessage.includes("already registered")) {
-                        setResponseMessage("该用户名已经被注册");
-                        setOpen(true); // 显示弹窗
-                    } else {
-                        setResponseMessage(`Error: ${errorMessage}`);
-                    }
-                    console.error('Error sending request:', error.response.data);
-                } else {
-                    setResponseMessage(`Error: ${error.message}`);
-                    console.error('Error sending request:', error.message);
-                }
-            } else {
-                setResponseMessage('Unexpected error occurred.');
-                console.error('Unexpected error:', error);
-            }
-        }
-    };
-
-    const handleRegister = (event: React.FormEvent) => {
+    const handleRegister = async (event: React.FormEvent) => {
         event.preventDefault();
-        const message = new UserRegisterMessage(username, password, authority);
-        sendPostRequest(message);
+        const result = await userRegister(username, password);
+        if (result) {
+            setResponseMessage("注册成功！");
+            history.push('/');
+        } else {
+            setResponseMessage("该用户名已经被注册");
+            setOpen(true);
+        }
     };
 
     const handleClose = () => {
@@ -108,18 +77,6 @@ export function UserRegister() {
                             autoComplete="current-password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="authority"
-                            label="Authority"
-                            type="authority"
-                            id="authority"
-                            autoComplete="current-authority"
-                            value={authority}
-                            onChange={(e) => setAuthority(Number(e.target.value))}
                         />
 
                         <Button
