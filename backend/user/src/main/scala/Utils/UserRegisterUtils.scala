@@ -22,7 +22,7 @@ object UserRegisterUtils {
       if (exists) {
         IO(false)
       } else {
-        val query = s"INSERT INTO \"${schemaName}\".user_info (username, password, authority) VALUES (?, ?, 0) RETURNING id"
+        val query = s"INSERT INTO \"${schemaName}\".user_info (username, password, authority, \"commentIdList\") VALUES (?, ?, 0, '{}') RETURNING id"
         val parameters = List(
           SqlParameter("String", userName),
           SqlParameter("String", password),

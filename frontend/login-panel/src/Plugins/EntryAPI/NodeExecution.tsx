@@ -1,4 +1,4 @@
-import { NodeModifyMessage, NodeIdQueryMessage } from 'Plugins/EntryAPI/NodeMessage';
+import { NodeModifyMessage, NodeQueryMessage } from 'Plugins/EntryAPI/NodeMessage';
 import { Node } from 'Plugins/Models/Entry';
 import { sendPostRequest } from 'Plugins/PostRequest'
 import { createEntry } from 'Plugins/EntryAPI/EntryExecution'
@@ -13,7 +13,7 @@ const jsonStringToNode = (jsonString: string): Node => {
 }
 
 export const getNodeById = async (id: number): Promise<Node | null> => {
-    const message = new NodeIdQueryMessage(id);
+    const message = new NodeQueryMessage(id);
     const result = await sendPostRequest(message);
     return jsonStringToNode(result); // 直接返回结果
 };

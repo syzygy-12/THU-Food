@@ -1,6 +1,6 @@
 import { EntryMessage } from 'Plugins/EntryAPI/EntryMessage';
 
-export class NodeIdQueryMessage extends EntryMessage {
+export class NodeQueryMessage extends EntryMessage {
 
     id : number
 
@@ -8,7 +8,7 @@ export class NodeIdQueryMessage extends EntryMessage {
         super();
         this.id = id;
         Object.defineProperty(this, 'type', {
-            value: 'NodeIdQueryMessage',
+            value: 'NodeQueryMessage',
             writable: false
         });
     }

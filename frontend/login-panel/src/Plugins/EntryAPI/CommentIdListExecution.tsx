@@ -5,9 +5,16 @@ import {
     CommentIdListQueryMessage,
 } from 'Plugins/EntryAPI/CommentIdListMessage'
 
-export const queryEntryCommentIdList = async (id: number): Promise<number> => {
+export const queryEntryCommentIdList = async (id: number): Promise<number[]> => {
     const message = new CommentIdListQueryMessage(id);
-    return await sendPostRequest(message); // 直接返回结果
+    console.log(message);
+    const result = await sendPostRequest(message);
+    console.log(result);
+    /*const commentIdList = JSON.parse(result);
+    if (Array.isArray(commentIdList)) {
+        return commentIdList;
+    }*/
+    return [];
 }
 
 export const insertEntryCommentId = async (id: number, newCommentId: number): Promise<boolean> => {

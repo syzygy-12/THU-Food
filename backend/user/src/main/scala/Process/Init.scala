@@ -27,7 +27,8 @@ object Init {
            |  id SERIAL PRIMARY KEY,
            |  username TEXT,
            |  password TEXT,
-           |  authority INT
+           |  authority INT,
+           |  "commentIdList" INT[]
            |)
            |""".stripMargin, List()
       )

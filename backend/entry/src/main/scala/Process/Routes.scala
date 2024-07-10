@@ -24,8 +24,8 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "NodeIdQueryMessage" =>
-        IO(decode[NodeIdQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NodeIdQueryMessage")))
+      case "NodeQueryMessage" =>
+        IO(decode[NodeQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NodeQueryMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
@@ -34,8 +34,8 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "NameIdQueryMessage" =>
-        IO(decode[NameIdQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NameIdQueryMessage")))
+      case "NameQueryMessage" =>
+        IO(decode[NameQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NameQueryMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

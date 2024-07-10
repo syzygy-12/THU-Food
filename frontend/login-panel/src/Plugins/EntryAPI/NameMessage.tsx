@@ -1,6 +1,6 @@
 import { EntryMessage } from 'Plugins/EntryAPI/EntryMessage';
 
-export class NameIdQueryMessage extends EntryMessage {
+export class NameQueryMessage extends EntryMessage {
 
     id : number
 
@@ -8,7 +8,7 @@ export class NameIdQueryMessage extends EntryMessage {
         super();
         this.id = id;
         Object.defineProperty(this, 'type', {
-            value: 'NameIdQueryMessage',
+            value: 'NameQueryMessage',
             writable: false
         });
     }

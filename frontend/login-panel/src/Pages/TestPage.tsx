@@ -10,9 +10,10 @@ import { createComment, deleteComment, queryComment, testComment } from 'Plugins
 import { CommentQueryMessage } from 'Plugins/CommentAPI/CommentMessage'
 import {
     insertEntryCommentId,
-    insertEntryCommentIdList,
     queryEntryCommentIdList,
 } from 'Plugins/EntryAPI/CommentIdListExecution' // 假设 createImage 函数在这个模块中
+import { insertUserCommentId, queryUserCommentIdList } from 'Plugins/UserAPI/CommentIdListExecution'
+
 
 interface RouteParams {
     id: string;
@@ -163,6 +164,21 @@ export function TestPage() {
         console.log(result);
     };
 
+    const handleClick13 = async() => {
+        const result = await queryUserCommentIdList(1);
+        console.log(result);
+    }
+
+    const handleClick14 = async () => {
+        await insertUserCommentId(1,1);
+        console.log('user insert commentId finish');
+    }
+
+    const handleClick15 = async () => {
+        const result =await getNameById(1);
+        console.log(result);
+    }
+
     const handleClose = () => {
         setOpen(false);
         setSelectedFile(null);
@@ -257,6 +273,18 @@ export function TestPage() {
 
                 <Button variant="contained" onClick={handleClick12} sx={{ ml: 2 }}>
                     为 Entry 插入评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick13} sx={{ ml: 2 }}>
+                    查询 User 的评论们
+                </Button>
+
+                <Button variant="contained" onClick={handleClick14} sx={{ ml: 2 }}>
+                    为 User 插入评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick15} sx={{ ml: 2 }}>
+                    查询 Entry 的名字
                 </Button>
             </Container>
         </Box>

@@ -36,4 +36,5 @@ object ServiceUtils{
   lazy val serviceFullName: String = fullNameMap(serviceCode)
   lazy val serviceShortName: String = serviceName(serviceCode)
   lazy val schemaName: String = serviceName(serviceCode)
+  lazy val tableName: String = serviceName(serviceCode) + "_info"
 }

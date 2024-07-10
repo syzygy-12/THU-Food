@@ -8,6 +8,7 @@ import {
     Toolbar,
     TextField,
 } from '@mui/material';
+import { TopBar, TopBarData } from '../Components/TopBar'
 
 export function HomePage() {
     const history = useHistory();
@@ -31,33 +32,15 @@ export function HomePage() {
         history.push(path);
     };
 
+    const topBarData = new TopBarData('THU Food', username, [
+        { label: '主页', path: '/home' },
+        { label: '用户', path: '/profile' },
+        { label: '设置', path: '/settings' }
+    ]);
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <AppBar position="fixed">
-                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-                        <Typography variant="h6" component="div" sx={{ marginRight: 2 }}>
-                            THU Food
-                        </Typography>
-                        <Button color="inherit" onClick={() => handleNavigation('/home')}>首页</Button>
-                        <Button color="inherit" onClick={() => handleNavigation('/profile')}>用户</Button>
-                        <Button color="inherit" onClick={() => handleNavigation('/settings')}>设置</Button>
-                    </Box>
-                    <TextField
-                        placeholder="搜索"
-                        variant="outlined"
-                        size="small"
-                        sx={{
-                            backgroundColor: 'white',
-                            borderRadius: 1,
-                            marginRight: 2,
-                        }}
-                    />
-                    <Typography variant="h6" component="div">
-                        欢迎 {username} UID: {userId}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
+            <TopBar data={topBarData} />
             <Toolbar /> {/* 用于占位，使内容不被顶栏遮挡 */}
             <Box
                 component="main"
