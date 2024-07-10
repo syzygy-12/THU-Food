@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { TextField, Button, Container, Typography, Box, Toolbar, AppBar, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Toolbar, AppBar } from '@mui/material';
 import { getNodeById, modifyNode } from 'Plugins/EntryAPI/NodeExecution';
 import { getNameById } from 'Plugins/EntryAPI/NameExecution';
 import { createEntry, testEntry } from 'Plugins/EntryAPI/EntryExecution';
 //import { createImage } from 'Plugins/ImageAPI/ImageExecution';
 import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExecution'
-import { createComment, deleteComment, queryComment, testComment } from 'Plugins/CommentAPI/CommentExecution'
-import { CommentQueryMessage } from 'Plugins/CommentAPI/CommentMessage'
 import {
-    insertEntryCommentId,
-    queryEntryCommentIdList,
-} from 'Plugins/EntryAPI/CommentIdListExecution' // 假设 createImage 函数在这个模块中
-import { insertUserCommentId, queryUserCommentIdList } from 'Plugins/UserAPI/CommentIdListExecution'
+    createComment,
+    deleteComment,
+    queryCommentByEntry,
+    queryCommentByUser,
+} from 'Plugins/CommentAPI/CommentExecution'
+import { createStar, queryStaredEntryIdList, testStar } from 'Plugins/StarAPI/StarExecution'
 
 
 interface RouteParams {
@@ -139,43 +139,38 @@ export function TestPage() {
         console.log(result);
     };
 
-    const handleClick8 = async () => {
-        const result = await testComment(10);
-        console.log(result);
-    };
-
     const handleClick9 = async () => {
         const result = await deleteComment(3);
         console.log(result);
     };
 
-    const handleClick10 = async () => {
-        const result = await queryComment(4);
-        console.log(result);
-    };
-
-    const handleClick11 = async () => {
-        const result = await queryEntryCommentIdList(1);
-        console.log(result);
-    };
-
-    const handleClick12 = async () => {
-        const result = await insertEntryCommentId(1,1);
-        console.log(result);
-    };
-
-    const handleClick13 = async() => {
-        const result = await queryUserCommentIdList(1);
-        console.log(result);
-    }
-
-    const handleClick14 = async () => {
-        await insertUserCommentId(1,1);
-        console.log('user insert commentId finish');
-    }
-
     const handleClick15 = async () => {
         const result =await getNameById(1);
+        console.log(result);
+    }
+
+    const handleClick16 = async () => {
+        const result =await testStar(1,1);
+        console.log(result);
+    }
+
+    const handleClick17 = async () => {
+        const result =await createStar(1,1);
+        console.log(result);
+    }
+
+    const handleClick18 = async () => {
+        const result =await queryStaredEntryIdList(1);
+        console.log(result);
+    }
+
+    const handleClick19 = async () => {
+        const result =await queryCommentByEntry(1);
+        console.log(result);
+    }
+
+    const handleClick20 = async () => {
+        const result =await queryCommentByUser(1);
         console.log(result);
     }
 
@@ -255,37 +250,34 @@ export function TestPage() {
                     添加评论
                 </Button>
 
-                <Button variant="contained" onClick={handleClick8} sx={{ ml: 2 }}>
-                    测试评论
-                </Button>
-
                 <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
                     删除评论
-                </Button>
-
-                <Button variant="contained" onClick={handleClick10} sx={{ ml: 2 }}>
-                    查询评论
-                </Button>
-
-                <Button variant="contained" onClick={handleClick11} sx={{ ml: 2 }}>
-                    查询 Entry 的评论们
-                </Button>
-
-                <Button variant="contained" onClick={handleClick12} sx={{ ml: 2 }}>
-                    为 Entry 插入评论
-                </Button>
-
-                <Button variant="contained" onClick={handleClick13} sx={{ ml: 2 }}>
-                    查询 User 的评论们
-                </Button>
-
-                <Button variant="contained" onClick={handleClick14} sx={{ ml: 2 }}>
-                    为 User 插入评论
                 </Button>
 
                 <Button variant="contained" onClick={handleClick15} sx={{ ml: 2 }}>
                     查询 Entry 的名字
                 </Button>
+
+                <Button variant="contained" onClick={handleClick17} sx={{ ml: 2 }}>
+                    新建收藏
+                </Button>
+
+                <Button variant="contained" onClick={handleClick16} sx={{ ml: 2 }}>
+                    测试收藏
+                </Button>
+
+                <Button variant="contained" onClick={handleClick18} sx={{ ml: 2 }}>
+                    查询 User 的收藏列表
+                </Button>
+
+                <Button variant="contained" onClick={handleClick19} sx={{ ml: 2 }}>
+                    查询 Entry 的评论列表
+                </Button>
+
+                <Button variant="contained" onClick={handleClick20} sx={{ ml: 2 }}>
+                    查询 User 的评论列表
+                </Button>
+
             </Container>
         </Box>
     );

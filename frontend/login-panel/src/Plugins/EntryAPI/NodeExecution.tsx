@@ -1,6 +1,6 @@
 import { NodeModifyMessage, NodeQueryMessage } from 'Plugins/EntryAPI/NodeMessage';
 import { Node } from 'Plugins/Models/Entry';
-import { sendPostRequest } from 'Plugins/PostRequest'
+import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import { createEntry } from 'Plugins/EntryAPI/EntryExecution'
 
 const nodeToJsonString = (node: Node): string => {

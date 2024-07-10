@@ -4,8 +4,7 @@ import Common.API.PlanContext
 import Common.DBAPI.{ReadDBRowsMessage, readDBRows}
 import Common.Object.SqlParameter
 import Common.ServiceUtils.*
-import Models.{Comment, CommentInit}
-import Utils.CommentUtils.commentToString
+import Models.Comment
 import cats.effect.IO
 import io.circe.Json
 import io.circe.generic.auto.*
@@ -14,11 +13,12 @@ import io.circe.syntax.*
 object CommentCreateUtils {
 
   def commentCreate(content: String, userId: Int, entryId: Int)(using planContext: PlanContext): IO[Int] = {
-
-    val comment = Comment(content, userId, entryId)
-    val query = s"INSERT INTO ${schemaName}.${tableName} (comment) VALUES (?) RETURNING id"
+    
+    val query = s"INSERT INTO ${schemaName}.${tableName} (userid, entryid, content) VALUES (?,?,?) RETURNING id"
     val parameters = List(
-      SqlParameter("Json", commentToString(comment))
+      SqlParameter("Int", userId.toString),
+      SqlParameter("Int", entryId.toString),
+      SqlParameter("String", content)
     )
 
     readDBRows(query, parameters).flatMap {

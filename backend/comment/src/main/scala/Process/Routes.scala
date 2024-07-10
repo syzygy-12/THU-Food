@@ -19,18 +19,18 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentTestMessage" =>
-        IO(decode[CommentTestMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentTestMessage")))
-          .flatMap{m=>
-            m.fullPlan.map(_.asJson.toString)
-          }
       case "CommentDeleteMessage" =>
         IO(decode[CommentDeleteMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentDeleteMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentQueryMessage" =>
-        IO(decode[CommentQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryMessage")))
+      case "CommentQueryByEntryMessage" =>
+        IO(decode[CommentQueryByEntryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryByEntryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "CommentQueryByUserMessage" =>
+        IO(decode[CommentQueryByUserMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryByUserMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

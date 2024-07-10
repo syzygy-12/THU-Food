@@ -1,4 +1,4 @@
-import { sendPostRequest } from 'Plugins/PostRequest'
+import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import {
     UserAuthorityChangeMessage,
     UserLoginMessage,

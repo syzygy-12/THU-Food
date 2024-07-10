@@ -1,0 +1,6 @@
+image: 10000
+db-manager: 10001
+user: 10002
+star:
+portal: 10004
+entry: 10006

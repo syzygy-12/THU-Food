@@ -1,5 +1,5 @@
 import { EntryCreateMessage, EntryTestMessage } from 'Plugins/EntryAPI/EntryMessage'
-import { sendPostRequest } from 'Plugins/PostRequest'
+import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 
 export const createEntry = async (): Promise<number> => {
     const message = new EntryCreateMessage;

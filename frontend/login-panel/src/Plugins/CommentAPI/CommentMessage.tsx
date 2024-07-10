@@ -32,60 +32,26 @@ export class CommentDeleteMessage extends CommentMessage {
     }
 }
 
-export class ContentModifyMessage extends CommentMessage {
-    id: number;
-    content: string;
-    constructor(id: number, content: string) {
+export class CommentQueryByEntryMessage extends CommentMessage {
+    entryId: number;
+    constructor(entryId: number) {
         super()
-        this.id = id;
-        this.content = content;
-    }
-}
-
-export class CommentTestMessage extends CommentMessage {
-    id: number;
-    constructor(id: number) {
-        super()
-        this.id = id;
+        this.entryId = entryId;
         Object.defineProperty(this, 'type', {
-            value: 'CommentTestMessage',
+            value: 'CommentQueryByEntryMessage',
             writable: false
         });
     }
 }
 
-export class CommentQueryMessage extends CommentMessage {
-    id: number;
-    constructor(id: number) {
+export class CommentQueryByUserMessage extends CommentMessage {
+    userId: number;
+    constructor(userId: number) {
         super()
-        this.id = id;
+        this.userId = userId;
         Object.defineProperty(this, 'type', {
-            value: 'CommentQueryMessage',
+            value: 'CommentQueryByUserMessage',
             writable: false
         });
-    }
-}
-
-export class ContentIdQueryMessage extends CommentMessage {
-    id: number;
-    constructor(id: number) {
-        super()
-        this.id = id;
-    }
-}
-
-export class EntryIdQueryMessage extends CommentMessage {
-    id: number;
-    constructor(id: number) {
-        super()
-        this.id = id;
-    }
-}
-
-export class UserIdQueryMessage extends CommentMessage {
-    id: number;
-    constructor(id: number) {
-        super()
-        this.id = id;
     }
 }
