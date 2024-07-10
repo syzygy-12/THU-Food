@@ -4,11 +4,10 @@ import {
     Button,
     Typography,
     Box,
-    AppBar,
     Toolbar,
-    TextField,
 } from '@mui/material';
 import { TopBar, TopBarData } from '../Components/TopBar'
+import '../styles.css';
 
 export function HomePage() {
     const history = useHistory();
@@ -28,7 +27,7 @@ export function HomePage() {
         }
     }, []);
 
-    const handleNavigation = (path:string) => {
+    const handleNavigation = (path: string) => {
         history.push(path);
     };
 
@@ -39,7 +38,7 @@ export function HomePage() {
     ]);
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', backgroundColor: '#F7F7FB' }}>
             <TopBar data={topBarData} />
             <Toolbar /> {/* 用于占位，使内容不被顶栏遮挡 */}
             <Box
@@ -54,31 +53,31 @@ export function HomePage() {
                 }}
             >
                 <Box sx={{ width: '80%', maxWidth: '1000px' }}>
-                    <Box sx={{ mb: 3, backgroundColor: '#f0f0f0', height: '200px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h5">滚动广告</Typography>
+                    <Box sx={{ mb: 3, backgroundColor: '#ffffff', height: '300px', display: 'flex', justifyContent: 'center', alignItems: 'center', borderRadius: '15px' }}>
+                        <Typography variant="h3" color="#333">Spicy delicious xiatou</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                        <Button variant="contained" color="primary" onClick={() => handleNavigation('/explore/1')}>
+                        <Button variant="contained" color="primary" onClick={() => handleNavigation('/explore/1')} sx={{ padding: '10px 20px', borderRadius: '10px' }}>
                             探索美食
                         </Button>
-                        <Button variant="contained" color="secondary" onClick={() => handleNavigation('/recommendations')}>
+                        <Button variant="contained" color="secondary" onClick={() => handleNavigation('/recommendations')} sx={{ padding: '10px 20px', borderRadius: '10px' }}>
                             随机推荐
                         </Button>
-                        <Button variant="contained" color="secondary" onClick={() => handleNavigation('/test')}>
+                        <Button variant="contained" color="secondary" onClick={() => handleNavigation('/test')} sx={{ padding: '10px 20px', borderRadius: '10px' }}>
                             测试界面
                         </Button>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 3 }}>
-                        <Typography variant="h6">最新食评</Typography>
-                        <Typography variant="h6">我的收藏</Typography>
+                        <Typography variant="h5" color="#333">最新食评</Typography>
+                        <Typography variant="h5" color="#333">我的收藏</Typography>
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', mb: 2 }}>
-                        <Box sx={{ width: '48%', backgroundColor: '#f0f0f0', height: '150px' }} />
-                        <Box sx={{ width: '48%', backgroundColor: '#f0f0f0', height: '150px' }} />
+                        <Box sx={{ width: '48%', backgroundColor: '#fff', height: '150px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }} />
+                        <Box sx={{ width: '48%', backgroundColor: '#fff', height: '150px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }} />
                     </Box>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                        <Box sx={{ width: '48%', backgroundColor: '#f0f0f0', height: '150px' }} />
-                        <Box sx={{ width: '48%', backgroundColor: '#f0f0f0', height: '150px' }} />
+                        <Box sx={{ width: '48%', backgroundColor: '#fff', height: '150px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }} />
+                        <Box sx={{ width: '48%', backgroundColor: '#fff', height: '150px', borderRadius: '10px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)' }} />
                     </Box>
                 </Box>
             </Box>

@@ -9,7 +9,9 @@ import { UserEntrance } from 'Pages/UserEntrancePage'
 import { UserRegister } from 'Pages/UserRegisterPage'
 import { UserLogin } from 'Pages/UserLoginPage'
 import { TestPage } from 'Pages/TestPage'
-
+import {CommentPage} from 'Pages/CommentPage'
+import { UserPage } from 'Pages/UserPage'
+import { SettingPage } from 'Pages/SettingPage';
 const Layout = () => {
     return (
         <HashRouter>
@@ -22,6 +24,10 @@ const Layout = () => {
                 <Route path="/explore/:id" exact component={ExplorePage} />
                 <Route path="/info/:id" exact component={InfoPage} />
                 <Route path="/test" exact component={TestPage} />
+                <Route path="/main" exact component={Main} />
+                <Route path="/userpage/:id" exact component={UserPage} />
+                <Route path="/comment/:id" exact component={CommentPage} />
+                <Route path="/settings" exact component={SettingPage} />
             </Switch>
         </HashRouter>
     )

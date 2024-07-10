@@ -1,4 +1,3 @@
-import { EntryMessage } from 'Plugins/EntryAPI/EntryMessage';
 import { API } from 'Plugins/CommonUtils/API'
 
 export abstract class StarMessage extends API {

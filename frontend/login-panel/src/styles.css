@@ -1,0 +1,116 @@
+/* styles.css */
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #F7F7FB; /* 调整背景颜色 */
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+header nav a {
+    margin: 0 15px;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
+}
+
+header nav a:hover {
+    color: #660874;
+}
+
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 50px;
+    background-color: #EAF2F8;
+    border-radius: 15px;
+    margin: 20px;
+}
+
+.main-content img {
+    width: 50%;
+    border-radius: 15px;
+}
+
+.main-content .details {
+    width: 40%;
+}
+
+.main-content .details h1 {
+    font-size: 36px;
+    color: #333;
+}
+
+.main-content .details p {
+    font-size: 16px;
+    color: #660874;
+    line-height: 1.6;
+}
+
+.main-content .details .info {
+    display: flex;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.main-content .details .info div {
+    margin-right: 20px;
+}
+
+.main-content .details .info div span {
+    display: block;
+    font-size: 14px;
+    color: #777;
+}
+
+.main-content .details button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #660874;
+    color: #fff;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.main-content .details button:hover {
+    background-color: #660874;
+}
+
+.categories {
+    display: flex;
+    justify-content: space-around;
+    margin: 50px 0;
+}
+
+.categories .category {
+    text-align: center;
+    width: 100px;
+}
+
+.categories .category img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.categories .category span {
+    display: block;
+    font-size: 16px;
+    color: #660874;
+}

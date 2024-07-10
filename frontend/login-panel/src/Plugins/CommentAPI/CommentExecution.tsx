@@ -2,8 +2,7 @@ import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import { Comment } from 'Plugins/Models/Comment'
 import {
     CommentCreateMessage,
-    CommentDeleteMessage, CommentModifyMessage,
-    CommentQueryByObjectMessage,
+    CommentDeleteMessage, CommentModifyMessage, CommentQueryByObjectMessage,
     CommentQueryByUserMessage,
 } from 'Plugins/CommentAPI/CommentMessage'
 
