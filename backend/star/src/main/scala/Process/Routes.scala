@@ -24,8 +24,8 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "StaredEntryIdListQueryMessage" =>
-        IO(decode[StaredEntryIdListQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StaredEntryIdListQueryMessage")))
+      case "StaredObjectIdListQueryMessage" =>
+        IO(decode[StaredObjectIdListQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StaredObjectIdListQueryMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

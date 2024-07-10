@@ -12,7 +12,13 @@ import {
     queryCommentByEntry,
     queryCommentByUser,
 } from 'Plugins/CommentAPI/CommentExecution'
-import { createStar, queryStaredEntryIdList, testStar } from 'Plugins/StarAPI/StarExecution'
+import {
+    createStar,
+    queryStaredEntryIdList,
+    queryStaredObjectIdList,
+    StarType,
+    testStar,
+} from 'Plugins/StarAPI/StarExecution'
 
 
 interface RouteParams {
@@ -150,17 +156,17 @@ export function TestPage() {
     }
 
     const handleClick16 = async () => {
-        const result =await testStar(1,1);
+        const result =await testStar(1,1, StarType.StarForEntry);
         console.log(result);
     }
 
     const handleClick17 = async () => {
-        const result =await createStar(1,1);
+        const result =await createStar(1,1, StarType.LikeForBlog);
         console.log(result);
     }
 
     const handleClick18 = async () => {
-        const result =await queryStaredEntryIdList(1);
+        const result =await queryStaredObjectIdList(1, StarType.StarForEntry);
         console.log(result);
     }
 
