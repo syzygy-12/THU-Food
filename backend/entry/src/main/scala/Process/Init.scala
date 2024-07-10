@@ -23,7 +23,8 @@ object Init {
            |CREATE TABLE IF NOT EXISTS ${schemaName}.${tableName} (
            |  id SERIAL PRIMARY KEY,
            |  node JSON,
-           |  name TEXT
+           |  name TEXT,
+           |  \"commentIdList\" INT[]
            |)
            |""".stripMargin, List()
       )

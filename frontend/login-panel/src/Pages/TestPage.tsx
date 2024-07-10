@@ -5,7 +5,14 @@ import { getNodeById, modifyNode } from 'Plugins/EntryAPI/NodeExecution';
 import { getNameById } from 'Plugins/EntryAPI/NameExecution';
 import { createEntry, testEntry } from 'Plugins/EntryAPI/EntryExecution';
 //import { createImage } from 'Plugins/ImageAPI/ImageExecution';
-import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExecution' // 假设 createImage 函数在这个模块中
+import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExecution'
+import { createComment, deleteComment, queryComment, testComment } from 'Plugins/CommentAPI/CommentExecution'
+import { CommentQueryMessage } from 'Plugins/CommentAPI/CommentMessage'
+import {
+    insertEntryCommentId,
+    insertEntryCommentIdList,
+    queryEntryCommentIdList,
+} from 'Plugins/EntryAPI/CommentIdListExecution' // 假设 createImage 函数在这个模块中
 
 interface RouteParams {
     id: string;
@@ -126,6 +133,36 @@ export function TestPage() {
         console.log(result);
     };
 
+    const handleClick7 = async () => {
+        const result = await createComment("abaaba",1,1);
+        console.log(result);
+    };
+
+    const handleClick8 = async () => {
+        const result = await testComment(10);
+        console.log(result);
+    };
+
+    const handleClick9 = async () => {
+        const result = await deleteComment(3);
+        console.log(result);
+    };
+
+    const handleClick10 = async () => {
+        const result = await queryComment(4);
+        console.log(result);
+    };
+
+    const handleClick11 = async () => {
+        const result = await queryEntryCommentIdList(1);
+        console.log(result);
+    };
+
+    const handleClick12 = async () => {
+        const result = await insertEntryCommentId(1,1);
+        console.log(result);
+    };
+
     const handleClose = () => {
         setOpen(false);
         setSelectedFile(null);
@@ -196,6 +233,30 @@ export function TestPage() {
 
                 <Button variant="contained" onClick={handleClick6} sx={{ ml: 2 }}>
                     修改权限
+                </Button>
+
+                <Button variant="contained" onClick={handleClick7} sx={{ ml: 2 }}>
+                    添加评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick8} sx={{ ml: 2 }}>
+                    测试评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
+                    删除评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick10} sx={{ ml: 2 }}>
+                    查询评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick11} sx={{ ml: 2 }}>
+                    查询 Entry 的评论们
+                </Button>
+
+                <Button variant="contained" onClick={handleClick12} sx={{ ml: 2 }}>
+                    为 Entry 插入评论
                 </Button>
             </Container>
         </Box>

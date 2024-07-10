@@ -2,11 +2,11 @@ package Models
 
 import Models.NodeInit.newNode
 
-case class Entry(id: Int, node: Node, name: String)
+case class Entry(id: Int, node: Node, name: String, commentIdList: Array[Int] = Array.empty[Int])
 
 object EntryInit {
   def newEntry(): Entry = {
-    new Entry(0, newNode(), "new")
+    Entry(0, newNode(), "new", Array.empty[Int])
   }
 }
 
