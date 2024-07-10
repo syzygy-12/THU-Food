@@ -27,11 +27,12 @@ object Init {
            |    id SERIAL PRIMARY KEY,
            |    userid INT,
            |    entryid INT,
-           |    content TEXT
+           |    content TEXT,
+           |    comment_type INT
            |)
            |""".stripMargin, List()
       )
-      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_userid ON ${schemaName}.${tableName} (userid)", List() )
-      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_entryid ON ${schemaName}.${tableName} (entryid)", List() )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_userid ON ${schemaName}.${tableName} (userid, comment_type)", List() )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_entryid ON ${schemaName}.${tableName} (entryid, comment_type)", List() )
     } yield ()
 }

@@ -24,8 +24,8 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentQueryByEntryMessage" =>
-        IO(decode[CommentQueryByEntryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryByEntryMessage")))
+      case "CommentQueryByObjectMessage" =>
+        IO(decode[CommentQueryByObjectMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryByObjectMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

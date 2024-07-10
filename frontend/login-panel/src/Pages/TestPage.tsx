@@ -4,12 +4,12 @@ import { TextField, Button, Container, Typography, Box, Toolbar, AppBar } from '
 import { getNodeById, modifyNode } from 'Plugins/EntryAPI/NodeExecution';
 import { getNameById } from 'Plugins/EntryAPI/NameExecution';
 import { createEntry, testEntry } from 'Plugins/EntryAPI/EntryExecution';
-//import { createImage } from 'Plugins/ImageAPI/ImageExecution';
 import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExecution'
 import {
+    CommentType,
     createComment,
     deleteComment,
-    queryCommentByEntry,
+    queryCommentByObject,
     queryCommentByUser,
 } from 'Plugins/CommentAPI/CommentExecution'
 import {
@@ -141,7 +141,7 @@ export function TestPage() {
     };
 
     const handleClick7 = async () => {
-        const result = await createComment("abaaba",1,1);
+        const result = await createComment("OneStar",1,1,CommentType.ScoreForEntry);
         console.log(result);
     };
 
@@ -171,12 +171,12 @@ export function TestPage() {
     }
 
     const handleClick19 = async () => {
-        const result =await queryCommentByEntry(1);
+        const result =await queryCommentByObject(1,CommentType.ScoreForEntry);
         console.log(result);
     }
 
     const handleClick20 = async () => {
-        const result =await queryCommentByUser(1);
+        const result =await queryCommentByUser(1,CommentType.ScoreForEntry);
         console.log(result);
     }
 

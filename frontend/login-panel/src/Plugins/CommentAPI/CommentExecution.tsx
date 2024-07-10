@@ -3,17 +3,18 @@ import { Comment } from 'Plugins/Models/Comment'
 import {
     CommentCreateMessage,
     CommentDeleteMessage,
-    CommentQueryByEntryMessage,
-    CommentQueryByUserMessage
+    CommentQueryByObjectMessage,
+    CommentQueryByUserMessage,
 } from 'Plugins/CommentAPI/CommentMessage'
 
-const jsonStringToComment = (jsonString: string): Comment => {
-    const obj = JSON.parse(jsonString);
-    return obj as Comment;
+export enum CommentType {
+    ScoreForEntry,
+    CommentForEntry,
+    CommentForBlog,
 }
 
-export const createComment = async (content: string, userId: number, entryId: number): Promise<number> => {
-    const message = new CommentCreateMessage(content, userId, entryId);
+export const createComment = async (content: string, userId: number, entryId: number, commentType: CommentType): Promise<number> => {
+    const message = new CommentCreateMessage(content, userId, entryId, commentType);
     return await sendPostRequest(message); // 直接返回结果
 }
 
@@ -22,8 +23,8 @@ export const deleteComment = async (id: number): Promise<boolean> => {
     return await sendPostRequest(message); // 直接返回结果
 }
 
-export const queryCommentByEntry = async (entryId: number): Promise<Comment[]> => {
-    const message = new CommentQueryByEntryMessage(entryId);
+export const queryCommentByObject = async (entryId: number, commentType: CommentType): Promise<Comment[]> => {
+    const message = new CommentQueryByObjectMessage(entryId, commentType);
     const result = await sendPostRequest(message);
     console.log(result);
     const commentList = JSON.parse(result);
@@ -33,8 +34,8 @@ export const queryCommentByEntry = async (entryId: number): Promise<Comment[]> =
     return [];
 }
 
-export const queryCommentByUser = async (userId: number): Promise<Comment[]> => {
-    const message = new CommentQueryByUserMessage(userId);
+export const queryCommentByUser = async (userId: number, commentType: CommentType): Promise<Comment[]> => {
+    const message = new CommentQueryByUserMessage(userId, commentType);
     const result = await sendPostRequest(message);
     console.log(result);
     const commentList = JSON.parse(result);

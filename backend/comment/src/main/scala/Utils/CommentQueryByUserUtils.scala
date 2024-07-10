@@ -10,9 +10,12 @@ import io.circe.Json
 import io.circe.generic.auto.*
 
 object CommentQueryByUserUtils {
-  def queryCommentByUser(userId: Int)(using planContext: PlanContext): IO[List[Comment]] = {
-    val query = s"SELECT id, userid, entryid, content FROM ${schemaName}.${tableName} WHERE userid = ?"
-    val parameters = List(SqlParameter("Int", userId.toString))
+  def queryCommentByUser(userId: Int, commentType: Int)(using planContext: PlanContext): IO[List[Comment]] = {
+    val query = s"SELECT id, userid, entryid, content FROM ${schemaName}.${tableName} WHERE userid = ? AND comment_type = ?"
+    val parameters = List(
+      SqlParameter("Int", userId.toString),
+      SqlParameter("Int", commentType.toString)
+    )
 
     readDBRows(query, parameters).map { rows =>
       rows.map { row =>

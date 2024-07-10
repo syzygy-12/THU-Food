@@ -12,13 +12,14 @@ import io.circe.syntax.*
 
 object CommentCreateUtils {
 
-  def commentCreate(content: String, userId: Int, entryId: Int)(using planContext: PlanContext): IO[Int] = {
+  def commentCreate(content: String, userId: Int, entryId: Int, commentType: Int)(using planContext: PlanContext): IO[Int] = {
     
-    val query = s"INSERT INTO ${schemaName}.${tableName} (userid, entryid, content) VALUES (?,?,?) RETURNING id"
+    val query = s"INSERT INTO ${schemaName}.${tableName} (userid, entryid, content, comment_type) VALUES (?,?,?,?) RETURNING id"
     val parameters = List(
       SqlParameter("Int", userId.toString),
       SqlParameter("Int", entryId.toString),
-      SqlParameter("String", content)
+      SqlParameter("String", content),
+      SqlParameter("Int", commentType.toString)
     )
 
     readDBRows(query, parameters).flatMap {
