@@ -26,13 +26,14 @@ object Init {
            |CREATE TABLE IF NOT EXISTS ${schemaName}.${tableName} (
            |    id SERIAL PRIMARY KEY,
            |    userid INT,
-           |    entryid INT,
+           |    objectid INT,
            |    content TEXT,
-           |    comment_type INT
+           |    comment_type INT,
+           |    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
            |)
            |""".stripMargin, List()
       )
       _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_userid ON ${schemaName}.${tableName} (userid, comment_type)", List() )
-      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_entryid ON ${schemaName}.${tableName} (entryid, comment_type)", List() )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_objectid ON ${schemaName}.${tableName} (objectid, comment_type)", List() )
     } yield ()
 }

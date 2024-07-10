@@ -39,6 +39,23 @@ export class StarCreateMessage extends StarMessage {
     }
 }
 
+export class StarDeleteMessage extends StarMessage {
+    userId : number
+    entryId : number
+    starType : number
+
+    constructor(userId : number, entryId : number, starType : number) {
+        super();
+        this.userId = userId;
+        this.entryId = entryId;
+        this.starType  = starType;
+        Object.defineProperty(this, 'type', {
+            value: 'StarDeleteMessage',
+            writable: false
+        });
+    }
+}
+
 export class StaredObjectIdListQueryMessage extends StarMessage {
     userId : number
     starType : number

@@ -8,6 +8,7 @@ import io.circe.generic.auto.*
 
 case class CommentQueryByUserMessagePlanner(userId: Int, commentType: Int, override val planContext: PlanContext) extends Planner[String] {
   override def plan(using PlanContext): IO[String] = {
-    queryCommentByUser(userId, commentType).map(_.asJson.noSpaces)
+    val tmp = queryCommentByUser(userId, commentType)
+    tmp.map(_.asJson.noSpaces)
   }
 }

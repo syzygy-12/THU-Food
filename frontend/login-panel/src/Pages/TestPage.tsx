@@ -8,13 +8,12 @@ import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExe
 import {
     CommentType,
     createComment,
-    deleteComment,
+    deleteComment, modifyComment,
     queryCommentByObject,
     queryCommentByUser,
 } from 'Plugins/CommentAPI/CommentExecution'
 import {
-    createStar,
-    queryStaredEntryIdList,
+    createStar, deleteStar,
     queryStaredObjectIdList,
     StarType,
     testStar,
@@ -146,7 +145,7 @@ export function TestPage() {
     };
 
     const handleClick9 = async () => {
-        const result = await deleteComment(3);
+        const result = await deleteComment(1);
         console.log(result);
     };
 
@@ -156,7 +155,7 @@ export function TestPage() {
     }
 
     const handleClick16 = async () => {
-        const result =await testStar(1,1, StarType.StarForEntry);
+        const result =await testStar(1,1, StarType.LikeForBlog);
         console.log(result);
     }
 
@@ -177,6 +176,16 @@ export function TestPage() {
 
     const handleClick20 = async () => {
         const result =await queryCommentByUser(1,CommentType.ScoreForEntry);
+        console.log(result);
+    }
+
+    const handleClick21 = async () => {
+        const result =await modifyComment(1,"haha");
+        console.log(result);
+    }
+
+    const handleClick22 = async () => {
+        const result =await deleteStar(1,1,StarType.LikeForBlog);
         console.log(result);
     }
 
@@ -282,6 +291,14 @@ export function TestPage() {
 
                 <Button variant="contained" onClick={handleClick20} sx={{ ml: 2 }}>
                     查询 User 的评论列表
+                </Button>
+
+                <Button variant="contained" onClick={handleClick21} sx={{ ml: 2 }}>
+                    修改评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick22} sx={{ ml: 2 }}>
+                    删除收藏
                 </Button>
 
             </Container>

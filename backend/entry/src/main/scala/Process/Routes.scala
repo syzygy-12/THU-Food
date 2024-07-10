@@ -10,7 +10,6 @@ import org.http4s.*
 import org.http4s.client.Client
 import org.http4s.dsl.io.*
 
-
 object Routes {
   private def executePlan(messageType: String, str: String): IO[String] =
     messageType match {

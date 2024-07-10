@@ -8,11 +8,10 @@ import cats.effect.IO
 import io.circe.generic.auto.*
 
 object CommentDeleteUtils {
-
   def commentDelete(id: Int)(using planContext: PlanContext): IO[String] = {
-      writeDB(
-        s"DELETE FROM ${schemaName}.${tableName} WHERE id = ?",
-        List(SqlParameter("Int", id.toString))
-      )
+    writeDB(
+      s"DELETE FROM ${schemaName}.${tableName} WHERE id = ?",
+      List(SqlParameter("Int", id.toString))
+    )
   }
 }

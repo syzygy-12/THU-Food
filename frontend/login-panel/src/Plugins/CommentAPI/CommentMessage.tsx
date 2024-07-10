@@ -8,13 +8,13 @@ export abstract class CommentMessage extends API {
 export class CommentCreateMessage extends CommentMessage {
     content: string;
     userId: number;
-    entryId: number;
+    objectId: number;
     commentType: number;
-    constructor(content: string, userId: number, entryId: number, commentType: number) {
+    constructor(content: string, userId: number, objectId: number, commentType: number) {
         super()
         this.content = content;
         this.userId = userId;
-        this.entryId = entryId;
+        this.objectId = objectId;
         this.commentType = commentType;
         Object.defineProperty(this, 'type', {
             value: 'CommentCreateMessage',
@@ -35,12 +35,26 @@ export class CommentDeleteMessage extends CommentMessage {
     }
 }
 
-export class CommentQueryByObjectMessage extends CommentMessage {
-    entryId: number;
-    commentType: number;
-    constructor(entryId: number,  commentType: number) {
+export class CommentModifyMessage extends CommentMessage {
+    id: number;
+    content: string;
+    constructor(id: number, content: string) {
         super()
-        this.entryId = entryId;
+        this.id = id;
+        this.content = content;
+        Object.defineProperty(this, 'type', {
+            value: 'CommentModifyMessage',
+            writable: false
+        });
+    }
+}
+
+export class CommentQueryByObjectMessage extends CommentMessage {
+    objectId: number;
+    commentType: number;
+    constructor(objectId: number,  commentType: number) {
+        super()
+        this.objectId = objectId;
         this.commentType = commentType;
         Object.defineProperty(this, 'type', {
             value: 'CommentQueryByObjectMessage',

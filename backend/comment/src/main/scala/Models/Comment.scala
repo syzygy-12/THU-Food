@@ -1,12 +1,11 @@
 package Models
 
+import java.sql.Timestamp
 
 case class Comment(
   id: Int,
   content: String,
   userId: Int,
-  entryId: Int
+  objectId: Int,
+  createdAt: String
 )
-
-// 用 .asJson 转化为 JSON
-// 用 decode[Type](JsonString) 转化为 Type

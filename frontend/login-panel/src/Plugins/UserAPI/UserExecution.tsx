@@ -12,7 +12,7 @@ const jsonStringToUserLoginResponse = (jsonString: string): UserLoginResponse =>
     return obj as UserLoginResponse;
 }
 
-export const userRegister = async (userName: string, password: string): Promise<Boolean> => {
+export const userRegister = async (userName: string, password: string): Promise<boolean> => {
     const message = new UserRegisterMessage(userName, password);
     return await sendPostRequest(message);
 }
