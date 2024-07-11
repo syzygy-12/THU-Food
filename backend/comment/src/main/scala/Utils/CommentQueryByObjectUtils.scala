@@ -9,10 +9,10 @@ import cats.effect.IO
 import io.circe.generic.auto.*
 
 object CommentQueryByObjectUtils {
-  def queryCommentByObject(userId: Int, commentType: Int)(using planContext: PlanContext): IO[List[Comment]] = {
-    val query = s"SELECT id, userid, objectid, content, created_at FROM ${schemaName}.${tableName} WHERE userid = ? AND comment_type = ?"
+  def queryCommentByObject(objectId: Int, commentType: Int)(using planContext: PlanContext): IO[List[Comment]] = {
+    val query = s"SELECT id, userid, objectid, content, created_at FROM ${schemaName}.${tableName} WHERE objectid = ? AND comment_type = ?"
     val parameters = List(
-      SqlParameter("Int", userId.toString),
+      SqlParameter("Int", objectId.toString),
       SqlParameter("Int", commentType.toString)
     )
 

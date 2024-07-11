@@ -23,11 +23,6 @@ const formatTimestamp = (timestamp: string): string => {
     return `${year}-${month}-${day} ${hours}:${minutes}`;
 };
 
-export const formatDate = (dateString: string): string => {
-    const date = new Date(dateString);
-    return date.toLocaleString();
-}
-
 export const createComment = async (content: string, userId: number, objectId: number, commentType: CommentType): Promise<number> => {
     const message = new CommentCreateMessage(content, userId, objectId, commentType);
     return await sendPostRequest(message); // 直接返回结果
@@ -46,7 +41,6 @@ export const modifyComment = async (id: number, content: string): Promise<boolea
 export const queryCommentByObject = async (objectId: number, commentType: CommentType): Promise<Comment[]> => {
     const message = new CommentQueryByObjectMessage(objectId, commentType);
     const result = await sendPostRequest(message);
-    console.log(result);
     const commentList = JSON.parse(result);
     if (Array.isArray(commentList)) {
         return commentList.map(comment => ({
@@ -60,7 +54,6 @@ export const queryCommentByObject = async (objectId: number, commentType: Commen
 export const queryCommentByUser = async (userId: number, commentType: CommentType): Promise<Comment[]> => {
     const message = new CommentQueryByUserMessage(userId, commentType);
     const result = await sendPostRequest(message);
-    console.log(result);
     const commentList = JSON.parse(result);
     if (Array.isArray(commentList)) {
         return commentList.map(comment => ({
