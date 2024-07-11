@@ -1,7 +1,7 @@
 import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import {
     CardInfoQueryByFatherMessage,
-    CardInfoQueryByGrandfatherMessage,
+    CardInfoQueryByGrandfatherMessage, CardInfoQueryByIdListMessage,
     CardInfoQueryMessage,
 } from 'Plugins/EntryAPI/CradInfoMessage'
 import { CardInfo } from 'Plugins/Models/Entry'
@@ -22,6 +22,15 @@ export const getCardInfoByFather = async (fatherId: number): Promise<CardInfo[]>
 
 export const getCardInfoByGrandFather = async (grandfatherId: number): Promise<CardInfo[]> => {
     const message = new CardInfoQueryByGrandfatherMessage(grandfatherId);
+    const cardInfoList = JSON.parse(await sendPostRequest(message));
+    if (Array.isArray(cardInfoList)) {
+        return cardInfoList;
+    }
+    return [];
+}
+
+export const getCardInfoByIdList = async (idList: number[]): Promise<CardInfo[]> => {
+    const message = new CardInfoQueryByIdListMessage(idList);
     const cardInfoList = JSON.parse(await sendPostRequest(message));
     if (Array.isArray(cardInfoList)) {
         return cardInfoList;

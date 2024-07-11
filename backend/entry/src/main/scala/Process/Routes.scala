@@ -43,6 +43,11 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "CardInfoQueryByIdListMessage" =>
+        IO(decode[CardInfoQueryByIdListMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CardInfoQueryByIdListMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

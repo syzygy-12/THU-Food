@@ -24,6 +24,21 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "CommentTestMessage" =>
+        IO(decode[CommentTestMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentTestMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "CommentModifyMessage" =>
+        IO(decode[CommentModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "CommentQueryMessage" =>
+        IO(decode[CommentQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case "CommentQueryByObjectMessage" =>
         IO(decode[CommentQueryByObjectMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryByObjectMessage")))
           .flatMap{m=>
@@ -34,13 +49,8 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentTestMessage" =>
-        IO(decode[CommentTestMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentTestMessage")))
-          .flatMap{m=>
-            m.fullPlan.map(_.asJson.toString)
-          }
-      case "CommentModifyMessage" =>
-        IO(decode[CommentModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentModifyMessage")))
+      case "CommentQueryByIdListMessage" =>
+        IO(decode[CommentQueryByIdListMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentQueryByIdListMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

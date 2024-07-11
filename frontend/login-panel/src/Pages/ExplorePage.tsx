@@ -6,6 +6,7 @@ import { TopBar, TopBarData } from '../Components/TopBar';
 import { testStar, createStar, StarType } from 'Plugins/StarAPI/StarExecution';
 import { CardInfo } from 'Plugins/Models/Entry'
 import { getCardInfo, getCardInfoByFather } from 'Plugins/EntryAPI/CardInfoExecution'
+import SmallCardList from '../Components/SmallCardList'
 
 interface RouteParams {
     id: string;
@@ -14,9 +15,8 @@ interface RouteParams {
 export function ExplorePage() {
     const params = useParams<RouteParams>();
     const history = useHistory();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
-    const [sonCardInfoList, setSonCardInfoList] = useState<CardInfo[] | null>(null);
+    const [sonCardInfoList, setSonCardInfoList] = useState([]);
     const [entryExists, setEntryExists] = useState<boolean>(null);
     const [isStarred, setIsStarred] = useState<boolean>(false);
 
@@ -25,14 +25,12 @@ export function ExplorePage() {
     const currentEntryId: number = Number(params.id);
 
     const fetchData = async () => {
-        setIsLoading(true);
         const entryTestResult = await testEntry(currentEntryId);
         setEntryExists(entryTestResult);
         if (entryTestResult) {
             setCardInfo(await getCardInfo(currentEntryId));
             setSonCardInfoList(await getCardInfoByFather(currentEntryId));
         }
-        setIsLoading(false);
     };
 
     useEffect(() => {
@@ -70,17 +68,6 @@ export function ExplorePage() {
         { label: '设置', path: '/settings' }
     ]);
 
-    if (isLoading)
-        return (
-            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <TopBar data={topBarData} />
-                <Toolbar />
-
-                <div>Loading...</div>
-            </Box>
-        );
-
-
     if (!entryExists)
         return (
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
@@ -91,12 +78,20 @@ export function ExplorePage() {
             </Box>
         );
 
+    if (cardInfo == null)
+        return (
+            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <TopBar data={topBarData} />
+                <Toolbar />
+            </Box>
+        );
+
     return (
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
             <TopBar data={topBarData} />
             <Toolbar />
 
-            <Container sx={{ mt: 8, mb: 2 }}>
+            <Container sx={{ mt: 6, mb: 2 }}>
                 <Button variant="contained" onClick={handleCreateAndUpdate} sx={{ ml: 2 }}>创建节点</Button>
                 <Button variant="contained" color="error" onClick={handleDelete} sx={{ ml: 2 }}>删除节点</Button>
                 <>目前ID: {currentEntryId}  fatherId: {cardInfo.fatherId}</>
@@ -109,17 +104,7 @@ export function ExplorePage() {
                 >
                     {isStarred ? '取消收藏' : '收藏'}
                 </Button>
-                <Grid container spacing={2} sx={{ mt: 4 }}>
-                    {sonCardInfoList.map((sonCardInfo) => (
-                        <Grid item xs={12} sm={6} md={4} key={sonCardInfo.id}>
-                            <Card onClick={() => handleNavigation(`/explore/${sonCardInfo.id}`)} sx={{ cursor: 'pointer' }}>
-                                <CardContent>
-                                    <Typography variant="h6">ID: {sonCardInfo.id}  Name: {sonCardInfo.name}</Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    ))}
-                </Grid>
+                <SmallCardList cardInfoList={sonCardInfoList} handleNavigation={handleNavigation} />
             </Container>
         </Box>
     );

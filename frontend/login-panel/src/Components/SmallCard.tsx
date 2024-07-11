@@ -1,31 +1,30 @@
 import React from 'react';
-import { Typography, Card, CardContent, Grid } from '@mui/material'
-import { useHistory } from 'react-router-dom';
+import { Card, CardContent, Typography } from '@mui/material';
 
-export interface SmallCardData {
+interface CardInfo {
     id: number;
+    fatherId: number;
     name: string;
 }
 
 interface SmallCardProps {
-    data: SmallCardData;
+    cardInfo: CardInfo;
+    onNavigate: (url: string) => void;
 }
 
-const SmallCard: React.FC<SmallCardProps> = ({ data }) => {
-    const history = useHistory();
-
-    const handleNavigation = (path: string) => {
-        history.push(path);
-    };
-
+const SmallCard: React.FC<SmallCardProps> = ({ cardInfo, onNavigate }) => {
     return (
-        <Grid item xs={12} sm={6} md={4} key={data.id}>
-            <Card onClick={() => handleNavigation(`/explore/${data.id}`)} sx={{ cursor: 'pointer' }}>
-                <CardContent>
-                    <Typography variant="h6">ID: {data.id}</Typography>
-                </CardContent>
-            </Card>
-        </Grid>
+        <Card
+            onClick={() => onNavigate(`/explore/${cardInfo.id}`)}
+            sx = {{
+                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                width: 200, height: 60
+            }}
+        >
+            <CardContent>
+                <Typography variant="h6">{cardInfo.id}: {cardInfo.name}</Typography>
+            </CardContent>
+        </Card>
     );
 };
 

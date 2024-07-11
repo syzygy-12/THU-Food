@@ -35,3 +35,15 @@ export class CardInfoQueryByGrandfatherMessage extends EntryMessage {
         });
     }
 }
+
+export class CardInfoQueryByIdListMessage extends EntryMessage {
+    idList: number[]
+    constructor(idList: number[]) {
+        super();
+        this.idList = idList;
+        Object.defineProperty(this, 'type', {
+            value: 'CardInfoQueryByIdListMessage',
+            writable: false
+        });
+    }
+}

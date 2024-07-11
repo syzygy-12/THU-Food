@@ -17,12 +17,13 @@ object CardInfoQueryUtils {
          """.stripMargin,
       List(SqlParameter("Int", id.toString))
     )
-    query.map {
+    query.flatMap  {
       case head :: _ =>
         val id = head.hcursor.get[Int]("id").getOrElse(throw new Exception("Cannot fetch id"))
         val fatherId = head.hcursor.get[Int]("fatherid").getOrElse(throw new Exception("Cannot fetch fatherid"))
         val name = head.hcursor.get[String]("name").getOrElse(throw new Exception("Cannot fetch name"))
-        CardInfo(id, fatherId, name)
+        IO(CardInfo(id, fatherId, name))
+      case Nil => IO.raiseError(new Exception("Cannot fetch cardInfo"))
     }
   }
 }
