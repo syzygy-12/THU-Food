@@ -1,15 +1,14 @@
 package Impl
 
 import Common.API.{PlanContext, Planner}
-import Models.Node
-import Utils.NameIdQueryUtils.nameIdQuery
+import Utils.CardInfoQueryUtils.cardInfoQuery
 import cats.effect.IO
 import io.circe.Encoder
 import io.circe.generic.auto.*
 import io.circe.syntax.*
 
-case class NameQueryMessagePlanner(id: Int, override val planContext: PlanContext) extends Planner[String] {
+case class CardInfoQueryMessagePlanner(id: Int, override val planContext: PlanContext) extends Planner[String] {
   override def plan(using planContext: PlanContext): IO[String] = {
-    nameIdQuery(id)
+    cardInfoQuery(id).map(_.asJson.noSpaces)
   }
 }

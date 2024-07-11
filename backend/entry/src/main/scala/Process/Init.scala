@@ -22,17 +22,19 @@ object Init {
         s"""
            |CREATE TABLE IF NOT EXISTS ${schemaName}.${tableName} (
            |  id SERIAL PRIMARY KEY,
-           |  node JSON,
-           |  name TEXT,
-           |  \"commentIdList\" INT[]
+           |  fatherid INT,
+           |  grandfatherid INT,
+           |  name TEXT
            |)
            |""".stripMargin, List()
       )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_fatherid ON ${schemaName}.${tableName} (fatherid)", List() )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_grandfatherid ON ${schemaName}.${tableName} (grandfatherid)", List() )
       checkRootExists <- readDBBoolean(s"SELECT EXISTS(SELECT 1 FROM ${schemaName}.${tableName} WHERE id = ?)",
         List(SqlParameter("Int", Integer.toString(1)))
       )
       _ <- if (!checkRootExists) {
-          entryCreate()
+          entryCreate(0, 0)
         } else {
           IO.unit
         }

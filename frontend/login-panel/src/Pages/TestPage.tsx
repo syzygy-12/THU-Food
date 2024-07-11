@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box, Toolbar, AppBar } from '@mui/material';
-import { getNodeById, modifyNode } from 'Plugins/EntryAPI/NodeExecution';
-import { getNameById } from 'Plugins/EntryAPI/NameExecution';
-import { createEntry, testEntry } from 'Plugins/EntryAPI/EntryExecution';
+import { createEntry, deleteEntry, testEntry } from 'Plugins/EntryAPI/EntryExecution'
 import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExecution'
 import {
     CommentType,
@@ -18,6 +16,7 @@ import {
     StarType,
     testStar,
 } from 'Plugins/StarAPI/StarExecution'
+import { getCardInfo, getCardInfoByFather, getCardInfoByGrandFather } from 'Plugins/EntryAPI/CardInfoExecution'
 
 
 interface RouteParams {
@@ -102,29 +101,6 @@ export function TestPage() {
         history.push(path);
     };
 
-    const handleClick = async () => {
-        const result = await createEntry();
-        console.log(result);
-    };
-
-    const handleClick2 = async () => {
-        const id = 10;
-        const checkEntryExists = await testEntry(id);
-        if (checkEntryExists) {
-            const resultNode = await getNodeById(id);
-            console.log(resultNode);
-            const resultName = await getNameById(id);
-            console.log(resultName);
-        } else {
-            console.log("Entry does not exist!")
-        }
-    };
-
-    const handleClick3 = async () => {
-        const result = await modifyNode(4, { fatherId: 1, son: [1, 1] });
-        console.log(result);
-    };
-
     const handleClick4 = () => {
         setOpen(true);
     };
@@ -148,11 +124,6 @@ export function TestPage() {
         const result = await deleteComment(1);
         console.log(result);
     };
-
-    const handleClick15 = async () => {
-        const result =await getNameById(1);
-        console.log(result);
-    }
 
     const handleClick16 = async () => {
         const result =await testStar(1,1, StarType.LikeForBlog);
@@ -186,6 +157,36 @@ export function TestPage() {
 
     const handleClick22 = async () => {
         const result =await deleteStar(1,1,StarType.LikeForBlog);
+        console.log(result);
+    }
+
+    const handleClick23 = async () => {
+        const result =await createEntry(0,0);
+        console.log(result);
+    }
+
+    const handleClick24 = async () => {
+        const result =await testEntry(1);
+        console.log(result);
+    }
+
+    const handleClick25 = async () => {
+        const result =await deleteEntry(1);
+        console.log(result);
+    }
+
+    const handleClick26 = async () => {
+        const result =await getCardInfo(2);
+        console.log(result);
+    }
+
+    const handleClick27 = async () => {
+        const result =await getCardInfoByFather(1);
+        console.log(result);
+    }
+
+    const handleClick28 = async () => {
+        const result =await getCardInfoByGrandFather(1);
         console.log(result);
     }
 
@@ -240,15 +241,7 @@ export function TestPage() {
             <Toolbar /> {/* 用于占位，使内容不被顶栏遮挡 */}
 
             <Container sx={{ mt: 8, mb: 2 }}>
-                <Button variant="contained" onClick={handleClick} sx={{ ml: 2 }}>
-                    创建
-                </Button>
-                <Button variant="contained" onClick={handleClick2} sx={{ ml: 2 }}>
-                    查询
-                </Button>
-                <Button variant="contained" onClick={handleClick3} sx={{ ml: 2 }}>
-                    修改
-                </Button>
+
                 <Button variant="contained" onClick={handleClick4} sx={{ ml: 2 }}>
                     上传图片
                 </Button>
@@ -267,10 +260,6 @@ export function TestPage() {
 
                 <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
                     删除评论
-                </Button>
-
-                <Button variant="contained" onClick={handleClick15} sx={{ ml: 2 }}>
-                    查询 Entry 的名字
                 </Button>
 
                 <Button variant="contained" onClick={handleClick17} sx={{ ml: 2 }}>
@@ -299,6 +288,30 @@ export function TestPage() {
 
                 <Button variant="contained" onClick={handleClick22} sx={{ ml: 2 }}>
                     删除收藏
+                </Button>
+
+                <Button variant="contained" onClick={handleClick23} sx={{ ml: 2 }}>
+                    新建 Entry
+                </Button>
+
+                <Button variant="contained" onClick={handleClick24} sx={{ ml: 2 }}>
+                    测试 Entry
+                </Button>
+
+                <Button variant="contained" onClick={handleClick25} sx={{ ml: 2 }}>
+                    删除 Entry
+                </Button>
+
+                <Button variant="contained" onClick={handleClick26} sx={{ ml: 2 }}>
+                    查询 CradInfo
+                </Button>
+
+                <Button variant="contained" onClick={handleClick27} sx={{ ml: 2 }}>
+                    查询儿子的 CradInfo
+                </Button>
+
+                <Button variant="contained" onClick={handleClick28} sx={{ ml: 2 }}>
+                    查询孙子的 CradInfo
                 </Button>
 
             </Container>

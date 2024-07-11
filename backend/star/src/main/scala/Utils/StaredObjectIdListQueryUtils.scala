@@ -6,10 +6,7 @@ import Common.Object.SqlParameter
 import Common.ServiceUtils.*
 import cats.effect.IO
 import io.circe.generic.auto.*
-import io.circe.parser.*
-import io.circe.Json
 import io.circe.Decoder
-import io.circe.HCursor
 
 object StaredObjectIdListQueryUtils {
   def queryStaredObjectIdList(userId: Int, starType: Int)(using planContext: PlanContext): IO[Array[Int]] = {

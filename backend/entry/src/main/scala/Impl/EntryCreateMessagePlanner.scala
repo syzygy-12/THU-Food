@@ -5,8 +5,8 @@ import cats.effect.IO
 import io.circe.generic.auto._
 import Utils.EntryCreateUtils.entryCreate
 
-case class EntryCreateMessagePlanner(override val planContext: PlanContext) extends Planner[Int] {
+case class EntryCreateMessagePlanner(fatherId: Int, grandfatherId: Int,override val planContext: PlanContext) extends Planner[Int] {
   override def plan(using PlanContext): IO[Int] = {
-    entryCreate()
+    entryCreate(fatherId, grandfatherId)
   }
 }

@@ -23,28 +23,23 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "NodeQueryMessage" =>
-        IO(decode[NodeQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NodeQueryMessage")))
+      case "EntryDeleteMessage" =>
+        IO(decode[EntryDeleteMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for EntryDeleteMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "NodeModifyMessage" =>
-        IO(decode[NodeModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NodeModifyMessage")))
+      case "CardInfoQueryMessage" =>
+        IO(decode[CardInfoQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CardInfoQueryMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "NameQueryMessage" =>
-        IO(decode[NameQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NameQueryMessage")))
+      case "CardInfoQueryByFatherMessage" =>
+        IO(decode[CardInfoQueryByFatherMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CardInfoQueryByFatherMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentIdListQueryMessage" =>
-        IO(decode[CommentIdListQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentIdListQueryMessage")))
-          .flatMap{m=>
-            m.fullPlan.map(_.asJson.toString)
-          }
-      case "CommentIdInsertMessage" =>
-        IO(decode[CommentIdInsertMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentIdInsertMessage")))
+      case "CardInfoQueryByGrandfatherMessage" =>
+        IO(decode[CardInfoQueryByGrandfatherMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CardInfoQueryByGrandfatherMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

@@ -4,8 +4,6 @@ import Common.API.PlanContext
 import Common.DBAPI.{ReadDBRowsMessage, readDBRows}
 import Common.Object.SqlParameter
 import Common.ServiceUtils.*
-import Models.EntryInit
-import Utils.NodeUtils.nodeToString
 import cats.effect.IO
 import io.circe.Json
 import io.circe.generic.auto.*
@@ -13,14 +11,13 @@ import io.circe.syntax.*
 
 object EntryCreateUtils {
 
-  def entryCreate()(using planContext: PlanContext): IO[Int] = {
+  def entryCreate(fatherId: Int, grandfatherId: Int)(using planContext: PlanContext): IO[Int] = {
 
-    val query = s"INSERT INTO ${schemaName}.${tableName} (node, name, \"commentIdList\") VALUES (?, ?, string_to_array(?, ',')::int[]) RETURNING id"
-    val newEntry = EntryInit.newEntry()
+    val query = s"INSERT INTO ${schemaName}.${tableName} (fatherid, grandfatherid, name) VALUES (?, ?, ?) RETURNING id"
     val parameters = List(
-      SqlParameter("Json", nodeToString(newEntry.node)),
-      SqlParameter("String", newEntry.name),
-      SqlParameter("String", newEntry.commentIdList.mkString(","))
+      SqlParameter("Int", fatherId.toString),
+      SqlParameter("Int", grandfatherId.toString),
+      SqlParameter("String", "new")
     )
 
     readDBRows(query, parameters).flatMap {

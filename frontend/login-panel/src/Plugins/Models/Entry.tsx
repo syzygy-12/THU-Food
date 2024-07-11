@@ -1,4 +1,5 @@
-export interface Node {
-    fatherId: number;
-    son: number[];
+export interface CardInfo {
+    id: number
+    fatherId: number
+    name: string
 }
