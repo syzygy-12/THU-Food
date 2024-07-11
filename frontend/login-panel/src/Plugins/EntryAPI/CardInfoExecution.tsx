@@ -20,7 +20,7 @@ export const getCardInfoByFather = async (fatherId: number): Promise<CardInfo[]>
     return [];
 }
 
-export const getCardInfoByGrandFather = async (grandfatherId: number): Promise<CardInfo[]> => {
+export const getCardInfoByGrandfather = async (grandfatherId: number): Promise<CardInfo[]> => {
     const message = new CardInfoQueryByGrandfatherMessage(grandfatherId);
     const cardInfoList = JSON.parse(await sendPostRequest(message));
     if (Array.isArray(cardInfoList)) {

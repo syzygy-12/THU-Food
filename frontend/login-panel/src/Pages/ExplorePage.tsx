@@ -5,8 +5,10 @@ import { createEntry, deleteEntry, testEntry } from 'Plugins/EntryAPI/EntryExecu
 import { TopBar, TopBarData } from '../Components/TopBar';
 import { testStar, createStar, StarType } from 'Plugins/StarAPI/StarExecution';
 import { CardInfo } from 'Plugins/Models/Entry'
-import { getCardInfo, getCardInfoByFather } from 'Plugins/EntryAPI/CardInfoExecution'
-import SmallCardList from '../Components/SmallCardList'
+import { getCardInfo, getCardInfoByFather, getCardInfoByGrandfather } from 'Plugins/EntryAPI/CardInfoExecution'
+import { BigCardInfo } from '../Components/BigCard'
+import BigCardList, { generateBigCardInfoList } from '../Components/BigCardList'
+import background from '../../images/main1.jpg';
 
 interface RouteParams {
     id: string;
@@ -16,7 +18,7 @@ export function ExplorePage() {
     const params = useParams<RouteParams>();
     const history = useHistory();
     const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
-    const [sonCardInfoList, setSonCardInfoList] = useState([]);
+    const [bigCardInfoList, setBigCardInfoList] = useState<BigCardInfo[]>([]);
     const [entryExists, setEntryExists] = useState<boolean>(null);
     const [isStarred, setIsStarred] = useState<boolean>(false);
 
@@ -29,7 +31,9 @@ export function ExplorePage() {
         setEntryExists(entryTestResult);
         if (entryTestResult) {
             setCardInfo(await getCardInfo(currentEntryId));
-            setSonCardInfoList(await getCardInfoByFather(currentEntryId));
+            const sonCardInfoList = await getCardInfoByFather(currentEntryId);
+            const grandsonCardInfoList = await getCardInfoByGrandfather(currentEntryId);
+            setBigCardInfoList(generateBigCardInfoList(sonCardInfoList, grandsonCardInfoList))
         }
     };
 
@@ -49,7 +53,7 @@ export function ExplorePage() {
 
     const handleDelete = async () => {
         const fatherId = cardInfo.fatherId;
-        if (fatherId == 1) console.log("Error: 无法删除根目录！");
+        if (fatherId == 0) console.log("Error: 无法删除根目录！");
         else {
             await deleteEntry(currentEntryId);
             history.push(`/explore/${fatherId}`);
@@ -87,25 +91,41 @@ export function ExplorePage() {
         );
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+        <div style={{
+            backgroundImage: `url(${background})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
             <TopBar data={topBarData} />
             <Toolbar />
 
-            <Container sx={{ mt: 6, mb: 2 }}>
-                <Button variant="contained" onClick={handleCreateAndUpdate} sx={{ ml: 2 }}>创建节点</Button>
-                <Button variant="contained" color="error" onClick={handleDelete} sx={{ ml: 2 }}>删除节点</Button>
-                <>目前ID: {currentEntryId}  fatherId: {cardInfo.fatherId}</>
-                <Button variant="contained" onClick={() => handleNavigation(`/comment/${currentEntryId}`)}>介绍</Button>
-                <Button
-                    variant="contained"
-                    color={isStarred ? 'secondary' : 'primary'}
-                    onClick={handleStarToggle}
-                    sx={{ ml: 2 }}
-                >
-                    {isStarred ? '取消收藏' : '收藏'}
-                </Button>
-                <SmallCardList cardInfoList={sonCardInfoList} handleNavigation={handleNavigation} />
-            </Container>
-        </Box>
+            <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', mt: 6, mb: 2, width: '100%', paddingLeft: 0, paddingRight: 0, boxSizing: 'border-box' }}>
+                <Box>
+                    <Button variant="contained" onClick={handleCreateAndUpdate} sx={{ flex: 0, ml: 2 }}>创建节点</Button>
+                    <Button variant="contained" color="error" onClick={handleDelete} sx={{ flex: 0, ml: 2 }}>删除节点</Button>
+                    <Typography sx={{ flex: 0, ml: 2, display: 'inline-block' }}>目前ID: {currentEntryId}  fatherId: {cardInfo.fatherId}</Typography>
+                    <Button variant="contained" onClick={() => handleNavigation(`/comment/${currentEntryId}`)} sx={{ flex: 0, ml: 2 }}>介绍</Button>
+                    <Button
+                        variant="contained"
+                        color={isStarred ? 'secondary' : 'primary'}
+                        onClick={handleStarToggle}
+                        sx={{ ml: 2 }}
+                    >
+                        {isStarred ? '取消收藏' : '收藏'}
+                    </Button>
+                </Box>
+                <Box sx={{ flexGrow: 1, display: 'flex', width: '100%', paddingLeft: 0, paddingRight: 0, boxSizing: 'border-box' }}>
+                    <BigCardList
+                        bigCardInfoList={bigCardInfoList}
+                        handleNavigation={handleNavigation}
+                    />
+                </Box>
+            </Box>
+        </div>
     );
 }

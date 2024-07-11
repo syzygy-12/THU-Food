@@ -1,4 +1,5 @@
 *.idea
+images/*
 target/*
 project/*
 artifacts/*

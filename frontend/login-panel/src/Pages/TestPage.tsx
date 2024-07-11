@@ -16,17 +16,17 @@ import {
     StarType,
     testStar,
 } from 'Plugins/StarAPI/StarExecution'
-import { getCardInfo, getCardInfoByFather, getCardInfoByGrandFather } from 'Plugins/EntryAPI/CardInfoExecution'
+import { getCardInfo, getCardInfoByFather, getCardInfoByGrandfather } from 'Plugins/EntryAPI/CardInfoExecution'
 
 
 interface RouteParams {
     id: string;
 }
 
-/*
+
 export function TestPage() {
-    const [imageSrcLow, setImageSrcLow] = useState<string>('http://localhost:10000/images/default-low.jpg');
-    const [imageSrcHigh, setImageSrcHigh] = useState<string>('http://localhost:10000/images/default-high.jpg');
+    const [imageSrcLow, setImageSrcLow] = useState<string>('http://localhost:10000/images/ZDkwZDliZTEtYjlmOC00YzRjLTk4MjEtYzZlMTNiMjc0MGU5-low.jpg');
+    const [imageSrcHigh, setImageSrcHigh] = useState<string>('http://localhost:10000/images/ZDkwZDliZTEtYjlmOC00YzRjLTk4MjEtYzZlMTNiMjc0MGU5-high.jpg');
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
     const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -83,8 +83,8 @@ export function TestPage() {
         </div>
     );
 }
-*/
 
+/*
 export function TestPage() {
     const params = useParams<RouteParams>();
     const history = useHistory();
@@ -258,7 +258,7 @@ export function TestPage() {
                     </Typography>
                 </Toolbar>
             </AppBar>
-            <Toolbar /> {/* 用于占位，使内容不被顶栏遮挡 */}
+            <Toolbar />
 
             <Container sx={{ mt: 8, mb: 2 }}>
 
@@ -354,3 +354,4 @@ export function TestPage() {
         </Box>
     );
 }
+*/

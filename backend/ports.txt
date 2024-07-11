@@ -1,6 +1,7 @@
 image: 10000
 db-manager: 10001
 user: 10002
-star:
+comment: 10003
 portal: 10004
+star: 10005
 entry: 10006
