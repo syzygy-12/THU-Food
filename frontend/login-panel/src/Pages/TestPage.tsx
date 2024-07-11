@@ -6,22 +6,17 @@ import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExe
 import {
     CommentType,
     createComment,
-    deleteComment, modifyComment, queryComment, queryCommentByIdList,
+    deleteComment, modifyComment,
     queryCommentByObject,
-    queryCommentByUser,
+    queryCommentByUser, queryCommentLikes,
 } from 'Plugins/CommentAPI/CommentExecution'
 import {
-    createStar, deleteStar,
+    createStar, deleteStar, flipStar,
     queryStaredObjectIdList,
     StarType,
     testStar,
 } from 'Plugins/StarAPI/StarExecution'
-import {
-    getCardInfo,
-    getCardInfoByFather,
-    getCardInfoByGrandFather,
-    getCardInfoByIdList,
-} from 'Plugins/EntryAPI/CardInfoExecution'
+import { getCardInfo, getCardInfoByFather, getCardInfoByGrandFather } from 'Plugins/EntryAPI/CardInfoExecution'
 
 
 interface RouteParams {
@@ -106,25 +101,104 @@ export function TestPage() {
         history.push(path);
     };
 
-    const handleClick1 = async () => {
-        const result = await createComment("aaaaa",1,1, CommentType.CommentForEntry);
+    const handleClick4 = () => {
+        setOpen(true);
+    };
+
+    const handleClick5 = async () => {
+        const result = await userPasswordChange(1,"ls","lslsls");
         console.log(result);
     };
 
-    const handleClick2 = async () => {
-        const result = await queryComment(1,1, CommentType.CommentForEntry);
+    const handleClick6 = async () => {
+        const result = await userAuthorityChange("ls",1);
         console.log(result);
     };
 
-    const handleClick3 = async () => {
-        const result = await queryCommentByIdList([2,3]);
+    const handleClick7 = async () => {
+        const result = await createComment("OneStar",1,1,CommentType.ScoreForEntry);
         console.log(result);
     };
 
-    const handleClick4 = async () => {
-        const result = await getCardInfoByIdList([12,23,34]);
+    const handleClick9 = async () => {
+        const result = await deleteComment(1);
         console.log(result);
     };
+
+    const handleClick16 = async () => {
+        const result =await testStar(1,1, StarType.LikeForBlog);
+        console.log(result);
+    }
+
+    const handleClick17 = async () => {
+        const result =await createStar(1,1, StarType.LikeForBlog);
+        console.log(result);
+    }
+
+    const handleClick18 = async () => {
+        const result =await queryStaredObjectIdList(1, StarType.StarForEntry);
+        console.log(result);
+    }
+
+    const handleClick19 = async () => {
+        const result =await queryCommentByObject(1,CommentType.ScoreForEntry);
+        console.log(result);
+    }
+
+    const handleClick20 = async () => {
+        const result =await queryCommentByUser(1,CommentType.ScoreForEntry);
+        console.log(result);
+    }
+
+    const handleClick21 = async () => {
+        const result =await modifyComment(1,"haha");
+        console.log(result);
+    }
+
+    const handleClick22 = async () => {
+        const result =await deleteStar(1,1,StarType.LikeForBlog);
+        console.log(result);
+    }
+
+    const handleClick23 = async () => {
+        const result =await createEntry(0,0);
+        console.log(result);
+    }
+
+    const handleClick24 = async () => {
+        const result =await testEntry(1);
+        console.log(result);
+    }
+
+    const handleClick25 = async () => {
+        const result =await deleteEntry(1);
+        console.log(result);
+    }
+
+    const handleClick26 = async () => {
+        const result =await getCardInfo(2);
+        console.log(result);
+    }
+
+    const handleClick27 = async () => {
+        const result =await getCardInfoByFather(1);
+        console.log(result);
+    }
+
+    const handleClick28 = async () => {
+        const result =await getCardInfoByGrandFather(1);
+        console.log(result);
+    }
+
+    const handleClick29 = async () => {
+        const result =await queryCommentLikes(1);
+        console.log(result);
+    }
+
+    const handleClick30 = async () => {
+        const result =await flipStar(1,1,StarType.LikeForComment);
+        console.log(result);
+    }
 
     const handleClose = () => {
         setOpen(false);
@@ -178,20 +252,84 @@ export function TestPage() {
 
             <Container sx={{ mt: 8, mb: 2 }}>
 
-                <Button variant="contained" onClick={handleClick1} sx={{ ml: 2 }}>
-                    创建评论
-                </Button>
-
-                <Button variant="contained" onClick={handleClick2} sx={{ ml: 2 }}>
-                    查询评论
-                </Button>
-
-                <Button variant="contained" onClick={handleClick3} sx={{ ml: 2 }}>
-                    查询评论 by idlist
-                </Button>
-
                 <Button variant="contained" onClick={handleClick4} sx={{ ml: 2 }}>
-                    查询 Entry by idlist
+                    上传图片
+                </Button>
+
+                <Button variant="contained" onClick={handleClick5} sx={{ ml: 2 }}>
+                    修改密码
+                </Button>
+
+                <Button variant="contained" onClick={handleClick6} sx={{ ml: 2 }}>
+                    修改权限
+                </Button>
+
+                <Button variant="contained" onClick={handleClick7} sx={{ ml: 2 }}>
+                    添加评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
+                    删除评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick17} sx={{ ml: 2 }}>
+                    新建收藏
+                </Button>
+
+                <Button variant="contained" onClick={handleClick16} sx={{ ml: 2 }}>
+                    测试收藏
+                </Button>
+
+                <Button variant="contained" onClick={handleClick18} sx={{ ml: 2 }}>
+                    查询 User 的收藏列表
+                </Button>
+
+                <Button variant="contained" onClick={handleClick19} sx={{ ml: 2 }}>
+                    查询 Entry 的评论列表
+                </Button>
+
+                <Button variant="contained" onClick={handleClick20} sx={{ ml: 2 }}>
+                    查询 User 的评论列表
+                </Button>
+
+                <Button variant="contained" onClick={handleClick21} sx={{ ml: 2 }}>
+                    修改评论
+                </Button>
+
+                <Button variant="contained" onClick={handleClick22} sx={{ ml: 2 }}>
+                    删除收藏
+                </Button>
+
+                <Button variant="contained" onClick={handleClick23} sx={{ ml: 2 }}>
+                    新建 Entry
+                </Button>
+
+                <Button variant="contained" onClick={handleClick24} sx={{ ml: 2 }}>
+                    测试 Entry
+                </Button>
+
+                <Button variant="contained" onClick={handleClick25} sx={{ ml: 2 }}>
+                    删除 Entry
+                </Button>
+
+                <Button variant="contained" onClick={handleClick26} sx={{ ml: 2 }}>
+                    查询 CradInfo
+                </Button>
+
+                <Button variant="contained" onClick={handleClick27} sx={{ ml: 2 }}>
+                    查询儿子的 CradInfo
+                </Button>
+
+                <Button variant="contained" onClick={handleClick28} sx={{ ml: 2 }}>
+                    查询孙子的 CradInfo
+                </Button>
+
+                <Button variant="contained" onClick={handleClick29} sx={{ ml: 2 }}>
+                    查询评论点赞数
+                </Button>
+
+                <Button variant="contained" onClick={handleClick30} sx={{ ml: 2 }}>
+                    评论点赞翻转
                 </Button>
 
             </Container>

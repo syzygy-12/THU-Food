@@ -29,8 +29,18 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "StarFlipMessage" =>
+        IO(decode[StarFlipMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StarFlipMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case "StaredObjectIdListQueryMessage" =>
         IO(decode[StaredObjectIdListQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StaredObjectIdListQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "StaredObjectStarCountMessage" =>
+        IO(decode[StaredObjectStarCountMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StaredObjectStarCountMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

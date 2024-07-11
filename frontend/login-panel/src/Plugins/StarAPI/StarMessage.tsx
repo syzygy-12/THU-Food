@@ -55,6 +55,23 @@ export class StarDeleteMessage extends StarMessage {
     }
 }
 
+export class StarFlipMessage extends StarMessage {
+    userId : number
+    entryId : number
+    starType : number
+
+    constructor(userId : number, entryId : number, starType : number) {
+        super();
+        this.userId = userId;
+        this.entryId = entryId;
+        this.starType  = starType;
+        Object.defineProperty(this, 'type', {
+            value: 'StarFlipMessage',
+            writable: false
+        });
+    }
+}
+
 export class StaredObjectIdListQueryMessage extends StarMessage {
     userId : number
     starType : number
@@ -65,6 +82,21 @@ export class StaredObjectIdListQueryMessage extends StarMessage {
         this.starType  = starType;
         Object.defineProperty(this, 'type', {
             value: 'StaredObjectIdListQueryMessage',
+            writable: false
+        });
+    }
+}
+
+export class StaredObjectStarCountMessage extends StarMessage {
+    objectId : number
+    starType : number
+
+    constructor(userId : number, starType : number) {
+        super();
+        this.objectId = userId;
+        this.starType  = starType;
+        Object.defineProperty(this, 'type', {
+            value: 'StaredObjectStarCountMessage',
             writable: false
         });
     }

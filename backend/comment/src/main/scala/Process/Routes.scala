@@ -54,6 +54,21 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "CommentLikesIncrementMessage" =>
+        IO(decode[CommentLikesIncrementMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentLikesIncrementMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "CommentLikesQueryMessage" =>
+        IO(decode[CommentLikesQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentLikesQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "CommentLikesModifyMessage" =>
+        IO(decode[CommentLikesModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentLikesModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

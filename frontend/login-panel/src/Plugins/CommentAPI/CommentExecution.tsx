@@ -2,8 +2,10 @@ import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import { Comment } from 'Plugins/Models/Comment'
 import {
     CommentCreateMessage,
-    CommentDeleteMessage, CommentModifyMessage, CommentQueryByIdListMessage, CommentQueryByObjectMessage,
-    CommentQueryByUserMessage, CommentQueryMessage, CommentTestMessage,
+    CommentDeleteMessage, CommentModifyMessage, CommentQueryByObjectMessage,
+    CommentQueryByUserMessage,
+    CommentLikesQueryMessage,
+
 } from 'Plugins/CommentAPI/CommentMessage'
 
 export enum CommentType {
@@ -28,23 +30,13 @@ export const createComment = async (content: string, userId: number, objectId: n
     return await sendPostRequest(message); // 直接返回结果
 }
 
-export const deleteComment = async (id: number): Promise<void> => {
+export const deleteComment = async (id: number): Promise<boolean> => {
     const message = new CommentDeleteMessage(id);
     return await sendPostRequest(message); // 直接返回结果
 }
 
-export const modifyComment = async (id: number, content: string): Promise<void> => {
+export const modifyComment = async (id: number, content: string): Promise<boolean> => {
     const message = new CommentModifyMessage(id, content);
-    return await sendPostRequest(message); // 直接返回结果
-}
-
-export const testComment = async (userId: number, objectId: number, commentType: number): Promise<boolean> => {
-    const message = new CommentTestMessage(userId, objectId, commentType);
-    return await sendPostRequest(message); // 直接返回结果
-}
-
-export const queryComment = async (userId: number, objectId: number, commentType: number): Promise<Comment> => {
-    const message = new CommentQueryMessage(userId, objectId, commentType);
     return await sendPostRequest(message); // 直接返回结果
 }
 
@@ -74,15 +66,7 @@ export const queryCommentByUser = async (userId: number, commentType: CommentTyp
     return [];
 }
 
-export const queryCommentByIdList = async (idList: number[]): Promise<Comment[]> => {
-    const message = new CommentQueryByIdListMessage(idList);
-    const result = await sendPostRequest(message);
-    const commentList = JSON.parse(result);
-    if (Array.isArray(commentList)) {
-        return commentList.map(comment => ({
-            ...comment,
-            createdAt: formatTimestamp(comment.createdAt)
-        }));
-    }
-    return [];
+export const queryCommentLikes = async (commentId: number): Promise<number> => {
+    const message = new CommentLikesQueryMessage(commentId);
+    return await sendPostRequest(message);
 }

@@ -3,5 +3,6 @@ export interface Comment {
     content: String,
     userId: number,
     objectId: number,
+    likes: number,
     createdAt: string
 }

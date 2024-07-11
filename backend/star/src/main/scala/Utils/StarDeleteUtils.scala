@@ -8,7 +8,7 @@ import cats.effect.IO
 import io.circe.generic.auto.*
 
 object StarDeleteUtils {
-  def deleteStar(userId: Int, entryId: Int, starType: Int)(using planContext: PlanContext): IO[String] = {
+  def deleteStar(userId: Int, entryId: Int, starType: Int)(using planContext: PlanContext): IO[Unit] = {
     writeDB(
       s"DELETE FROM ${schemaName}.${tableName} WHERE userid = ? AND objectid = ? AND startype = ?",
       List(
@@ -16,6 +16,6 @@ object StarDeleteUtils {
         SqlParameter("Int", entryId.toString),
         SqlParameter("Int", starType.toString)
       )
-    )
+    ).map(_ => ())
   }
 }

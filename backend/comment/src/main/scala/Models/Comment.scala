@@ -7,5 +7,6 @@ case class Comment(
   content: String,
   userId: Int,
   objectId: Int,
-  createdAt: String
+  likes: Int,
+  createdAt: String,
 )

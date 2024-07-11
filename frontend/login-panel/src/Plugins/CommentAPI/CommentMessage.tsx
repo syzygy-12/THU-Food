@@ -1,4 +1,5 @@
 import { API } from "Plugins/CommonUtils/API";
+import { queryCommentByObject } from 'Plugins/CommentAPI/CommentExecution'
 
 export abstract class CommentMessage extends API {
     override serviceName:string="Comment"
@@ -48,38 +49,6 @@ export class CommentModifyMessage extends CommentMessage {
     }
 }
 
-export class CommentTestMessage extends CommentMessage {
-    userId: number
-    objectId: number
-    commentType: number
-    constructor(userId: number, objectId: number, commentType: number) {
-        super()
-        this.userId = userId
-        this.objectId = objectId
-        this.commentType = commentType
-        Object.defineProperty(this, 'type', {
-            value: 'CommentTestMessage',
-            writable: false
-        });
-    }
-}
-
-export class CommentQueryMessage extends CommentMessage {
-    userId: number
-    objectId: number
-    commentType: number
-    constructor(userId: number, objectId: number, commentType: number) {
-        super()
-        this.userId = userId
-        this.objectId = objectId
-        this.commentType = commentType
-        Object.defineProperty(this, 'type', {
-            value: 'CommentQueryMessage',
-            writable: false
-        });
-    }
-}
-
 export class CommentQueryByObjectMessage extends CommentMessage {
     objectId: number;
     commentType: number;
@@ -108,13 +77,13 @@ export class CommentQueryByUserMessage extends CommentMessage {
     }
 }
 
-export class CommentQueryByIdListMessage extends CommentMessage {
-    idList: number[];
-    constructor(idList: number[]) {
+export class CommentLikesQueryMessage extends CommentMessage {
+    id: number;
+    constructor(id: number) {
         super()
-        this.idList = idList;
+        this.id = id;
         Object.defineProperty(this, 'type', {
-            value: 'CommentQueryByIdListMessage',
+            value: 'CommentLikesQueryMessage',
             writable: false
         });
     }

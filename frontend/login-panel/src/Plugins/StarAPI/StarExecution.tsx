@@ -3,7 +3,9 @@ import {
     StarCreateMessage,
     StarTestMessage,
     StarDeleteMessage,
+    StarFlipMessage,
     StaredObjectIdListQueryMessage,
+    StaredObjectStarCountMessage
 } from 'Plugins/StarAPI/StarMessage'
 
 export enum StarType {
@@ -17,14 +19,19 @@ export const testStar = async (userId: number, entryId : number, starType: StarT
     return await sendPostRequest(message);
 };
 
-export const createStar = async (userId: number, entryId : number, starType: StarType): Promise<boolean> => {
+export const createStar = async (userId: number, entryId : number, starType: StarType): Promise<void> => {
     const message = new StarCreateMessage(userId, entryId, starType);
-    return await sendPostRequest(message);
+    await sendPostRequest(message);
 }
 
-export const deleteStar = async (userId: number, entryId : number, starType: StarType): Promise<string> => {
+export const deleteStar = async (userId: number, entryId : number, starType: StarType): Promise<void> => {
     const message = new StarDeleteMessage(userId, entryId, starType);
-    return await sendPostRequest(message);
+    await sendPostRequest(message);
+}
+
+export const flipStar = async (userId: number, entryId : number, starType: StarType): Promise<void> => {
+    const message = new StarFlipMessage(userId, entryId, starType);
+    await sendPostRequest(message);
 }
 
 export const queryStaredObjectIdList = async (userId: number, starType: StarType): Promise<number[]> => {
@@ -36,5 +43,11 @@ export const queryStaredObjectIdList = async (userId: number, starType: StarType
         return entryIdList;
     }
     return [];
+}
+
+export const queryStaredObjectStarCount = async (entryId: number, starType: StarType): Promise<number> => {
+    const message = new StaredObjectStarCountMessage(entryId, starType);
+    const result = await sendPostRequest(message);
+    return result;
 }
 

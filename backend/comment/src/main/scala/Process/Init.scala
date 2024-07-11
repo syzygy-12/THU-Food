@@ -29,6 +29,7 @@ object Init {
            |    objectid INT,
            |    content TEXT,
            |    comment_type INT,
+           |    likes INT,
            |    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
            |)
            |""".stripMargin, List()

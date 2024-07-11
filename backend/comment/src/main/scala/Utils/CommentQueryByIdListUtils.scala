@@ -12,7 +12,7 @@ object CommentQueryByIdListUtils {
   def queryCommentByIdList(idList: List[Int])(using planContext: PlanContext): IO[List[Comment]] = {
     val query =
       s"""
-         |SELECT id, userid, objectid, content, created_at
+         |SELECT id, userid, objectid, content, likes, created_at
          |FROM ${schemaName}.${tableName}
          |WHERE id IN (${idList.mkString(",")})
          |""".stripMargin
@@ -23,8 +23,9 @@ object CommentQueryByIdListUtils {
         val userId = row.hcursor.get[Int]("userid").getOrElse(throw new Exception("Cannot fetch userid"))
         val objectId = row.hcursor.get[Int]("objectid").getOrElse(throw new Exception("Cannot fetch objectid"))
         val content = row.hcursor.get[String]("content").getOrElse(throw new Exception("Cannot fetch content"))
+        val likes = row.hcursor.get[Int]("likes").getOrElse(throw new Exception("Cannot fetch likes"))
         val createdAtStr = row.hcursor.get[String]("createdAt").getOrElse(throw new Exception("Cannot fetch createdAt"))
-        Comment(id, content, userId, objectId, createdAtStr)
+        Comment(id, content, userId, objectId, likes, createdAtStr)
       }
     }
   }

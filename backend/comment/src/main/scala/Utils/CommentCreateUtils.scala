@@ -42,7 +42,7 @@ object CommentCreateUtils {
   }
 
   private def insertComment(content: String, userId: Int, objectId: Int, commentType: Int)(using planContext: PlanContext): IO[Int] = {
-    val query = s"INSERT INTO ${schemaName}.${tableName} (userid, objectid, content, comment_type) VALUES (?,?,?,?) RETURNING id"
+    val query = s"INSERT INTO ${schemaName}.${tableName} (userid, objectid, content, comment_type, likes) VALUES (?,?,?,?,0) RETURNING id"
     val parameters = List(
       SqlParameter("Int", userId.toString),
       SqlParameter("Int", objectId.toString),
