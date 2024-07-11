@@ -12,7 +12,7 @@ object CardInfoQueryByIdListUtils {
   def cardInfoQueryByIdList(idList: List[Int])(using planContext: PlanContext): IO[List[CardInfo]] = {
     val query =readDBRows(
       s"""
-         |SELECT id, fatherid, name
+         |SELECT id, fatherid, name, stars, scorehistogram
          |FROM ${schemaName}.${tableName}
          |WHERE id IN (${idList.mkString(",")})
          |""".stripMargin,
@@ -24,7 +24,9 @@ object CardInfoQueryByIdListUtils {
         val id = row.hcursor.get[Int]("id").getOrElse(throw new Exception("Cannot fetch id"))
         val fatherId = row.hcursor.get[Int]("fatherid").getOrElse(throw new Exception("Cannot fetch fatherid"))
         val name = row.hcursor.get[String]("name").getOrElse(throw new Exception("Cannot fetch name"))
-        CardInfo(id, fatherId, name)
+        val stars = row.hcursor.get[Int]("stars").getOrElse(throw new Exception("Cannot fetch stars"))
+        val scoreHistogram = row.hcursor.get[Array[Int]]("scorehistogram").getOrElse(throw new Exception("Cannot fetch scorehistogram"))
+        CardInfo(id, fatherId, name, stars, scoreHistogram)
       }
     }
   }

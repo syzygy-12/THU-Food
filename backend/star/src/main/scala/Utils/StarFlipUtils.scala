@@ -10,33 +10,44 @@ import io.circe.generic.auto.*
 import Utils.StarDeleteUtils.deleteStar
 import Utils.StarCreateUtils.createStar
 import APIs.CommentAPI.CommentLikesIncrementMessage
+import APIs.EntryAPI.EntryStarsIncrementMessage
 import Models.*
 
 object StarFlipUtils {
-  def flipStar(userId: Int, entryId: Int, starType: Int)(using planContext: PlanContext): IO[Unit] = {
+  def flipStar(userId: Int, objectId: Int, starType: Int)(using planContext: PlanContext): IO[Unit] = {
     if (!starTypes.contains(starType)) {
       IO.raiseError(new Exception("Invalid starType"))
     } else {
-      testStar(userId, entryId, starType).flatMap { exists =>
+      testStar(userId, objectId, starType).flatMap { exists =>
         if (exists) {
           for {
-            _ <- deleteStar(userId, entryId, starType) // 删除记录
+            _ <- deleteStar(userId, objectId, starType) // 删除记录
             _ <- if (starType == LikeForComment) {
               startTransaction {
-                CommentLikesIncrementMessage(entryId, -1).send // 发送消息
+                CommentLikesIncrementMessage(objectId, -1).send // 发送消息
               }
-            } else IO.unit
+            } else if (starType == StarForEntry) {
+              startTransaction {
+                EntryStarsIncrementMessage(objectId, -1).send // 发送消息
+              }
+            }
+            else IO.unit
           } yield ()
 
 
         } else {
           for {
-            _ <- createStar(userId, entryId, starType)
+            _ <- createStar(userId, objectId, starType)
             _ <- if (starType == LikeForComment) {
               startTransaction {
-                CommentLikesIncrementMessage(entryId, 1).send // 发送消息
+                CommentLikesIncrementMessage(objectId, 1).send // 发送消息
               }
-            } else IO.unit
+            } else if (starType == StarForEntry) {
+              startTransaction {
+                EntryStarsIncrementMessage(objectId, 1).send // 发送消息
+              }
+            }
+            else IO.unit
           } yield ()
         }
       }

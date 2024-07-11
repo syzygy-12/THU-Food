@@ -6,7 +6,7 @@ import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExe
 import {
     CommentType,
     createComment,
-    deleteComment, modifyComment,
+    deleteComment, flipScoreHistogram, modifyComment,
     queryCommentByObject,
     queryCommentByUser, queryCommentLikes,
 } from 'Plugins/CommentAPI/CommentExecution'
@@ -121,7 +121,7 @@ export function TestPage() {
     };
 
     const handleClick9 = async () => {
-        const result = await deleteComment(1);
+        const result = await deleteComment(2);
         console.log(result);
     };
 
@@ -176,7 +176,7 @@ export function TestPage() {
     }
 
     const handleClick26 = async () => {
-        const result =await getCardInfo(2);
+        const result =await getCardInfo(1);
         console.log(result);
     }
 
@@ -197,6 +197,16 @@ export function TestPage() {
 
     const handleClick30 = async () => {
         const result =await flipStar(1,1,StarType.LikeForComment);
+        console.log(result);
+    }
+
+    const handleClick31 = async () => {
+        const result =await flipStar(1,1,StarType.StarForEntry);
+        console.log(result);
+    }
+
+    const handleClick32 = async () => {
+        const result =await flipScoreHistogram(1,1, 1);
         console.log(result);
     }
 
@@ -330,6 +340,14 @@ export function TestPage() {
 
                 <Button variant="contained" onClick={handleClick30} sx={{ ml: 2 }}>
                     评论点赞翻转
+                </Button>
+
+                <Button variant="contained" onClick={handleClick31} sx={{ ml: 2 }}>
+                    条目收藏翻转
+                </Button>
+
+                <Button variant="contained" onClick={handleClick32} sx={{ ml: 2 }}>
+                    评分直方图翻转
                 </Button>
 
             </Container>

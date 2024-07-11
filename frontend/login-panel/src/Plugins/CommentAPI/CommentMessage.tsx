@@ -88,3 +88,19 @@ export class CommentLikesQueryMessage extends CommentMessage {
         });
     }
 }
+
+export class ScoreHistogramFlipMessage extends CommentMessage {
+    score: number;
+    userId: number;
+    objectId: number;
+    constructor(score: number, userId: number, objectId: number) {
+        super()
+        this.score = score;
+        this.userId = userId;
+        this.objectId = objectId;
+        Object.defineProperty(this, 'type', {
+            value: 'ScoreHistogramFlipMessage',
+            writable: false
+        });
+    }
+}

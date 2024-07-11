@@ -24,7 +24,9 @@ object Init {
            |  id SERIAL PRIMARY KEY,
            |  fatherid INT,
            |  grandfatherid INT,
-           |  name TEXT
+           |  name TEXT,
+           |  stars INT,
+           |  scoreHistogram INT[]
            |)
            |""".stripMargin, List()
       )

@@ -69,6 +69,11 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "ScoreHistogramFlipMessage" =>
+        IO(decode[ScoreHistogramFlipMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for ScoreHistogramFlipMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

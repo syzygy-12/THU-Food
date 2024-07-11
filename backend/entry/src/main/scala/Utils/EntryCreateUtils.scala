@@ -13,7 +13,7 @@ object EntryCreateUtils {
 
   def entryCreate(fatherId: Int, grandfatherId: Int)(using planContext: PlanContext): IO[Int] = {
 
-    val query = s"INSERT INTO ${schemaName}.${tableName} (fatherid, grandfatherid, name) VALUES (?, ?, ?) RETURNING id"
+    val query = s"INSERT INTO ${schemaName}.${tableName} (fatherid, grandfatherid, name, stars, scorehistogram) VALUES (?, ?, ?, 0, '{0,0,0,0,0}') RETURNING id"
     val parameters = List(
       SqlParameter("Int", fatherId.toString),
       SqlParameter("Int", grandfatherId.toString),

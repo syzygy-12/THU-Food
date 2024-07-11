@@ -5,7 +5,7 @@ import {
     CommentDeleteMessage, CommentModifyMessage, CommentQueryByObjectMessage,
     CommentQueryByUserMessage,
     CommentLikesQueryMessage,
-
+    ScoreHistogramFlipMessage,
 } from 'Plugins/CommentAPI/CommentMessage'
 
 export enum CommentType {
@@ -69,4 +69,9 @@ export const queryCommentByUser = async (userId: number, commentType: CommentTyp
 export const queryCommentLikes = async (commentId: number): Promise<number> => {
     const message = new CommentLikesQueryMessage(commentId);
     return await sendPostRequest(message);
+}
+
+export const flipScoreHistogram = async (score: number, userId: number, objectId: number): Promise<void> => {
+    const message = new ScoreHistogramFlipMessage(score, userId, objectId);
+    await sendPostRequest(message);
 }

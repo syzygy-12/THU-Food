@@ -48,6 +48,16 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "EntryStarsIncrementMessage" =>
+        IO(decode[EntryStarsIncrementMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for EntryStarIncrementMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "ScoreHistogramIncrementMessage" =>
+        IO(decode[ScoreHistogramIncrementMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for ScoreHistogramIncrementMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

@@ -3,5 +3,7 @@ package Models
 case class CardInfo(
   id: Int,
   fatherId: Int,
-  name: String
+  name: String,
+  stars: Int,
+  scoreHistogram: Array[Int]
 )

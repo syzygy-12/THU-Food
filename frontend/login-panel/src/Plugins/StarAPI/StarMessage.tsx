@@ -6,13 +6,13 @@ export abstract class StarMessage extends API {
 
 export class StarTestMessage extends StarMessage {
     userId : number
-    entryId : number
+    objectId : number
     starType : number
 
-    constructor(userId : number, entryId : number, starType : number) {
+    constructor(userId : number, objectId : number, starType : number) {
         super();
         this.userId = userId;
-        this.entryId = entryId;
+        this.objectId = objectId;
         this.starType  = starType;
         Object.defineProperty(this, 'type', {
             value: 'StarTestMessage',
@@ -23,13 +23,13 @@ export class StarTestMessage extends StarMessage {
 
 export class StarCreateMessage extends StarMessage {
     userId : number
-    entryId : number
+    objectId : number
     starType : number
 
-    constructor(userId : number, entryId : number, starType : number) {
+    constructor(userId : number, objectId : number, starType : number) {
         super();
         this.userId = userId;
-        this.entryId = entryId;
+        this.objectId = objectId;
         this.starType  = starType;
         Object.defineProperty(this, 'type', {
             value: 'StarCreateMessage',
@@ -40,13 +40,13 @@ export class StarCreateMessage extends StarMessage {
 
 export class StarDeleteMessage extends StarMessage {
     userId : number
-    entryId : number
+    objectId : number
     starType : number
 
-    constructor(userId : number, entryId : number, starType : number) {
+    constructor(userId : number, objectId : number, starType : number) {
         super();
         this.userId = userId;
-        this.entryId = entryId;
+        this.objectId = objectId;
         this.starType  = starType;
         Object.defineProperty(this, 'type', {
             value: 'StarDeleteMessage',
@@ -57,13 +57,13 @@ export class StarDeleteMessage extends StarMessage {
 
 export class StarFlipMessage extends StarMessage {
     userId : number
-    entryId : number
+    objectId : number
     starType : number
 
-    constructor(userId : number, entryId : number, starType : number) {
+    constructor(userId : number, objectId : number, starType : number) {
         super();
         this.userId = userId;
-        this.entryId = entryId;
+        this.objectId = objectId;
         this.starType  = starType;
         Object.defineProperty(this, 'type', {
             value: 'StarFlipMessage',

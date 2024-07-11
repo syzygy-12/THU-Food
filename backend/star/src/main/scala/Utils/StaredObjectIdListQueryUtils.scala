@@ -18,7 +18,7 @@ object StaredObjectIdListQueryUtils {
 
     readDBRows(query, parameters).map { rows =>
       rows.map { row =>
-        row.hcursor.get[Int]("objectid").getOrElse(throw new Exception("Cannot fetch entryid"))
+        row.hcursor.get[Int]("objectid").getOrElse(throw new Exception("Cannot fetch objectid"))
       }.toArray
     }
   }
