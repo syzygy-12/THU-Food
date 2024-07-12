@@ -17,6 +17,9 @@ import {
     testStar,
 } from 'Plugins/StarAPI/StarExecution'
 import { getCardInfo, getCardInfoByFather, getCardInfoByGrandfather } from 'Plugins/EntryAPI/CardInfoExecution'
+import ScoreCard from '../Components/ScoreCard'
+import SmallScoreCard from '../Components/SmallScoreCard'
+
 
 
 interface RouteParams {
@@ -72,13 +75,25 @@ export function TestPage() {
         };
     }, [imageSrcHigh]);
 
-    return (
-        <div id="app">
-            <h1>Image Viewer</h1>
+    const scoreHistogram = [0, 0, 0, 0, 0]; // 示例数据
+
+
+    /*
+    <h1>Image Viewer</h1>
             <img id="image" src={imageSrcLow} alt="Loaded Image" />
             <div>
                 <input type="file" accept=".png,.jpg,.jpeg,.gif" onChange={handleFileChange} />
                 <button onClick={handleUpload}>Upload Image</button>
+            </div>
+     */
+
+    return (
+        <div id="app">
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <ScoreCard scoreHistogram={scoreHistogram} />
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <SmallScoreCard scoreHistogram={scoreHistogram} />
             </div>
         </div>
     );

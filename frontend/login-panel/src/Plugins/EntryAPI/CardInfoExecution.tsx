@@ -6,7 +6,7 @@ import {
 } from 'Plugins/EntryAPI/CradInfoMessage'
 import { CardInfo } from 'Plugins/Models/Entry'
 
-export const getCardInfo = async (id: number): Promise<CardInfo> => {
+export const getCardInfo = async (id: number): Promise<CardInfo | null> => {
     const message = new CardInfoQueryMessage(id);
     return JSON.parse(await sendPostRequest(message)); // 直接返回结果
 }

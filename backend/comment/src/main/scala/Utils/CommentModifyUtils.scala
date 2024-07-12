@@ -23,7 +23,7 @@ object CommentModifyUtils {
             SqlParameter("String", content),
             SqlParameter("Int", id.toString)
           )
-        ).map(_ => true)
+        ).map(_ => IO.unit)
       }
     }
   }

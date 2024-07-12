@@ -16,8 +16,6 @@ export class TopBarData {
     }
 }
 
-
-
 interface TopBarProps {
     data: TopBarData;
 }

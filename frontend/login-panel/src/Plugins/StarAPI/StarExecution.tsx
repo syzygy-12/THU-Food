@@ -29,9 +29,9 @@ export const deleteStar = async (userId: number, objectId : number, starType: St
     await sendPostRequest(message);
 }
 
-export const flipStar = async (userId: number, objectId : number, starType: StarType): Promise<void> => {
+export const flipStar = async (userId: number, objectId : number, starType: StarType): Promise<boolean> => {
     const message = new StarFlipMessage(userId, objectId, starType);
-    await sendPostRequest(message);
+    return await sendPostRequest(message);
 }
 
 export const queryStaredObjectIdList = async (userId: number, starType: StarType): Promise<number[]> => {
