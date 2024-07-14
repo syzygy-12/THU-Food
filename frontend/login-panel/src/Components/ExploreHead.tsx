@@ -21,11 +21,11 @@ const ExploreHead: React.FC<ExploreHeadProps> = ({
                                                    }) => {
 
     return (
-        <Box>
+        <Box sx={{ margin: '16px' }}>
             <Button variant="contained" onClick={handleCreateAndUpdate} sx={{ flex: 0, ml: 2 }}>创建节点</Button>
             <Button variant="contained" color="error" onClick={handleDelete} sx={{ flex: 0, ml: 2 }}>删除节点</Button>
             <Typography sx={{ flex: 0, ml: 2, display: 'inline-block' }}>目前ID: {cardInfo.id}  fatherID: {cardInfo.fatherID}</Typography>
-            <Button variant="contained" onClick={() => handleNavigation(`/comment/${cardInfo.id}`)} sx={{ flex: 0, ml: 2 }}>介绍</Button>
+            <Button variant="contained" onClick={() => handleNavigation(`/info/${cardInfo.id}`)} sx={{ flex: 0, ml: 2 }}>介绍</Button>
             <Button
                 variant="contained"
                 color={isStarred ? 'secondary' : 'primary'}

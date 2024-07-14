@@ -1,14 +1,15 @@
 import React, { useState, useRef } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { CardInfo } from 'Plugins/Models/Entry';
+import { ImageComponent2, ImageComponent3 } from './Image'
 
 interface SmallCardProps {
     cardInfo: CardInfo;
     handleNavigation: (url: string) => void;
 }
 
-const SmallCardWidth = 320;
-const SmallCardHeight = 72;
+const SmallCardWidth = '320px';
+const SmallCardHeight = '72px';
 
 const SmallCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation }) => {
     const [isHovered, setIsHovered] = useState(false);
@@ -45,30 +46,37 @@ const SmallCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation }) => 
             <Card
                 onClick={() => handleNavigation(`/explore/${cardInfo.id}`)}
                 sx={{
+                    backgroundColor: 'rgba(255, 255, 255, 0.35)', // 半透明背景颜色
                     cursor: 'pointer',
                     width: '100%',
                     height: '100%',
                     alignItems: 'center',
                     justifyContent: 'center',
                     position: 'absolute',
+                    borderRadius: '8px',
                     top: 0,
                     left: 0,
                 }}
             >
                 <CardContent
                     sx={{
-                        paddingTop: '8px',
+                        paddingTop: '0px',
                         paddingLeft: '12px',
                         display: 'flex',
-                        flexDirection: 'column',
+                        flexDirection: 'row',
                         alignItems: 'flex-start',
                         justifyContent: 'flex-start',
                         height: '100%',
                     }}
                 >
-                    <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '16px', margin: 0 }}>
+                    <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '16px', margin: 0, width: '200px', paddingTop: '8px',}}>
                         名称: {cardInfo.name} ID: {cardInfo.id}
                     </Typography>
+                    <ImageComponent3
+                        imageName={cardInfo.image}
+                        height='72px'
+                        width='108px'
+                    />
                 </CardContent>
             </Card>
         </Box>

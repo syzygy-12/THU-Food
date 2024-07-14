@@ -21,7 +21,7 @@ object ScoreHistogramModifyUtils {
         writeDB(
           s"""
              |UPDATE ${schemaName}.${tableName}
-             |SET scorehistogram = ARRAY[${scoreHistogram.mkString(",")}]
+             |SET score_histogram = ARRAY[${scoreHistogram.mkString(",")}]
              |WHERE id = ?""".stripMargin,
           List(
             SqlParameter("Int", id.toString)

@@ -92,23 +92,18 @@ export function ExplorePage() {
             </Box>
         );
 
-
-
     return (
         <div style={{
-            backgroundImage: `url(${background})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
-            minHeight: '100vh',
-            maxHeight: '100vh',
+            height: '100vh',
             display: 'flex',
             flexDirection: 'column',
         }}>
             <TopBar data={topBarData} />
             <Box
                 sx={{
-                    minHeight: '128px',
-                    maxHeight: '128px',
+                    height: '100px',
                     width: '100%',
                 }}
             />
@@ -119,6 +114,7 @@ export function ExplorePage() {
                     flex: 1,
                     overflow: 'hidden', // 确保 ExplorePanel 内部不会出现滚动条
                     width: '100%',
+                    paddingBottom: 0,
                 }}
             >
                 <ExplorePanel

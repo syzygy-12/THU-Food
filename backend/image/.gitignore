@@ -1,5 +1,8 @@
 *.idea
 images/*
+!images/emptyAvatar.jpg
+!images/emptyImage-high.jpg
+!images/emptyImage-low.jpg
 target/*
 project/*
 artifacts/*

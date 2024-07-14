@@ -4,6 +4,7 @@ import { CardInfo } from 'Plugins/Models/Entry';
 import BigCardList, { generateBigCardInfoList } from './BigCardList';
 import ExploreHead from './ExploreHead';
 import SpecialBigCardList from './SpecialBigCardList';
+import { ImageComponent2 } from './Image';
 
 interface ExplorePanelProps {
     cardInfo: CardInfo;
@@ -26,24 +27,50 @@ const ExplorePanel: React.FC<ExplorePanelProps> = ({
                                                        handleStarToggle,
                                                        isStarred
                                                    }) => {
+    const backgroundImage = (
+        <Box
+            sx={{
+                position: 'absolute',
+                left: 0,
+                width: '100%',
+                height: '100%',
+                zIndex: -1,
+                overflow: 'hidden'
+            }}
+        >
+            <ImageComponent2
+                imageName={cardInfo.image}
+                height="100%"
+                width="100%"
+                opacity={66}
+            />
+        </Box>
+    );
+
+    const exploreHead = (
+        <ExploreHead
+            cardInfo={cardInfo}
+            handleNavigation={handleNavigation}
+            handleCreateAndUpdate={handleCreateAndUpdate}
+            handleDelete={handleDelete}
+            handleStarToggle={handleStarToggle}
+            isStarred={isStarred}
+        />
+    );
+
     if (sonCardInfoList.length >= 1 && sonCardInfoList[0].isFood) {
         return (
             <Box
                 sx={{
+                    position: 'relative',
                     display: 'flex',
                     flexDirection: 'column',
                     height: '100%',
                     overflow: 'hidden',
                 }}
             >
-                <ExploreHead
-                    cardInfo={cardInfo}
-                    handleNavigation={handleNavigation}
-                    handleCreateAndUpdate={handleCreateAndUpdate}
-                    handleDelete={handleDelete}
-                    handleStarToggle={handleStarToggle}
-                    isStarred={isStarred}
-                />
+                {backgroundImage}
+                {exploreHead}
                 <Box
                     sx={{
                         flex: 1,
@@ -64,15 +91,9 @@ const ExplorePanel: React.FC<ExplorePanelProps> = ({
     const bigCardInfoList = generateBigCardInfoList(sonCardInfoList, grandsonCardInfoList);
 
     return (
-        <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', mt: 6, mb: 2, width: '100%', paddingLeft: 0, paddingRight: 0, boxSizing: 'border-box' }}>
-            <ExploreHead
-                cardInfo={cardInfo}
-                handleNavigation={handleNavigation}
-                handleCreateAndUpdate={handleCreateAndUpdate}
-                handleDelete={handleDelete}
-                handleStarToggle={handleStarToggle}
-                isStarred={isStarred}
-            />
+        <Box sx={{ position: 'relative', flexGrow: 1, display: 'flex', flexDirection: 'column', width: '100%', margin: 0 }}>
+            {backgroundImage}
+            {exploreHead}
             <Box sx={{ flexGrow: 1, display: 'flex', width: '100%', paddingLeft: 0, paddingRight: 0, boxSizing: 'border-box' }}>
                 <BigCardList
                     bigCardInfoList={bigCardInfoList}

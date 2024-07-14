@@ -7,7 +7,6 @@ import Common.ServiceUtils.*
 import cats.effect.IO
 import io.circe.Json
 import io.circe.generic.auto.*
-import io.circe.syntax.*
 
 object EntryCreateUtils {
 
@@ -24,7 +23,7 @@ object EntryCreateUtils {
       SqlParameter("Int", grandfatherID.toString),
       SqlParameter("String", "new"),
       SqlParameter("String", "empty"),
-      SqlParameter("String", "url")
+      SqlParameter("String", "emptyImage")
     )
 
     readDBRows(query, parameters).flatMap {

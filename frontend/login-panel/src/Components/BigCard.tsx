@@ -3,6 +3,7 @@ import { Card, CardContent, Typography, Box } from '@mui/material';
 import SmallCardList from './SmallCardList';
 import { useHistory } from 'react-router-dom';
 import { CardInfo } from 'Plugins/Models/Entry';
+import { ImageComponent2 } from './Image';
 
 export interface BigCardInfo {
     cardInfo: CardInfo;
@@ -28,17 +29,19 @@ const BigCard: React.FC<BigCardProps> = ({ bigCardInfo, handleNavigation }) => {
         <Card
             sx={{
                 width: BigCardWidth,
-                paddingLeft: '8px',
-                paddingRight: '8px',
                 paddingBottom: '8px',
                 boxSizing: 'border-box',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                borderRadius: '8px',
                 overflow: 'visible', // 允许子元素溢出
                 maxHeight: 'calc(100vh - 220px)', // 最大高度控制在屏幕范围内，减去一些偏移量
-                backgroundColor: '#f0f0f0', // 略微加深的背景颜色
+                backgroundColor: 'rgba(255, 255, 255, 0.15)', // 半透明背景颜色
+                backdropFilter: 'blur(10px)', // 磨砂玻璃效果
+                WebkitBackdropFilter: 'blur(10px)', // 兼容 Safari
                 position: 'relative', // 允许子元素绝对定位
+                boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // 边框阴影
             }}
         >
             <CardContent
@@ -52,11 +55,46 @@ const BigCard: React.FC<BigCardProps> = ({ bigCardInfo, handleNavigation }) => {
                     cursor: 'pointer', // 添加鼠标指针变化
                     position: 'relative',
                     overflow: 'visible', // 允许子元素溢出
+                    padding: 0,
+                    '&:hover .image-box': { // 添加悬停效果
+                        border: '2px solid rgba(0, 123, 255, 1)',
+                        borderRadius: '8px', // 保持圆角
+                    }
                 }}
             >
-                <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '18px', marginBottom: '16px' }}>
-                    名称: {cardInfo.name} ID: {cardInfo.id}
-                </Typography>
+                <Box sx={{
+                    marginBottom: '16px',
+                    width: '100%',
+                    backgroundColor: 'rgba(255, 255, 255, 0.35)',
+                    borderRadius: '8px 8px 0 0',
+                }}>
+                    <Typography sx={{
+                        fontFamily: 'SimHei, sans-serif',
+                        fontSize: '18px',
+                        margin: '16px',
+                        width: '100%',
+                    }}>
+                        名称: {cardInfo.name} ID: {cardInfo.id}
+                    </Typography>
+                </Box>
+                <Box
+                    className="image-box" // 添加类名以便在悬停时修改样式
+                    sx={{
+                        height: '210px',
+                        width: '280px',
+                        borderRadius: '8px', // 圆角
+                        border: '2px solid transparent',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)', // 边框阴影
+                        overflow: 'hidden', // 确保图像不超出圆角框
+                        transition: 'border 0.3s ease-in-out', // 平滑过渡效果
+                    }}
+                >
+                    <ImageComponent2
+                        imageName={cardInfo.image}
+                        height='100%'
+                        width='100%'
+                    />
+                </Box>
             </CardContent>
 
             <Box

@@ -27,7 +27,7 @@ object UserRegisterUtils {
           SqlParameter("String", userName),
           SqlParameter("String", password),
           SqlParameter("String", "THUer"),
-          SqlParameter("String", "url")
+          SqlParameter("String", "emptyAvatar")
         )
         readDBRows(query, parameters).flatMap {
           case head :: _ =>
