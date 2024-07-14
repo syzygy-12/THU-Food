@@ -18,9 +18,6 @@ object Routes {
         IO(decode[StarCreateMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StarCreateMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
-valid JSON for StarTestMessage")))
-          .flatMap{m=>
-            m.fullPlan.map(_.asJson.toString)
           }
       case "StarDeleteMessage" =>
         IO(decode[StarDeleteMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StarDeleteMessage")))
@@ -37,8 +34,8 @@ valid JSON for StarTestMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "StaredObjectStar          }\n      case \"StarTestMessage\" =>\n        IO(decode[StarTestMessagePlanner](str).getOrElse(throw new Exception(\"InCountMessage" =>
-        IO(decode[StaredObjectStarCountMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StaredObjectStarCountMessage")))
+      case "StarTestMessage" =>
+        IO(decode[StarTestMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StarTestMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

@@ -5,7 +5,6 @@ import {
     StarDeleteMessage,
     StarFlipMessage,
     StaredObjectIdListQueryMessage,
-    StaredObjectStarCountMessage
 } from 'Plugins/StarAPI/StarMessage'
 
 export enum StarType {
@@ -43,11 +42,5 @@ export const queryStaredObjectIdList = async (userId: number, starType: StarType
         return objectIdList;
     }
     return [];
-}
-
-export const queryStaredObjectStarCount = async (objectId: number, starType: StarType): Promise<number> => {
-    const message = new StaredObjectStarCountMessage(objectId, starType);
-    const result = await sendPostRequest(message);
-    return result;
 }
 

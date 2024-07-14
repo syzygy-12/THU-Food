@@ -10,6 +10,9 @@ import io.circe.generic.auto.*
 
 object CommentQueryByIdListUtils {
   def queryCommentByIdList(idList: List[Int])(using planContext: PlanContext): IO[List[Comment]] = {
+    if (idList.isEmpty) {
+      return IO.pure(List())
+    }
     val query =
       s"""
          |SELECT id, userid, objectid, content, likes, created_at

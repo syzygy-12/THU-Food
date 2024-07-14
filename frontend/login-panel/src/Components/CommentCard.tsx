@@ -4,7 +4,7 @@ import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { Comment } from 'Plugins/Models/Comment';
 import { formatDistanceToNow } from 'date-fns';
-import { testStar, flipStar, queryStaredObjectStarCount, StarType } from 'Plugins/StarAPI/StarExecution';
+import { testStar, flipStar, StarType } from 'Plugins/StarAPI/StarExecution';
 
 interface CommentCardProps {
     comment: Comment;
@@ -13,14 +13,12 @@ interface CommentCardProps {
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment, userId }) => {
     const [isLiked, setIsLiked] = useState<boolean>(false);
-    const [likeCount, setLikeCount] = useState<number>(0);
+    const [likeCount, setLikeCount] = useState<number>(comment.likes);
 
     useEffect(() => {
         const fetchLikeStatus = async () => {
             const liked = await testStar(userId, comment.id, StarType.LikeForComment);
             setIsLiked(liked);
-            const count = await queryStaredObjectStarCount(comment.id, StarType.LikeForComment);
-            setLikeCount(count);
         };
         fetchLikeStatus();
     }, [userId, comment.id]);
@@ -28,7 +26,7 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, userId }) => {
     const handleLikeToggle = async () => {
         const newIsLiked = await flipStar(userId, comment.id, StarType.LikeForComment);
         setIsLiked(newIsLiked);
-        const count = await queryStaredObjectStarCount(comment.id, StarType.LikeForComment);
+        const count = newIsLiked ? likeCount + 1 : likeCount - 1;
         setLikeCount(count);
     };
 

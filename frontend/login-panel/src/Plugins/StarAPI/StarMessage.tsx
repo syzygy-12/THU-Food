@@ -86,18 +86,3 @@ export class StaredObjectIdListQueryMessage extends StarMessage {
         });
     }
 }
-
-export class StaredObjectStarCountMessage extends StarMessage {
-    objectId : number
-    starType : number
-
-    constructor(userId : number, starType : number) {
-        super();
-        this.objectId = userId;
-        this.starType  = starType;
-        Object.defineProperty(this, 'type', {
-            value: 'StaredObjectStarCountMessage',
-            writable: false
-        });
-    }
-}
