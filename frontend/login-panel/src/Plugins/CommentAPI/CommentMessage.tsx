@@ -35,6 +35,22 @@ export class CommentDeleteMessage extends CommentMessage {
     }
 }
 
+export class CommentQueryMessage extends CommentMessage {
+    userId: number;
+    objectId: number;
+    commentType: number;
+    constructor(userId: number, objectId: number, commentType: number) {
+        super()
+        this.userId = userId;
+        this.objectId = objectId;
+        this.commentType = commentType;
+        Object.defineProperty(this, 'type', {
+            value: 'CommentQueryMessage',
+            writable: false
+        });
+    }
+}
+
 export class CommentModifyMessage extends CommentMessage {
     id: number;
     content: string;
@@ -100,6 +116,22 @@ export class ScoreHistogramFlipMessage extends CommentMessage {
         this.objectId = objectId;
         Object.defineProperty(this, 'type', {
             value: 'ScoreHistogramFlipMessage',
+            writable: false
+        });
+    }
+}
+
+export class CommentTestMessage extends CommentMessage {
+    userId: number;
+    objectId: number;
+    commentType: number;
+    constructor(userId: number, objectId: number, commentType: number) {
+        super()
+        this.userId = userId;
+        this.objectId = objectId;
+        this.commentType = commentType;
+        Object.defineProperty(this, 'type', {
+            value: 'CommentTestMessage',
             writable: false
         });
     }

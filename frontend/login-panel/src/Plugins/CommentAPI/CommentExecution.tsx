@@ -5,7 +5,7 @@ import {
     CommentDeleteMessage, CommentModifyMessage, CommentQueryByObjectMessage,
     CommentQueryByUserMessage,
     CommentLikesQueryMessage,
-    ScoreHistogramFlipMessage,
+    ScoreHistogramFlipMessage, CommentQueryMessage, CommentTestMessage,
 } from 'Plugins/CommentAPI/CommentMessage'
 
 export enum CommentType {
@@ -38,6 +38,22 @@ export const deleteComment = async (id: number): Promise<boolean> => {
 export const modifyComment = async (id: number, content: string): Promise<boolean> => {
     const message = new CommentModifyMessage(id, content);
     return await sendPostRequest(message); // 直接返回结果
+}
+
+export const testComment = async (userId: number, objectId: number, commentType: CommentType): Promise<boolean> => {
+    const message = new CommentTestMessage(userId, objectId, commentType);
+    const result = await sendPostRequest(message);
+    return result;
+}
+
+export const queryComment = async (userId: number, objectId: number, commentType: CommentType): Promise<Comment> => {
+    const message = new CommentQueryMessage(userId, objectId, commentType);
+    const result = await sendPostRequest(message);
+    const comment = JSON.parse(result);
+    return {
+        ...comment,
+        createdAt: formatTimestamp(comment.createdAt)
+    };
 }
 
 export const queryCommentByObject = async (objectId: number, commentType: CommentType): Promise<Comment[]> => {

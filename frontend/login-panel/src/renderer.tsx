@@ -12,6 +12,7 @@ import { TestPage } from 'Pages/TestPage'
 import {CommentPage} from 'Pages/CommentPage'
 import { UserPage } from 'Pages/UserPage'
 import { SettingPage } from 'Pages/SettingPage';
+import {RandomRecommendationsPage} from 'Pages/RandomRecommendationPage'
 const Layout = () => {
     return (
         <HashRouter>
@@ -28,6 +29,7 @@ const Layout = () => {
                 <Route path="/userpage/:id" exact component={UserPage} />
                 <Route path="/comment/:id" exact component={CommentPage} />
                 <Route path="/settings" exact component={SettingPage} />
+                <Route path="/recommendations" exact component={RandomRecommendationsPage} />
             </Switch>
         </HashRouter>
     )

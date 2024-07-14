@@ -12,27 +12,28 @@ const ScoreCard: React.FC<ScoreHistogramProps> = ({ scoreHistogram }) => {
     const totalVotes = scoreHistogram.reduce((a, b) => a + b, 0);
     const averageScore = totalVotes ? (scoreHistogram.reduce((sum, count, index) => sum + count * (index + 1), 0) / totalVotes) : 0;
     const averageScoreDisplay = (averageScore * 2).toFixed(1);
-    const stars = Math.round(averageScore * 2 + 0.5) / 2; // 将分数转换为 0.5 的倍数
+    const stars = Math.round(averageScore * 2 ) / 2;
 
     return (
         <Box
             sx={{
-                width: '300px',
+                width: '240px',
+                height: '240px',
                 border: '1px solid #ccc',
                 borderRadius: '8px',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                padding: '16px',
                 boxSizing: 'border-box',
-                backgroundColor: '#fff'
+                backgroundColor: '#fff',
+                paddingTop: '12px'
             }}
         >
             {totalVotes === 0 ? (
                 <Typography variant="h6">还没有评分</Typography>
             ) : (
-                <>
-                    <Typography variant="h3" sx={{ marginBottom: '8px' }}>
+                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column', minWidth: '210px', maxWidth: '210px' }}>
+                    <Typography variant="h3" sx={{ marginBottom: '0px' }}>
                         {averageScoreDisplay}
                     </Typography>
                     <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
@@ -51,14 +52,14 @@ const ScoreCard: React.FC<ScoreHistogramProps> = ({ scoreHistogram }) => {
                     <Typography variant="body2" color="textSecondary">
                         {totalVotes}人评价
                     </Typography>
-                    <Box sx={{ width: '100%', marginTop: '16px' }}>
+                    <Box sx={{ width: '100%', marginTop: '16px'}}>
                         {scoreHistogram.slice().reverse().map((count, index) => (
-                            <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: '4px' }}>
-                                <Typography sx={{ width: '15%', textAlign: 'right', marginRight: '8px', fontSize: '0.875rem' }}>{5 - index}星</Typography>
+                            <Box key={index} sx={{ display: 'flex', alignItems: 'center', marginBottom: '0px' }}>
+                                <Typography sx={{ width: '15%', textAlign: 'right', marginRight: '8px', fontSize: '0.75rem' }}>{5 - index}星</Typography>
                                 <Box
                                     sx={{
                                         height: '10px',
-                                        flex: 1,
+                                        width: '120px',
                                         backgroundColor: '#f0f0f0',
                                         borderRadius: '0px',
                                         position: 'relative',
@@ -69,19 +70,19 @@ const ScoreCard: React.FC<ScoreHistogramProps> = ({ scoreHistogram }) => {
                                     <Box
                                         sx={{
                                             height: '10px',
-                                            width: `${(count / totalVotes) * 100}%`,
+                                            width: `${(count / totalVotes) * 120}px`,
                                             backgroundColor: '#ffa726',
                                             borderRadius: '0px'
                                         }}
-                                    ></Box>
+                                    />
                                 </Box>
-                                <Typography sx={{ fontSize: '0.875rem', whiteSpace: 'nowrap' }}>
+                                <Typography sx={{ fontSize: '0.75rem', whiteSpace: 'nowrap' }}>
                                     {((count / totalVotes) * 100).toFixed(1)}%
                                 </Typography>
                             </Box>
                         ))}
                     </Box>
-                </>
+                </Box>
             )}
         </Box>
     );

@@ -87,7 +87,7 @@ export function TestPage() {
         };
     }, [imageSrcHigh]);
 
-    const scoreHistogram = [0, 0, 0, 0, 0]; // 示例数据
+    const scoreHistogram = [0, 1, 0, 0, 0]; // 示例数据
 
     /*
     <h1>Image Viewer</h1>

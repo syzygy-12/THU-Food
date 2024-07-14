@@ -1,8 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, SyntheticEvent } from 'react'
 import { useHistory, useParams } from 'react-router-dom';
-import { TextField, Button, Container, Typography, Box, Grid, Card, CardContent, Toolbar, AppBar } from '@mui/material';
+import { TextField, Button, Container, Typography, Box, Toolbar } from '@mui/material';
 
-//import { Entry, getEntryById } from 'Plugins/EntryAPI/EntryExecution'
+import { TopBar, TopBarData } from '../Components/TopBar'
+import InfoPanel from '../Components/InfoPanel'
+import { CardInfo } from 'Plugins/Models/Entry'
+import { testEntry } from 'Plugins/EntryAPI/EntryExecution'
+import { getCardInfo, } from 'Plugins/EntryAPI/CardInfoExecution'
+import { StarType, testStar, flipStar } from 'Plugins/StarAPI/StarExecution'
+import {
+    CommentType,
+    flipScoreHistogram,
+    queryComment,
+    testComment,
+} from 'Plugins/CommentAPI/CommentExecution'
 
 interface RouteParams {
     id: string;
@@ -11,113 +22,112 @@ interface RouteParams {
 export function InfoPage() {
     const params = useParams<RouteParams>();
     const history = useHistory();
-    const [currentNode, setNode] = useState<Node | null>(null);
-    //const [currenEntry, setEntry] = useState<Entry | null>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [cardInfo, setCardInfo] = useState<CardInfo | null>(null);
+    const [entryExists, setEntryExists] = useState<boolean>(null);
+    const [isStarred, setIsStarred] = useState<boolean>(false);
+    const [score, setScore] = useState<number>(0);
+    const [scoreCommentId, setScoreCommentId] = useState<number>(0);
 
     const username = localStorage.getItem('username') || '';
+    const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+    const currentEntryId: number = Number(params.id);
+    console.log('currentEntryId', currentEntryId);
 
-    const currentNodeId: number = Number(params.id);
-    console.log("currentNodeId :", currentNodeId)
+    const fetchData = async () => {
+        const entryTestResult = await testEntry(currentEntryId);
+        setEntryExists(entryTestResult);
+        if (entryTestResult) {
+            const [cardInfo, isStarred, isScored] = await Promise.all([
+                getCardInfo(currentEntryId),
+                testStar(userId, currentEntryId, StarType.StarForEntry),
+                testComment(userId, currentEntryId, CommentType.ScoreForEntry),
+            ]);
+            if (isScored) {
+                const score = await queryComment(userId, currentEntryId, CommentType.ScoreForEntry);
+                setScore(Number(score.content) + 1);
+                setScoreCommentId(score.id)
+            } else {
+                setScore(0);
+                setScoreCommentId(0);
+            }
+            setCardInfo(cardInfo);
+            setIsStarred(isStarred);
+        }
+    };
 
-    // const fetchData = async () => {
-    //     setIsLoading(true); // 开始加载
-    //     const result = await getNodeById(currentNodeId);
-    //     if (!result) {
-    //         if (currentNodeId === 0) {
-    //             const rootNode: Node = { id: 0, son: [], fatherID: undefined, entryId: undefined};
-    //             await createNode(0, rootNode);
-    //             setNode(rootNode); // 设置根节点
-    //         } else {
-    //             console.log("节点不存在！");
-    //         }
-    //     } else {
-    //         setNode(result); // 设置获取到的节点
-    //         const entryId = result.entryId;
-    //         if (entryId) {
-    //             const entry = await getEntryById(entryId);
-    //             setEntry(entry);
-    //         }
-    //     }
-    //
-    //     setIsLoading(false); // 完成加载
-    // };
-    //
-    // useEffect(() => {
-    //     fetchData();
-    // }, [currentNodeId]);
-    //
+    useEffect(() => {
+        fetchData();
+    }, [currentEntryId]);
+
     const handleNavigation = (path: string) => {
         history.push(path);
     };
-    //
-    //
-    // if (isLoading)
-    //     return <div>Loading...</div>; // 在加载期间显示的内容
-    //
-    // console.log('currentNodeId:', currentNodeId);
-    // console.log('currentNode:', currentNode);
+
+    const handleToggleStar = async () => {
+        await flipStar(userId, currentEntryId, StarType.StarForEntry);
+        setIsStarred(!isStarred);
+    }
+
+    const handleScoreChange = async (event: SyntheticEvent<Element, Event>, value: number) => {
+
+        if (score == 0) {
+            await flipScoreHistogram(value - 1, userId, currentEntryId);
+            setScore(value);
+        } else {
+            await flipScoreHistogram(score - 1, userId, currentEntryId);
+            await flipScoreHistogram(value - 1, userId, currentEntryId);
+            setScore(value);
+        }
+    }
+
+    const topBarData = new TopBarData('THU Food', username, [
+        { label: '主页', path: '/home' },
+        { label: '用户', path: '/profile' },
+        { label: '设置', path: '/settings' }
+    ]);
+
+    if (!entryExists)
+        return (
+            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <TopBar data={topBarData} />
+                <Toolbar />
+
+                <div>页面不存在!</div>
+            </Box>
+        );
+
+    if (cardInfo == null)
+        return (
+            <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+                <TopBar data={topBarData} />
+                <Toolbar />
+            </Box>
+        );
 
     return (
-        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-            <AppBar position="fixed">
-                <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
-                        <Typography variant="h6" component="div" sx={{ marginRight: 2 }}>
-                            THU Food
-                        </Typography>
-                        <Button color="inherit" onClick={() => handleNavigation('/home')}>主页</Button>
-                        <Button color="inherit" onClick={() => handleNavigation('/profile')}>用户</Button>
-                        <Button color="inherit" onClick={() => handleNavigation('/settings')}>设置</Button>
-                    </Box>
-                    <TextField
-                        placeholder="搜索"
-                        variant="outlined"
-                        size="small"
-                        sx={{
-                            backgroundColor: 'white',
-                            borderRadius: 1,
-                            marginRight: 2,
-                        }}
-                    />
-                    <Typography variant="h6" component="div">
-                        欢迎 {username}
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-            <Toolbar /> {/* 用于占位，使内容不被顶栏遮挡 */}
+        <div style={{
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh',
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <TopBar data={topBarData} />
+            <Toolbar />
 
-            {/*<Container>*/}
-            {/*    <Grid container spacing={2}>*/}
-            {/*        <Grid item xs={12}>*/}
-            {/*            <Card>*/}
-            {/*                <CardContent>*/}
-            {/*                    <Typography variant="h5" component="div">*/}
-            {/*                        条目名称:{currenEntry?.name}*/}
-            {/*                    </Typography>*/}
-            {/*                    <Typography variant="body1" component="div">*/}
-            {/*                        当前id:{currentNode?.id}*/}
-            {/*                    </Typography>*/}
-            {/*                    <Typography variant="body1" component="div">*/}
-            {/*                        父亲id:{currentNode?.fatherID}*/}
-            {/*                    </Typography>*/}
-            {/*                    <Typography variant="body1" component="div">*/}
-            {/*                        儿子id:{currentNode?.son}*/}
-            {/*                    </Typography>*/}
-            {/*                </CardContent>*/}
-            {/*            </Card>*/}
-            {/*        </Grid>*/}
-            {/*        <Grid item xs={12}>*/}
-            {/*            <Button*/}
-            {/*                variant="contained"*/}
-            {/*                color="primary"*/}
-            {/*                onClick={() => handleNavigation(`/explore/${currentNodeId}`)}*/}
-            {/*            >*/}
-            {/*                返回*/}
-            {/*            </Button>*/}
-            {/*        </Grid>*/}
-            {/*    </Grid>*/}
-            {/*</Container>*/}
-        </Box>
+            <InfoPanel
+                cardInfo={cardInfo}
+                handleNavigation={handleNavigation}
+                handleToggleStar={handleToggleStar}
+                isStarred={isStarred}
+                score={score}
+                handleScoreChange={handleScoreChange}
+            />
+
+
+        </div>
     );
+
 }
