@@ -8,7 +8,13 @@ import EditIcon from '@mui/icons-material/Edit';
 import StarIcon from '@mui/icons-material/Star';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import CommentList from './CommentList'
-import { CommentType, createComment, queryComment, queryCommentByObject } from 'Plugins/CommentAPI/CommentExecution'
+import {
+    CommentType,
+    createComment, deleteComment, modifyComment,
+    queryComment,
+    queryCommentByObject,
+    testComment,
+} from 'Plugins/CommentAPI/CommentExecution'
 import CommentForm from './CommentForm'
 
 interface InfoPanelProps {
@@ -29,6 +35,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
     const [comments, setComments] = useState([]);
 
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
+    const objectId = cardInfo.id;
 
     const handleCommentButtonClick = async () => {
         if (!isCommentsFetched) {
@@ -40,7 +47,18 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
     };
 
     const handleCommentSubmit = async (content: string) => {
-        await createComment(content, userId, cardInfo.id, CommentType.CommentForEntry);
+        const commentExists = await testComment(userId, cardInfo.id, CommentType.CommentForEntry);
+        if (!commentExists) {
+            await createComment(content, userId, cardInfo.id, CommentType.CommentForEntry);
+        } else {
+            const comment = await queryComment(userId, cardInfo.id, CommentType.CommentForEntry);
+            if (!content.trim()) {
+                await deleteComment(comment.id);
+            } else {
+                await modifyComment(comment.id, content);
+            }
+        }
+
         const newComments = await queryCommentByObject(cardInfo.id, CommentType.CommentForEntry);
         setComments(newComments);
     };
@@ -131,9 +149,9 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                         </IconButton>
                     </Box>
 
-                    {showComments && <CommentForm onSubmit={handleCommentSubmit}/>}
+                    {showComments && <CommentForm userId={userId} objectId={objectId} onSubmit={handleCommentSubmit}/>}
 
-                    {showComments && <CommentList comments={comments} />}
+                    {showComments && <CommentList comments={comments} userId={userId} />}
 
                 </Box>
 

@@ -1,19 +1,19 @@
-import React, { useState, useEffect, SyntheticEvent } from 'react'
+import React, { useState, useEffect, SyntheticEvent } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
-import { TextField, Button, Container, Typography, Box, Toolbar } from '@mui/material';
+import { Button, Container, Typography, Box, Toolbar } from '@mui/material';
 
-import { TopBar, TopBarData } from '../Components/TopBar'
-import InfoPanel from '../Components/InfoPanel'
-import { CardInfo } from 'Plugins/Models/Entry'
-import { testEntry } from 'Plugins/EntryAPI/EntryExecution'
-import { getCardInfo, } from 'Plugins/EntryAPI/CardInfoExecution'
-import { StarType, testStar, flipStar } from 'Plugins/StarAPI/StarExecution'
+import { TopBar, TopBarData } from '../Components/TopBar';
+import InfoPanel from '../Components/InfoPanel';
+import { CardInfo } from 'Plugins/Models/Entry';
+import { testEntry } from 'Plugins/EntryAPI/EntryExecution';
+import { getCardInfo } from 'Plugins/EntryAPI/CardInfoExecution';
+import { StarType, testStar, flipStar } from 'Plugins/StarAPI/StarExecution';
 import {
     CommentType,
     flipScoreHistogram,
     queryComment,
     testComment,
-} from 'Plugins/CommentAPI/CommentExecution'
+} from 'Plugins/CommentAPI/CommentExecution';
 
 interface RouteParams {
     id: string;
@@ -45,7 +45,7 @@ export function InfoPage() {
             if (isScored) {
                 const score = await queryComment(userId, currentEntryId, CommentType.ScoreForEntry);
                 setScore(Number(score.content) + 1);
-                setScoreCommentId(score.id)
+                setScoreCommentId(score.id);
             } else {
                 setScore(0);
                 setScoreCommentId(0);
@@ -66,11 +66,10 @@ export function InfoPage() {
     const handleToggleStar = async () => {
         await flipStar(userId, currentEntryId, StarType.StarForEntry);
         setIsStarred(!isStarred);
-    }
+    };
 
     const handleScoreChange = async (event: SyntheticEvent<Element, Event>, value: number) => {
-
-        if (score == 0) {
+        if (score === 0) {
             await flipScoreHistogram(value - 1, userId, currentEntryId);
             setScore(value);
         } else {
@@ -78,12 +77,16 @@ export function InfoPage() {
             await flipScoreHistogram(value - 1, userId, currentEntryId);
             setScore(value);
         }
-    }
+    };
+
+    const handleNavigateToAdminPage = () => {
+        history.push(`/admin/${currentEntryId}`);
+    };
 
     const topBarData = new TopBarData('THU Food', username, [
         { label: '主页', path: '/home' },
         { label: '用户', path: '/profile' },
-        { label: '设置', path: '/settings' }
+        { label: '设置', path: '/settings' },
     ]);
 
     if (!entryExists)
@@ -91,7 +94,6 @@ export function InfoPage() {
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
                 <TopBar data={topBarData} />
                 <Toolbar />
-
                 <div>页面不存在!</div>
             </Box>
         );
@@ -105,18 +107,20 @@ export function InfoPage() {
         );
 
     return (
-        <div style={{
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            minHeight: '100vh',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
-        }}>
+        <Box
+            sx={{
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                minHeight: '100vh',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'relative',
+            }}
+        >
             <TopBar data={topBarData} />
             <Toolbar />
-
             <InfoPanel
                 cardInfo={cardInfo}
                 handleNavigation={handleNavigation}
@@ -125,9 +129,25 @@ export function InfoPage() {
                 score={score}
                 handleScoreChange={handleScoreChange}
             />
-
-
-        </div>
+            <Box
+                sx={{
+                    position: 'absolute',
+                    bottom: '30%',
+                    width: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                }}
+            >
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleNavigateToAdminPage}
+                >
+                    Go to Admin Page
+                </Button>
+            </Box>
+        </Box>
     );
-
 }
+
+export default InfoPage;

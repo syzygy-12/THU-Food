@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Container, Typography, Box, Grid, Card, CardContent, Toolbar, Avatar, Collapse, Paper } from '@mui/material';
-import { CommentType, queryCommentByUser } from 'Plugins/CommentAPI/CommentExecution';
+import {
+    CommentType,
+    queryCommentByUser,
+    queryComment,
+    testComment,
+    queryCommentByIdList,
+} from 'Plugins/CommentAPI/CommentExecution'
 import { queryStaredObjectIdList, StarType } from 'Plugins/StarAPI/StarExecution';
 import { Comment } from 'Plugins/Models/Comment';
 import { TopBar, TopBarData } from '../Components/TopBar';
@@ -15,10 +21,18 @@ const getFavoritesByUser = async (userId: number): Promise<Favorite[]> => {
     return favoriteIds.map((id: number) => ({ id }));
 };
 
+const getLikedCommentsByUser = async (userId: number): Promise<Comment[]> => {
+    const likedCommentIds = await queryStaredObjectIdList(userId, StarType.LikeForComment);
+    const likedComments: Comment[] = await queryCommentByIdList(likedCommentIds);
+    return likedComments;
+};
+
+
 export function UserPage() {
     const history = useHistory();
     const [comments, setComments] = useState<Comment[]>([]);
     const [favorites, setFavorites] = useState<Favorite[]>([]);
+    const [likedComments, setLikedComments] = useState<Comment[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [activeSection, setActiveSection] = useState<string | null>(null);
 
@@ -34,6 +48,8 @@ export function UserPage() {
             setComments(fetchedComments);
             const fetchedFavorites = await getFavoritesByUser(userId);
             setFavorites(fetchedFavorites);
+            const fetchedLikedComments = await getLikedCommentsByUser(userId);
+            setLikedComments(fetchedLikedComments);
             setIsLoading(false);
         }
     };
@@ -82,18 +98,20 @@ export function UserPage() {
                                 mb: 0,
                                 boxShadow: activeSection ? 3 : 1,
                                 transition: 'box-shadow 0.3s ease',
-                                bgcolor: activeSection ? 'primary.light' : 'background.paper',
                             }}>
                                 <Button
                                     variant="contained"
-                                    color="primary"
                                     onClick={() => handleButtonClick('comments')}
                                     sx={{
                                         ...commonButtonStyles,
                                         borderTopRightRadius: 0,
                                         borderBottomRightRadius: activeSection === 'comments' ? 0 : '8px',
-                                        marginRight: '2px', // 添加按钮之间的间距
+                                        marginRight: '2px',
                                         bgcolor: activeSection === 'comments' ? 'primary.light' : 'primary.main',
+                                        color: activeSection === 'comments' ? 'primary.contrastText' : 'white',
+                                        '&:hover': {
+                                            bgcolor: 'primary.light',
+                                        },
                                         boxShadow: 'none',
                                     }}
                                 >
@@ -101,18 +119,39 @@ export function UserPage() {
                                 </Button>
                                 <Button
                                     variant="contained"
-                                    color="primary"
                                     onClick={() => handleButtonClick('favorites')}
                                     sx={{
                                         ...commonButtonStyles,
                                         borderTopLeftRadius: 0,
                                         borderBottomLeftRadius: activeSection === 'favorites' ? 0 : '8px',
-                                        marginLeft: '2px', // 添加按钮之间的间距
-                                        bgcolor: activeSection === 'favorites' ? 'primary.light' : 'primary.main',
+                                        marginLeft: '2px',
+                                        bgcolor: activeSection === 'favorites' ? 'secondary.light' : 'secondary.main',
+                                        color: activeSection === 'favorites' ? 'secondary.contrastText' : 'white',
+                                        '&:hover': {
+                                            bgcolor: 'secondary.light',
+                                        },
                                         boxShadow: 'none',
                                     }}
                                 >
                                     我的收藏
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    onClick={() => handleButtonClick('likedComments')}
+                                    sx={{
+                                        ...commonButtonStyles,
+                                        borderTopLeftRadius: 0,
+                                        borderBottomLeftRadius: activeSection === 'likedComments' ? 0 : '8px',
+                                        marginLeft: '2px',
+                                        bgcolor: activeSection === 'likedComments' ? 'success.light' : 'success.main',
+                                        color: activeSection === 'likedComments' ? 'success.contrastText' : 'white',
+                                        '&:hover': {
+                                            bgcolor: 'success.light',
+                                        },
+                                        boxShadow: 'none',
+                                    }}
+                                >
+                                    我的点赞
                                 </Button>
                             </Paper>
                             <Collapse in={activeSection === 'comments'} sx={{ width: '100%' }}>
@@ -151,8 +190,8 @@ export function UserPage() {
                             <Collapse in={activeSection === 'favorites'} sx={{ width: '100%' }}>
                                 <Box sx={{
                                     p: 2,
-                                    bgcolor: 'primary.light',
-                                    color: 'primary.contrastText',
+                                    bgcolor: 'secondary.light',
+                                    color: 'secondary.contrastText',
                                     borderBottomLeftRadius: '8px',
                                     borderBottomRightRadius: '8px',
                                     boxShadow: 3,
@@ -170,6 +209,39 @@ export function UserPage() {
                                                     <Card onClick={() => handleNavigation(`/explore/${favorite.id}`)} sx={{ cursor: 'pointer' }}>
                                                         <CardContent>
                                                             <Typography variant="body1">收藏菜品ID: {favorite.id}</Typography>
+                                                        </CardContent>
+                                                    </Card>
+                                                </Grid>
+                                            ))}
+                                        </Grid>
+                                    )}
+                                </Box>
+                            </Collapse>
+                            <Collapse in={activeSection === 'likedComments'} sx={{ width: '100%' }}>
+                                <Box sx={{
+                                    p: 2,
+                                    bgcolor: 'success.light',
+                                    color: 'success.contrastText',
+                                    borderBottomLeftRadius: '8px',
+                                    borderBottomRightRadius: '8px',
+                                    boxShadow: 3,
+                                    transition: 'background-color 0.3s ease',
+                                }}>
+                                    <Typography variant="h4" gutterBottom>
+                                        {username}的点赞
+                                    </Typography>
+                                    {isLoading ? (
+                                        <Typography>加载中...</Typography>
+                                    ) : (
+                                        <Grid container spacing={2}>
+                                            {likedComments.map((comment) => (
+                                                <Grid item xs={12} key={comment.id}>
+                                                    <Card>
+                                                        <CardContent>
+                                                            <Typography variant="body1">{comment.content}</Typography>
+                                                            <Typography variant="caption" color="textSecondary">
+                                                                {comment.userId}
+                                                            </Typography>
                                                         </CardContent>
                                                     </Card>
                                                 </Grid>

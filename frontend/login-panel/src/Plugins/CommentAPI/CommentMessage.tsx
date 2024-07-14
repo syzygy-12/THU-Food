@@ -65,6 +65,18 @@ export class CommentModifyMessage extends CommentMessage {
     }
 }
 
+export class CommentQueryByIdListMessage extends CommentMessage {
+    idList: number[];
+    constructor(idList: number[]) {
+        super()
+        this.idList = idList;
+        Object.defineProperty(this, 'type', {
+            value: 'CommentQueryByIdListMessage',
+            writable: false
+        });
+    }
+}
+
 export class CommentQueryByObjectMessage extends CommentMessage {
     objectId: number;
     commentType: number;
@@ -122,9 +134,9 @@ export class ScoreHistogramFlipMessage extends CommentMessage {
 }
 
 export class CommentTestMessage extends CommentMessage {
-    userId: number;
-    objectId: number;
-    commentType: number;
+    userId: number
+    objectId: number
+    commentType: number
     constructor(userId: number, objectId: number, commentType: number) {
         super()
         this.userId = userId;

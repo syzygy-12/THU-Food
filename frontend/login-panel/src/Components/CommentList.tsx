@@ -5,16 +5,17 @@ import { Comment } from 'Plugins/Models/Comment';
 
 interface CommentListProps {
     comments: Comment[];
+    userId: number;
 }
 
-const CommentList: React.FC<CommentListProps> = ({ comments }) => {
+const CommentList: React.FC<CommentListProps> = ({ comments, userId }) => {
     return (
         <Box sx={{ marginTop: '16px' }}>
 
             <Typography variant="h6">评论列表</Typography>
 
             {comments.map((comment) => (
-                <CommentCard key={comment.id} comment={comment} />
+                <CommentCard comment={comment} userId={userId}/>
             ))}
         </Box>
     );

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { Button, Container, Typography, Box, Grid, Card, CardContent, Toolbar, TextField } from '@mui/material';
 import { CommentType, createComment, deleteComment, queryCommentByObject } from 'Plugins/CommentAPI/CommentExecution'
 import { Comment } from 'Plugins/Models/Comment';
@@ -11,6 +11,7 @@ interface RouteParams {
 
 export function CommentPage() {
     const params = useParams<RouteParams>();
+    const history = useHistory();
     const [comments, setComments] = useState<Comment[]>([]);
     const [newComment, setNewComment] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -46,6 +47,10 @@ export function CommentPage() {
         }
     };
 
+    const handleNavigateToAdminPage = () => {
+        history.push(`/admin/${currentEntryId}`);
+    };
+
     if (isLoading)
         return <div>Loading...</div>;
 
@@ -63,6 +68,14 @@ export function CommentPage() {
                 <Typography variant="h4" gutterBottom>
                     Comments for Entry {currentEntryId}
                 </Typography>
+                <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={handleNavigateToAdminPage}
+                    sx={{ mb: 4 }}
+                >
+                    Go to Admin Page
+                </Button>
                 <TextField
                     label="Write a comment"
                     variant="outlined"

@@ -5,7 +5,7 @@ import {
     CommentDeleteMessage, CommentModifyMessage, CommentQueryByObjectMessage,
     CommentQueryByUserMessage,
     CommentLikesQueryMessage,
-    ScoreHistogramFlipMessage, CommentQueryMessage, CommentTestMessage,
+    ScoreHistogramFlipMessage, CommentQueryMessage, CommentTestMessage, CommentQueryByIdListMessage,
 } from 'Plugins/CommentAPI/CommentMessage'
 
 export enum CommentType {
@@ -42,8 +42,7 @@ export const modifyComment = async (id: number, content: string): Promise<boolea
 
 export const testComment = async (userId: number, objectId: number, commentType: CommentType): Promise<boolean> => {
     const message = new CommentTestMessage(userId, objectId, commentType);
-    const result = await sendPostRequest(message);
-    return result;
+    return await sendPostRequest(message);
 }
 
 export const queryComment = async (userId: number, objectId: number, commentType: CommentType): Promise<Comment> => {
@@ -54,6 +53,19 @@ export const queryComment = async (userId: number, objectId: number, commentType
         ...comment,
         createdAt: formatTimestamp(comment.createdAt)
     };
+}
+
+export const queryCommentByIdList = async (idList: number[]): Promise<Comment[]> => {
+    const message = new CommentQueryByIdListMessage(idList);
+    const result = await sendPostRequest(message);
+    const commentList = JSON.parse(result);
+    if (Array.isArray(commentList)) {
+        return commentList.map(comment => ({
+            ...comment,
+            createdAt: formatTimestamp(comment.createdAt)
+        }));
+    }
+    return [];
 }
 
 export const queryCommentByObject = async (objectId: number, commentType: CommentType): Promise<Comment[]> => {

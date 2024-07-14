@@ -29,6 +29,7 @@ export function ExplorePage() {
     const fetchData = async () => {
         const entryTestResult = await testEntry(currentEntryId);
         setEntryExists(entryTestResult);
+        console.log('entryTestResult', entryTestResult); // 调试日志
         if (entryTestResult) {
             const [cardInfo, sonCardInfoList, grandsonCardInfoList, isStarred] = await Promise.all([
                 getCardInfo(currentEntryId),
