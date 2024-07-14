@@ -52,16 +52,16 @@ export function ExplorePage() {
     };
 
     const handleCreateAndUpdate = async () => {
-        await createEntry(currentEntryId, cardInfo.fatherId);
+        await createEntry(currentEntryId, cardInfo.fatherID);
         fetchData();
     };
 
     const handleDelete = async () => {
-        const fatherId = cardInfo.fatherId;
-        if (fatherId == 0) console.log("Error: 无法删除根目录！");
+        const fatherID = cardInfo.fatherID;
+        if (fatherID == 0) console.log("Error: 无法删除根目录！");
         else {
             await deleteEntry(currentEntryId);
-            history.push(`/explore/${fatherId}`);
+            history.push(`/explore/${fatherID}`);
         }
     };
 
@@ -80,9 +80,6 @@ export function ExplorePage() {
     if (!entryExists)
         return (
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <TopBar data={topBarData} />
-                <Toolbar />
-
                 <div>页面不存在!</div>
             </Box>
         );
@@ -90,10 +87,12 @@ export function ExplorePage() {
     if (cardInfo == null)
         return (
             <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-                <TopBar data={topBarData} />
-                <Toolbar />
+
+                <div>cardInfo 为空！</div>
             </Box>
         );
+
+
 
     return (
         <div style={{
@@ -101,24 +100,38 @@ export function ExplorePage() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             minHeight: '100vh',
+            maxHeight: '100vh',
             display: 'flex',
             flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center'
         }}>
             <TopBar data={topBarData} />
-            <Toolbar />
-
-            <ExplorePanel
-                cardInfo={cardInfo}
-                sonCardInfoList={sonCardInfoList}
-                grandsonCardInfoList={grandsonCardInfoList}
-                handleNavigation={handleNavigation}
-                handleCreateAndUpdate={handleCreateAndUpdate}
-                handleDelete={handleDelete}
-                handleStarToggle={handleStarToggle}
-                isStarred={isStarred}
+            <Box
+                sx={{
+                    minHeight: '128px',
+                    maxHeight: '128px',
+                    width: '100%',
+                }}
             />
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flex: 1,
+                    overflow: 'hidden', // 确保 ExplorePanel 内部不会出现滚动条
+                    width: '100%',
+                }}
+            >
+                <ExplorePanel
+                    cardInfo={cardInfo}
+                    sonCardInfoList={sonCardInfoList}
+                    grandsonCardInfoList={grandsonCardInfoList}
+                    handleNavigation={handleNavigation}
+                    handleCreateAndUpdate={handleCreateAndUpdate}
+                    handleDelete={handleDelete}
+                    handleStarToggle={handleStarToggle}
+                    isStarred={isStarred}
+                />
+            </Box>
         </div>
     );
 }

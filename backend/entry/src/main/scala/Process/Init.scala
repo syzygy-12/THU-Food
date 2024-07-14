@@ -22,19 +22,22 @@ object Init {
         s"""
            |CREATE TABLE IF NOT EXISTS ${schemaName}.${tableName} (
            |  id SERIAL PRIMARY KEY,
-           |  fatherid INT,
-           |  grandfatherid INT,
+           |  father_id INT,
+           |  grandfather_id INT,
            |  name TEXT,
            |  stars INT,
-           |  scoreHistogram INT[]
+           |  score_histogram INT[],
+           |  is_hidden BOOLEAN,
+           |  is_new BOOLEAN,
+           |  is_food BOOLEAN,
+           |  article TEXT,
+           |  image TEXT
            |)
            |""".stripMargin, List()
       )
-      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_fatherid ON ${schemaName}.${tableName} (fatherid)", List() )
-      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_grandfatherid ON ${schemaName}.${tableName} (grandfatherid)", List() )
-      checkRootExists <- readDBBoolean(s"SELECT EXISTS(SELECT 1 FROM ${schemaName}.${tableName} WHERE id = ?)",
-        List(SqlParameter("Int", Integer.toString(1)))
-      )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_father_id ON ${schemaName}.${tableName} (father_id)", List() )
+      _ <- writeDB( s"CREATE INDEX IF NOT EXISTS idx_grandfather_id ON ${schemaName}.${tableName} (grandfather_id)", List() )
+      checkRootExists <- readDBBoolean(s"SELECT EXISTS(SELECT 1 FROM ${schemaName}.${tableName} WHERE id = 1)", List())
       _ <- if (!checkRootExists) {
           entryCreate(0, 0)
         } else {

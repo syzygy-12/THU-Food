@@ -7,14 +7,11 @@ import Common.ServiceUtils.*
 import cats.effect.IO
 import io.circe.generic.auto.*
 
-object StarsModifyUtils {
-  def starsModify(id: Int, likes: Int)(using planContext: PlanContext): IO[Boolean] = {
+object IsHiddenModifyUtils {
+  def isHiddenModify(id: Int, isHidden: Boolean)(using planContext: PlanContext): IO[Boolean] = {
     // 查询数据库中的记录
-    val ret = writeDB(s"UPDATE ${schemaName}.${tableName} SET stars = ? WHERE id = ?",
-      List(
-        SqlParameter("Int", likes.toString),
-        SqlParameter("Int", id.toString)
-      )
+    val ret = writeDB(s"UPDATE ${schemaName}.${tableName} SET is_hidden = ${isHidden.toString} WHERE id = ?",
+      List(SqlParameter("Int", id.toString))
     )
 
     ret.flatMap { retString =>

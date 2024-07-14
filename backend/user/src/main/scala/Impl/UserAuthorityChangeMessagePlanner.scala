@@ -2,7 +2,6 @@ package Impl
 
 import Common.API.{PlanContext, Planner}
 import Utils.UserAuthorityChangeUtils.userAuthorityChange
-import Utils.UserPasswordChangeUtils.userPasswordChange
 import cats.effect.IO
 import io.circe.generic.auto.*
 

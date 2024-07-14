@@ -34,13 +34,23 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentIdInsertMessage" =>
-        IO(decode[CommentIdInsertMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentIdInsertMessage")))
+      case "UserInfoQueryMessage" =>
+        IO(decode[UserInfoQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for UserInfoQueryMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentIdListQueryMessage" =>
-        IO(decode[CommentIdListQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentIdListQueryMessage")))
+      case "UserInfoQueryByIdListMessage" =>
+        IO(decode[UserInfoQueryByIdListMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for UserInfoQueryByIdListMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "UserAvatarChangeMessage" =>
+        IO(decode[UserAvatarChangeMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for UserAvatarChangeMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "UserNicknameChangeMessage" =>
+        IO(decode[UserNicknameChangeMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for UserNicknameChangeMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }

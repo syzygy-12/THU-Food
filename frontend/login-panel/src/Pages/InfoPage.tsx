@@ -25,7 +25,7 @@ export function InfoPage() {
     //     const result = await getNodeById(currentNodeId);
     //     if (!result) {
     //         if (currentNodeId === 0) {
-    //             const rootNode: Node = { id: 0, son: [], fatherId: undefined, entryId: undefined};
+    //             const rootNode: Node = { id: 0, son: [], fatherID: undefined, entryId: undefined};
     //             await createNode(0, rootNode);
     //             setNode(rootNode); // 设置根节点
     //         } else {
@@ -99,7 +99,7 @@ export function InfoPage() {
             {/*                        当前id:{currentNode?.id}*/}
             {/*                    </Typography>*/}
             {/*                    <Typography variant="body1" component="div">*/}
-            {/*                        父亲id:{currentNode?.fatherId}*/}
+            {/*                        父亲id:{currentNode?.fatherID}*/}
             {/*                    </Typography>*/}
             {/*                    <Typography variant="body1" component="div">*/}
             {/*                        儿子id:{currentNode?.son}*/}

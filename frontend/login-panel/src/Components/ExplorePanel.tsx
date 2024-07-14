@@ -26,9 +26,16 @@ const ExplorePanel: React.FC<ExplorePanelProps> = ({
                                                        handleStarToggle,
                                                        isStarred
                                                    }) => {
-    if (grandsonCardInfoList.length === 0) {
+    if (sonCardInfoList.length >= 1 && sonCardInfoList[0].isFood) {
         return (
-            <Box className="bigcardlist-scrollbar" sx={{ overflow: 'hidden', flexGrow: 1, display: 'flex', flexDirection: 'column', mt: 6, mb: 2, width: '100%', paddingLeft: 0, paddingRight: 0, boxSizing: 'border-box' }}>
+            <Box
+                sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    overflow: 'hidden',
+                }}
+            >
                 <ExploreHead
                     cardInfo={cardInfo}
                     handleNavigation={handleNavigation}
@@ -37,7 +44,14 @@ const ExplorePanel: React.FC<ExplorePanelProps> = ({
                     handleStarToggle={handleStarToggle}
                     isStarred={isStarred}
                 />
-                <Box className="bigcardlist-scrollbar" sx={{ overflow: 'hidden', flexGrow: 1, display: 'flex', width: '100%', paddingLeft: 0, paddingRight: 0, boxSizing: 'border-box' }}>
+                <Box
+                    sx={{
+                        flex: 1,
+                        display: 'flex',
+                        overflow: 'hidden',
+                        paddingTop: '16px'
+                    }}
+                >
                     <SpecialBigCardList
                         cardInfoList={sonCardInfoList}
                         handleNavigation={handleNavigation}

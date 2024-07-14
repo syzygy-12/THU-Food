@@ -1,8 +1,8 @@
 import { EntryCreateMessage, EntryDeleteMessage, EntryTestMessage } from 'Plugins/EntryAPI/EntryMessage'
 import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 
-export const createEntry = async (fatherId: number, grandfatherId: number): Promise<number> => {
-    const message = new EntryCreateMessage(fatherId, grandfatherId);
+export const createEntry = async (fatherID: number, grandfatherID: number): Promise<number> => {
+    const message = new EntryCreateMessage(fatherID, grandfatherID);
     return await sendPostRequest(message); // 直接返回结果
 }
 

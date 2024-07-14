@@ -58,6 +58,36 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "ImageModifyMessage" =>
+        IO(decode[ImageModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for imageModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "IsNewModifyMessage" =>
+        IO(decode[IsNewModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for IsNewModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "IsFoodModifyMessage" =>
+        IO(decode[IsFoodModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for IsFoodModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "IsHiddenModifyMessage" =>
+        IO(decode[IsHiddenModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for IsHiddenModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "ArticleModifyMessage" =>
+        IO(decode[ArticleModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for ArticleModifyMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "ArticleQueryMessage" =>
+        IO(decode[ArticleQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for ArticleQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

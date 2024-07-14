@@ -5,34 +5,22 @@ export class CardInfoQueryMessage extends EntryMessage {
     constructor(id : number) {
         super();
         this.id = id;
-        Object.defineProperty(this, 'type', {
-            value: 'CardInfoQueryMessage',
-            writable: false
-        });
     }
 }
 
 export class CardInfoQueryByFatherMessage extends EntryMessage {
-    fatherId: number
-    constructor(fatherId: number) {
+    fatherID: number
+    constructor(fatherID: number) {
         super();
-        this.fatherId = fatherId;
-        Object.defineProperty(this, 'type', {
-            value: 'CardInfoQueryByFatherMessage',
-            writable: false
-        });
+        this.fatherID = fatherID;
     }
 }
 
 export class CardInfoQueryByGrandfatherMessage extends EntryMessage {
-    grandfatherId: number
-    constructor(grandfatherId: number) {
+    grandfatherID: number
+    constructor(grandfatherID: number) {
         super();
-        this.grandfatherId = grandfatherId;
-        Object.defineProperty(this, 'type', {
-            value: 'CardInfoQueryByGrandfatherMessage',
-            writable: false
-        });
+        this.grandfatherID = grandfatherID;
     }
 }
 
@@ -41,9 +29,45 @@ export class CardInfoQueryByIdListMessage extends EntryMessage {
     constructor(idList: number[]) {
         super();
         this.idList = idList;
-        Object.defineProperty(this, 'type', {
-            value: 'CardInfoQueryByIdListMessage',
-            writable: false
-        });
+    }
+}
+
+export class ImageModifyMessage extends EntryMessage {
+    id: number
+    newImage: string
+    constructor(id: number, newImage: string) {
+        super();
+        this.id = id;
+        this.newImage = newImage;
+    }
+}
+
+export class IsNewModifyMessage extends EntryMessage {
+    id: number
+    isNew: boolean
+    constructor(id: number, isNew: boolean) {
+        super();
+        this.id = id;
+        this.isNew = isNew;
+    }
+}
+
+export class IsFoodModifyMessage extends EntryMessage {
+    id: number
+    isFood: boolean
+    constructor(id: number, isFood: boolean) {
+        super();
+        this.id = id;
+        this.isFood = isFood;
+    }
+}
+
+export class IsHiddenModifyMessage extends EntryMessage {
+    id: number
+    isHidden: boolean
+    constructor(id: number, isHidden: boolean) {
+        super();
+        this.id = id;
+        this.isHidden = isHidden;
     }
 }

@@ -17,12 +17,12 @@ export class EntryTestMessage extends EntryMessage {
 }
 
 export class EntryCreateMessage extends EntryMessage {
-    fatherId: number
-    grandfatherId: number
-    constructor(fatherId: number, grandfatherId : number) {
+    fatherID: number
+    grandfatherID: number
+    constructor(fatherID: number, grandfatherID : number) {
         super();
-        this.fatherId = fatherId;
-        this.grandfatherId = grandfatherId;
+        this.fatherID = fatherID;
+        this.grandfatherID = grandfatherID;
         Object.defineProperty(this, 'type', {
             value: 'EntryCreateMessage',
             writable: false

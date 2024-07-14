@@ -43,7 +43,7 @@ const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation 
             onMouseLeave={handleMouseLeave}
         >
             <Card
-                onClick={() => handleNavigation(`/info/${cardInfo.id}`)}
+                onClick={() => handleNavigation(`/explore/${cardInfo.id}`)}
                 sx={{
                     cursor: 'pointer',
                     width: '100%',

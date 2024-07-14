@@ -11,13 +11,20 @@ import io.circe.syntax.*
 
 object EntryCreateUtils {
 
-  def entryCreate(fatherId: Int, grandfatherId: Int)(using planContext: PlanContext): IO[Int] = {
+  def entryCreate(fatherID: Int, grandfatherID: Int)(using planContext: PlanContext): IO[Int] = {
 
-    val query = s"INSERT INTO ${schemaName}.${tableName} (fatherid, grandfatherid, name, stars, scorehistogram) VALUES (?, ?, ?, 0, '{0,0,0,0,0}') RETURNING id"
+    val query =
+      s"""
+         |INSERT INTO ${schemaName}.${tableName}
+         |(father_id, grandfather_id, name, stars, score_histogram, is_hidden, is_new, is_food, article, image)
+         |VALUES (?, ?, ?, 0, '{0,0,0,0,0}', TRUE, TRUE, FALSE, ?, ?)
+         |RETURNING id""".stripMargin
     val parameters = List(
-      SqlParameter("Int", fatherId.toString),
-      SqlParameter("Int", grandfatherId.toString),
-      SqlParameter("String", "new")
+      SqlParameter("Int", fatherID.toString),
+      SqlParameter("Int", grandfatherID.toString),
+      SqlParameter("String", "new"),
+      SqlParameter("String", "empty"),
+      SqlParameter("String", "url")
     )
 
     readDBRows(query, parameters).flatMap {

@@ -7,12 +7,12 @@ import Common.ServiceUtils.*
 import cats.effect.IO
 import io.circe.generic.auto.*
 
-object StarsModifyUtils {
-  def starsModify(id: Int, likes: Int)(using planContext: PlanContext): IO[Boolean] = {
+object ArticleModifyUtils {
+  def articleModify(id: Int, newArticle: String)(using planContext: PlanContext): IO[Boolean] = {
     // 查询数据库中的记录
-    val ret = writeDB(s"UPDATE ${schemaName}.${tableName} SET stars = ? WHERE id = ?",
+    val ret = writeDB(s"UPDATE ${schemaName}.${tableName} SET article = ? WHERE id = ?",
       List(
-        SqlParameter("Int", likes.toString),
+        SqlParameter("String", newArticle),
         SqlParameter("Int", id.toString)
       )
     )

@@ -49,3 +49,43 @@ export class UserAuthorityChangeMessage extends UserMessage {
         this.newAuthority = newAuthority;
     }
 }
+
+export class UserInfoQueryMessage extends UserMessage {
+    id: number;
+
+    constructor(id: number) {
+        super();
+        this.id = id;
+    }
+}
+
+export class UserInfoQueryByIdListMessage extends UserMessage {
+    idList: number[];
+
+    constructor(idList: number[]) {
+        super();
+        this.idList = idList;
+    }
+}
+
+export class UserNicknameChangeMessage extends UserMessage {
+    id: number;
+    newNickname: string;
+
+    constructor(id: number, newNickname: string) {
+        super();
+        this.id = id;
+        this.newNickname = newNickname;
+    }
+}
+
+export class UserAvatarChangeMessage extends UserMessage {
+    id: number;
+    newAvatar: string;
+
+    constructor(id: number, newAvatar: string) {
+        super();
+        this.id = id;
+        this.newAvatar = newAvatar;
+    }
+}

@@ -15,7 +15,7 @@ interface BigCardListProps {
 
 export const generateBigCardInfoList = (sonCardInfoList: CardInfo[], grandCardInfoList: CardInfo[]): BigCardInfo[] => {
     return sonCardInfoList.map(sonCardInfo => {
-        const smallCardInfoList = grandCardInfoList.filter(grandCardInfo => grandCardInfo.fatherId === sonCardInfo.id);
+        const smallCardInfoList = grandCardInfoList.filter(grandCardInfo => grandCardInfo.fatherID === sonCardInfo.id);
         return {
             cardInfo: sonCardInfo,
             smallCardInfoList: smallCardInfoList

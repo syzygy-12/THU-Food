@@ -2,7 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { TextField, Button, Container, Typography, Box, Toolbar, AppBar } from '@mui/material';
 import { createEntry, deleteEntry, testEntry } from 'Plugins/EntryAPI/EntryExecution'
-import { userAuthorityChange, userPasswordChange } from 'Plugins/UserAPI/UserExecution'
+import {
+    changeUserAvatar, changeUserNickname,
+    getUserInfo,
+    getUserInfoByIdList,
+    userAuthorityChange,
+    userPasswordChange,
+} from 'Plugins/UserAPI/UserExecution'
 import {
     CommentType,
     createComment,
@@ -16,9 +22,15 @@ import {
     StarType,
     testStar,
 } from 'Plugins/StarAPI/StarExecution'
-import { getCardInfo, getCardInfoByFather, getCardInfoByGrandfather } from 'Plugins/EntryAPI/CardInfoExecution'
+import {
+    changeImage, changeIsFood, changeIsHidden, changeIsNew,
+    getCardInfo,
+    getCardInfoByFather,
+    getCardInfoByGrandfather,
+} from 'Plugins/EntryAPI/CardInfoExecution'
 import ScoreCard from '../Components/ScoreCard'
 import SmallScoreCard from '../Components/SmallScoreCard'
+import { changeArticle, getArticle } from 'Plugins/EntryAPI/ArticleExecution'
 
 
 
@@ -77,7 +89,6 @@ export function TestPage() {
 
     const scoreHistogram = [0, 0, 0, 0, 0]; // 示例数据
 
-
     /*
     <h1>Image Viewer</h1>
             <img id="image" src={imageSrcLow} alt="Loaded Image" />
@@ -87,8 +98,54 @@ export function TestPage() {
             </div>
      */
 
+    const handleClick1 =  () => {
+        const ret = getCardInfo(1);
+        console.log(ret)
+    };
+
+    const handleClick6 =  () => {
+        const ret = changeImage(1, "imageurl!!");
+        console.log(ret)
+    };
+
+    const handleClick7 =  () => {
+        const ret = changeIsNew(1, false);
+        console.log(ret)
+    };
+
+    const handleClick8 =  () => {
+        const ret = changeIsFood(1, true);
+        console.log(ret)
+    };
+
+    const handleClick9 =  () => {
+        const ret = changeIsHidden(1, false);
+        console.log(ret)
+    };
+
     return (
         <div id="app">
+
+            <Button variant="contained" onClick={handleClick1} sx={{ ml: 2 }}>
+                查询 CardInfo
+            </Button>
+
+            <Button variant="contained" onClick={handleClick6} sx={{ ml: 2 }}>
+                修改 image
+            </Button>
+
+            <Button variant="contained" onClick={handleClick7} sx={{ ml: 2 }}>
+                修改 isNew
+            </Button>
+
+            <Button variant="contained" onClick={handleClick8} sx={{ ml: 2 }}>
+                修改 isFood
+            </Button>
+
+            <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
+                修改 isHidden
+            </Button>
+
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                 <ScoreCard scoreHistogram={scoreHistogram} />
             </div>

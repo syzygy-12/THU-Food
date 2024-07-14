@@ -28,7 +28,8 @@ object Init {
            |  username TEXT,
            |  password TEXT,
            |  authority INT,
-           |  "commentIdList" INT[]
+           |  nickname TEXT,
+           |  avatar TEXT
            |)
            |""".stripMargin, List()
       )
