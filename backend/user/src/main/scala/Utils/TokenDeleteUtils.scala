@@ -10,7 +10,7 @@ import io.circe.generic.auto.deriveEncoder
 object TokenDeleteUtils {
   def deleteToken(token: String)(using planContext: PlanContext) : IO[Unit] = {
     writeDB(
-      s"DELETE FROM ${schemaName}.token WHERE token = ?",
+      s"DELETE FROM \"${schemaName}\".token WHERE token = ?",
       List(SqlParameter("String", token))
     ).map(_ => IO.unit)
   }

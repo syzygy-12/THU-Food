@@ -36,7 +36,7 @@ object Init {
       _ <- writeDB(
         s"""
            |CREATE TABLE IF NOT EXISTS "${schemaName}".token (
-           |  token INT PRIMARY KEY,
+           |  token TEXT PRIMARY KEY,
            |  userid INT,
            |  authority INT,
            |  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP

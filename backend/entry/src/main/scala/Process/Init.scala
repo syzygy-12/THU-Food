@@ -25,6 +25,7 @@ object Init {
            |  father_id INT,
            |  grandfather_id INT,
            |  name TEXT,
+           |  path TEXT,
            |  stars INT,
            |  score_histogram INT[],
            |  is_hidden BOOLEAN,

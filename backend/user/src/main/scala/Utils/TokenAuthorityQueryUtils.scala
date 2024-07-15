@@ -9,7 +9,7 @@ import io.circe.generic.auto.deriveEncoder
 
 object TokenAuthorityQueryUtils {
   def queryTokenAuthority(token: String)(using planContext: PlanContext) : IO[Int] = {
-    val query = s"SELECT authority FROM ${schemaName}.token WHERE token = ?"
+    val query = s"SELECT authority FROM \"${schemaName}\".token WHERE token = ?"
     val parameters = List(SqlParameter("String", token))
 
     readDBRows(query, parameters).flatMap {

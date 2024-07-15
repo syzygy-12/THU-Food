@@ -17,15 +17,14 @@ def generateRandomBase64String(length: Int): String = {
 }
 
 object TokenCreateUtils {
-  def createToken(userId: Int, authority: Int)(using planContext: PlanContext) : String = {
+  def createToken(userId: Int, authority: Int)(using planContext: PlanContext) : IO[String] = {
     val newToken = generateRandomBase64String(16)
     val query = s"INSERT INTO \"${schemaName}\".token (token, userid, authority) VALUES (?, ?, ?)"
     val parameters = List(
-      SqlParameter("String", generateRandomBase64String(16)),
+      SqlParameter("String", newToken),
       SqlParameter("Int", userId.toString),
       SqlParameter("Int", authority.toString)
     )
-    writeDB(query, parameters)
-    newToken
+    writeDB(query, parameters).map(_ => newToken)
   }
 }

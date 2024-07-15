@@ -48,6 +48,11 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "CardInfoQueryBySearchMessage" =>
+        IO(decode[CardInfoQueryBySearchMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CardInfoQueryBySearchMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case "EntryStarsIncrementMessage" =>
         IO(decode[EntryStarsIncrementMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for EntryStarIncrementMessage")))
           .flatMap{m=>
@@ -55,6 +60,11 @@ object Routes {
           }
       case "ScoreHistogramIncrementMessage" =>
         IO(decode[ScoreHistogramIncrementMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for ScoreHistogramIncrementMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "NameModifyMessage" =>
+        IO(decode[NameModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for NameModifyMessage")))
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
