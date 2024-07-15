@@ -6,8 +6,6 @@ import {
     changeUserAvatar, changeUserNickname,
     getUserInfo,
     getUserInfoByIdList,
-    userAuthorityChange,
-    userPasswordChange,
 } from 'Plugins/UserAPI/UserExecution'
 import {
     CommentType,
