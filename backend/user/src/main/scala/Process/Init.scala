@@ -33,5 +33,15 @@ object Init {
            |)
            |""".stripMargin, List()
       )
+      _ <- writeDB(
+        s"""
+           |CREATE TABLE IF NOT EXISTS "${schemaName}".token (
+           |  token INT PRIMARY KEY,
+           |  userid INT,
+           |  authority INT,
+           |  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+           |)
+           |""".stripMargin, List()
+      )
     } yield ()
 }

@@ -31,6 +31,7 @@ import {
 import ScoreCard from '../Components/ScoreCard'
 import SmallScoreCard from '../Components/SmallScoreCard'
 import { changeArticle, getArticle } from 'Plugins/EntryAPI/ArticleExecution'
+import { createAd, deleteAd, getAdList, modifyAd } from 'Plugins/AdvertisementAPI/AdvertisementExecution'
 
 
 
@@ -99,27 +100,22 @@ export function TestPage() {
      */
 
     const handleClick1 =  () => {
-        const ret = getCardInfo(1);
+        const ret = createAd();
         console.log(ret)
     };
 
-    const handleClick6 =  () => {
-        const ret = changeImage(1, "imageurl!!");
+    const handleClick2 =  () => {
+        const ret = deleteAd(1);
         console.log(ret)
     };
 
-    const handleClick7 =  () => {
-        const ret = changeIsNew(1, false);
+    const handleClick3 =  () => {
+        const ret = modifyAd(2, 233,"ima");
         console.log(ret)
     };
 
-    const handleClick8 =  () => {
-        const ret = changeIsFood(1, true);
-        console.log(ret)
-    };
-
-    const handleClick9 =  () => {
-        const ret = changeIsHidden(1, false);
+    const handleClick4=  () => {
+        const ret = getAdList();
         console.log(ret)
     };
 
@@ -127,23 +123,19 @@ export function TestPage() {
         <div id="app">
 
             <Button variant="contained" onClick={handleClick1} sx={{ ml: 2 }}>
-                查询 CardInfo
+                新建广告
             </Button>
 
-            <Button variant="contained" onClick={handleClick6} sx={{ ml: 2 }}>
-                修改 image
+            <Button variant="contained" onClick={handleClick2} sx={{ ml: 2 }}>
+                删除广告
             </Button>
 
-            <Button variant="contained" onClick={handleClick7} sx={{ ml: 2 }}>
-                修改 isNew
+            <Button variant="contained" onClick={handleClick3} sx={{ ml: 2 }}>
+                修改广告
             </Button>
 
-            <Button variant="contained" onClick={handleClick8} sx={{ ml: 2 }}>
-                修改 isFood
-            </Button>
-
-            <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
-                修改 isHidden
+            <Button variant="contained" onClick={handleClick4} sx={{ ml: 2 }}>
+                查询广告
             </Button>
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>

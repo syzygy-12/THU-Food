@@ -8,6 +8,7 @@ import Common.DBAPI.{readDBRows, readDBString}
 import Common.Object.SqlParameter
 import Common.ServiceUtils.schemaName
 import Models.UserLoginResponse
+import Utils.TokenCreateUtils.createToken
 
 // 定义一个 case class 来表示登录响应
 object UserLoginUtils {
@@ -26,7 +27,8 @@ object UserLoginUtils {
             // 解析 JSON 对象
             val id = row.hcursor.get[Int]("id").getOrElse(-1)
             val authority = row.hcursor.get[Int]("authority").getOrElse(-1)
-            UserLoginResponse(valid = true, Some(id))
+            val token = createToken(id, authority)
+            UserLoginResponse(valid = true, Some(id), Some(token))
           case None =>
             UserLoginResponse(valid = false)
         }

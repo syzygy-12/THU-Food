@@ -24,7 +24,7 @@ const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, h
                       paddingLeft: '64px',
                       paddingTop: '24px',
                       paddingRight: '64px',
-                      paddingBottom: '48px',
+                      paddingBottom: '80px',
                   }}
             >
                 {cardInfoList.map((cardInfo, index) => (

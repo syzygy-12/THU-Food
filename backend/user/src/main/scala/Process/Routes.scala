@@ -54,6 +54,21 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "TokenDeleteMessage" =>
+        IO(decode[TokenDeleteMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for TokenDeleteMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "TokenUserIdQueryMessage" =>
+        IO(decode[TokenUserIdQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for TokenUserIdQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
+      case "TokenAuthorityQueryMessage" =>
+        IO(decode[TokenAuthorityQueryMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for TokenAuthorityQueryMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

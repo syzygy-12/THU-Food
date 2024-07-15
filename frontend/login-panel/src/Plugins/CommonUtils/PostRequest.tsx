@@ -20,7 +20,12 @@ function handleErrorResponse(error: any)  {
 
 export const sendPostRequest = async (message: API): Promise<any> => {
     try {
-        const response = await axios.post(message.getURL(), JSON.stringify(message), {
+        const token = localStorage.getItem('token') || '';
+        const messageWithToken = {
+            ...message,
+            token: token
+        };
+        const response = await axios.post(message.getURL(), JSON.stringify(messageWithToken), {
             headers: { 'Content-Type': 'application/json' },
         });
         console.log('Response status:', response.status);

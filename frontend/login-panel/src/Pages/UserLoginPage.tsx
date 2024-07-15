@@ -16,6 +16,7 @@ export function UserLogin() {
         if (result.valid) {
             localStorage.setItem('username', username); // 将用户名存储在本地存储中
             localStorage.setItem('userId', result.id.toString());
+            localStorage.setItem('token', result.token);
             history.push('/home');
         } else if (!result.valid) {
             setOpen(true); // 显示弹窗

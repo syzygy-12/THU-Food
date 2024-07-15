@@ -40,6 +40,7 @@ export const TopBar: React.FC<TopBarProps> = ({ data }) => {
     const handleLogout = () => {
         localStorage.removeItem('username');
         localStorage.removeItem('userId');
+        localStorage.removeItem('token');
         handleMenuClose();
         history.push('/home');
         window.location.reload();

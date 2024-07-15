@@ -12,4 +12,5 @@ export interface UserInfo {
 export interface UserLoginResponse {
     valid: boolean
     id: number
+    token: string
 }
