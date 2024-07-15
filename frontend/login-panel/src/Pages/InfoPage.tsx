@@ -138,14 +138,15 @@ export function InfoPage() {
                     justifyContent: 'center',
                 }}
             >
-                <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={handleNavigateToAdminPage}
-                >
-                    Go to Admin Page
-                </Button>
+
             </Box>
+            <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleNavigateToAdminPage}
+            >
+                Go to Admin Page
+            </Button>
         </Box>
     );
 }

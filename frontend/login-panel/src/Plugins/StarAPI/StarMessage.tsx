@@ -14,10 +14,6 @@ export class StarTestMessage extends StarMessage {
         this.userId = userId;
         this.objectId = objectId;
         this.starType  = starType;
-        Object.defineProperty(this, 'type', {
-            value: 'StarTestMessage',
-            writable: false
-        });
     }
 }
 
@@ -31,10 +27,6 @@ export class StarCreateMessage extends StarMessage {
         this.userId = userId;
         this.objectId = objectId;
         this.starType  = starType;
-        Object.defineProperty(this, 'type', {
-            value: 'StarCreateMessage',
-            writable: false
-        });
     }
 }
 
@@ -48,10 +40,6 @@ export class StarDeleteMessage extends StarMessage {
         this.userId = userId;
         this.objectId = objectId;
         this.starType  = starType;
-        Object.defineProperty(this, 'type', {
-            value: 'StarDeleteMessage',
-            writable: false
-        });
     }
 }
 
@@ -65,10 +53,6 @@ export class StarFlipMessage extends StarMessage {
         this.userId = userId;
         this.objectId = objectId;
         this.starType  = starType;
-        Object.defineProperty(this, 'type', {
-            value: 'StarFlipMessage',
-            writable: false
-        });
     }
 }
 
@@ -80,9 +64,19 @@ export class StaredObjectIdListQueryMessage extends StarMessage {
         super();
         this.userId = userId;
         this.starType  = starType;
-        Object.defineProperty(this, 'type', {
-            value: 'StaredObjectIdListQueryMessage',
-            writable: false
-        });
     }
 }
+
+export class StarTestByUserIdAndObjectIdListMessage extends StarMessage {
+    userId : number
+    objectIdList: number[]
+    starType : number
+
+    constructor(userId : number, objectIdList: number[], starType : number) {
+        super();
+        this.userId = userId;
+        this.objectIdList  = objectIdList;
+        this.starType  = starType;
+    }
+}
+

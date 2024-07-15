@@ -12,7 +12,7 @@ interface SmallCardProps {
 const SpecialBigCardWidth = 288;
 const SpecialBigCardHeight = 240;
 
-const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation, showPath = false}) => {
+const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation, showPath}) => {
     const [isHovered, setIsHovered] = useState(false);
     const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
 

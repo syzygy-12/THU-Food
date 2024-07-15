@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Typography, Paper, Avatar, IconButton } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Typography, Paper, IconButton, Button } from '@mui/material';
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 import ThumbUpOutlinedIcon from '@mui/icons-material/ThumbUpOutlined';
 import { Comment } from 'Plugins/Models/Comment';
 import { formatDistanceToNow } from 'date-fns';
-import { testStar, flipStar, StarType } from 'Plugins/StarAPI/StarExecution';
+import { flipStar, StarType } from 'Plugins/StarAPI/StarExecution';
+import { ImageComponent2 } from './Image';
 
 interface CommentCardProps {
     comment: Comment;
@@ -12,16 +13,8 @@ interface CommentCardProps {
 }
 
 const CommentCard: React.FC<CommentCardProps> = ({ comment, userId }) => {
-    const [isLiked, setIsLiked] = useState<boolean>(false);
+    const [isLiked, setIsLiked] = useState<boolean>(comment.liked);
     const [likeCount, setLikeCount] = useState<number>(comment.likes);
-
-    useEffect(() => {
-        const fetchLikeStatus = async () => {
-            const liked = await testStar(userId, comment.id, StarType.LikeForComment);
-            setIsLiked(liked);
-        };
-        fetchLikeStatus();
-    }, [userId, comment.id]);
 
     const handleLikeToggle = async () => {
         const newIsLiked = await flipStar(userId, comment.id, StarType.LikeForComment);
@@ -33,10 +26,20 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, userId }) => {
     return (
         <Paper sx={{ padding: '16px', marginBottom: '24px', borderRadius: '12px', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)', maxWidth: '600px', width: '100%', margin: '0 auto' }}>
             <Box sx={{ display: 'flex', alignItems: 'center', marginBottom: '8px' }}>
-                <Avatar sx={{ marginRight: '8px' }}>{comment.userId}</Avatar>
+                <Box
+                    sx={{
+                        width: '48px',
+                        height: '48px',
+                        borderRadius: '50%',
+                        overflow: 'hidden',
+                        marginRight: '8px',
+                    }}
+                >
+                    <ImageComponent2 imageName={comment.userInfo?.avatar} width="48px" height="48px" />
+                </Box>
                 <Box>
                     <Typography variant="subtitle1" sx={{ fontWeight: 'bold', display: 'inline-block', width: 'auto' }}>
-                        {comment.userId}
+                        {comment.userInfo?.nickname || comment.userId}
                     </Typography>
                     <Typography variant="caption" sx={{ color: '#999', display: 'block', width: 'auto' }}>
                         {formatDistanceToNow(new Date(comment.createdAt), { addSuffix: true })}
@@ -53,6 +56,15 @@ const CommentCard: React.FC<CommentCardProps> = ({ comment, userId }) => {
                 <Typography variant="body2" sx={{ marginLeft: '8px' }}>
                     {likeCount}
                 </Typography>
+                {comment.userId === userId && (
+                    <Button
+                        variant="contained"
+                        color="error"
+                        sx={{ mt: 2 }}
+                    >
+                        Delete
+                    </Button>
+                )}
             </Box>
         </Paper>
     );

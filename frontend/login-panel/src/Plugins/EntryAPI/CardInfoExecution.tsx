@@ -2,7 +2,8 @@ import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import {
     CardInfoQueryByFatherMessage,
     CardInfoQueryByGrandfatherMessage,
-    CardInfoQueryByIdListMessage, CardInfoQueryBySearchMessage,
+    CardInfoQueryByIdListMessage,
+    CardInfoQueryBySearchMessage,
     CardInfoQueryMessage,
     ImageModifyMessage,
     IsFoodModifyMessage,

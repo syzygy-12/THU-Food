@@ -4,7 +4,7 @@ import {
     StarTestMessage,
     StarDeleteMessage,
     StarFlipMessage,
-    StaredObjectIdListQueryMessage,
+    StaredObjectIdListQueryMessage, StarTestByUserIdAndObjectIdListMessage,
 } from 'Plugins/StarAPI/StarMessage'
 
 export enum StarType {
@@ -36,11 +36,16 @@ export const flipStar = async (userId: number, objectId : number, starType: Star
 export const queryStaredObjectIdList = async (userId: number, starType: StarType): Promise<number[]> => {
     const message = new StaredObjectIdListQueryMessage(userId, starType);
     const result = await sendPostRequest(message);
-    console.log(result);
     const objectIdList = JSON.parse(result);
     if (Array.isArray(objectIdList)) {
         return objectIdList;
     }
     return [];
 }
+
+export const testStarByUserIdAndObjectIdList = async (userId: number, objectIdList : number[], starType: StarType): Promise<boolean[]> => {
+    const message = new StarTestByUserIdAndObjectIdListMessage(userId, objectIdList, starType);
+    const result = await sendPostRequest(message);
+    return (typeof result === 'string') ? result.split('').map(char => char === '1') : [];
+};
 

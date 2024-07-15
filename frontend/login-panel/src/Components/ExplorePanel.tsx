@@ -82,6 +82,7 @@ const ExplorePanel: React.FC<ExplorePanelProps> = ({
                     <SpecialBigCardList
                         cardInfoList={sonCardInfoList}
                         handleNavigation={handleNavigation}
+                        showPath={false}
                     />
                 </Box>
             </Box>

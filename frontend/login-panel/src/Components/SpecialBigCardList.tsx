@@ -9,7 +9,7 @@ interface SpecialBigCardListProps {
     showPath: boolean
 }
 
-const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, handleNavigation, showPath = false}) => {
+const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, handleNavigation, showPath}) => {
     return (
         <Box
             sx={{

@@ -39,6 +39,11 @@ object Routes {
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
+      case "StarTestByUserIdAndObjectIdListMessage" =>
+        IO(decode[StarTestByUserIdAndObjectIdListMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for StarTestByUserIdAndObjectIdListMessage")))
+          .flatMap{m=>
+            m.fullPlan.map(_.asJson.toString)
+          }
       case _ =>
         IO.raiseError(new Exception(s"Unknown type: $messageType"))
     }

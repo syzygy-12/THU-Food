@@ -1,8 +1,9 @@
 *.idea
 images/*
-!images/emptyAvatar.jpg
-!images/emptyImage-high.jpg
+!images/emptyAvatar-low.jpg
+!images/emptyAvatar-high.jpg
 !images/emptyImage-low.jpg
+!images/emptyImage-high.jpg
 target/*
 project/*
 artifacts/*

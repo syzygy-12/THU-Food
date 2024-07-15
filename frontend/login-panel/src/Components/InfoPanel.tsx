@@ -1,4 +1,4 @@
-import React, { SyntheticEvent, useState } from 'react'
+import React, { SyntheticEvent, useEffect, useState } from 'react'
 import { Box, Typography, Grid, Button, IconButton } from '@mui/material';
 import { CardInfo } from 'Plugins/Models/Entry';
 import ScoreCard from '../Components/ScoreCard';
@@ -16,6 +16,12 @@ import {
     testComment,
 } from 'Plugins/CommentAPI/CommentExecution'
 import CommentForm from './CommentForm'
+import { ImageComponent2 } from './Image'
+import { testEntry } from 'Plugins/EntryAPI/EntryExecution'
+import { getCardInfo } from 'Plugins/EntryAPI/CardInfoExecution'
+import { StarType, testStar, testStarByUserIdAndObjectIdList } from 'Plugins/StarAPI/StarExecution'
+import { getArticle } from 'Plugins/EntryAPI/ArticleExecution'
+import { getUserInfoByIdList } from 'Plugins/UserAPI/UserExecution'
 
 interface InfoPanelProps {
     cardInfo: CardInfo;
@@ -31,19 +37,44 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                                                  handleToggleStar, score, handleScoreChange}) => {
 
     const [showComments, setShowComments] = useState(false);
-    const [isCommentsFetched, setIsCommentsFetched] = useState(false);
     const [comments, setComments] = useState([]);
+    const [article, setArticle] = useState('');
 
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     const objectId = cardInfo.id;
 
+    const fetchData = async () => {
+        const entryTestResult = await testEntry(objectId);
+        if (entryTestResult) {
+            const article = await getArticle(objectId);
+            setArticle(article);
+        }
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, [objectId]);
+
     const handleCommentButtonClick = async () => {
-        if (!isCommentsFetched) {
-            const comments = await queryCommentByObject(cardInfo.id, CommentType.CommentForEntry);
-            setComments(comments);
+        if (!showComments) {
+            const fetchedComments = await queryCommentByObject(cardInfo.id, CommentType.CommentForEntry);
+            if (!fetchedComments.length) {
+                setComments(fetchedComments);
+            } else {
+                const userIds = fetchedComments.map(comment => comment.userId);
+                const [ userInfoList, likedList ] = await Promise.all([
+                    getUserInfoByIdList(userIds),
+                    testStarByUserIdAndObjectIdList(userId, fetchedComments.map(comment => comment.id), StarType.LikeForComment)
+                ]);
+                const commentsWithUserInfo = fetchedComments.map((comment, index) => ({
+                    ...comment,
+                    userInfo: userInfoList[index],
+                    liked: likedList[index]
+                }));
+                setComments(commentsWithUserInfo);
+            }
         }
         setShowComments(!showComments);
-        setIsCommentsFetched(true);
     };
 
     const handleCommentSubmit = async (content: string) => {
@@ -59,7 +90,6 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                 await modifyComment(comment.id, content);
             }
         }
-
         const newComments = await queryCommentByObject(cardInfo.id, CommentType.CommentForEntry);
         setComments(newComments);
     };
@@ -89,12 +119,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                             backgroundColor: '#fff'
                         }}
                     >
-                        <img
-                            src="https://images.pexels.com/photos/18939401/pexels-photo-18939401.jpeg?
-                            auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                            alt={cardInfo.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                        />
+                        <ImageComponent2 imageName={cardInfo.image} height='100%' width='100%'/>
                     </Box>
                 </Grid>
                 <Grid item xs={6}>
@@ -105,7 +130,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                         {cardInfo.name}
                     </Typography>
                     <Typography variant="body2" gutterBottom>
-                        在这里写介绍
+                        {article}
                     </Typography>
 
                 </Grid>

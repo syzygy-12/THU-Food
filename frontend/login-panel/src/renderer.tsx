@@ -9,7 +9,6 @@ import { UserEntrance } from 'Pages/UserEntrancePage'
 import { UserRegister } from 'Pages/UserRegisterPage'
 import { UserLogin } from 'Pages/UserLoginPage'
 import { TestPage } from 'Pages/TestPage'
-import {CommentPage} from 'Pages/CommentPage'
 import { UserPage } from 'Pages/UserPage'
 import { SettingPage } from 'Pages/SettingPage'
 import { AdminPage } from 'Pages/AdminPage';
@@ -28,7 +27,6 @@ const Layout = () => {
                 <Route path="/test" exact component={TestPage} />
                 <Route path="/main" exact component={Main} />
                 <Route path="/userpage/:id" exact component={UserPage} />
-                <Route path="/comment/:id" exact component={CommentPage} />
                 <Route path="/settings" exact component={SettingPage} />
                 <Route path="/admin/:id" exact component={AdminPage} />
                 <Route path="/search/:word" exact component={SearchPage} />

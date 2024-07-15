@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import { Button, Container, Typography, Box, Grid, Card, CardContent, Toolbar, Avatar, Collapse, Paper } from '@mui/material';
+import { Button, Container, Typography, Box, Grid, Card, CardContent, Toolbar, Collapse, Paper } from '@mui/material';
 import {
     CommentType,
     queryCommentByUser,
-    queryComment,
-    testComment,
     queryCommentByIdList,
-} from 'Plugins/CommentAPI/CommentExecution'
+} from 'Plugins/CommentAPI/CommentExecution';
 import { queryStaredObjectIdList, StarType } from 'Plugins/StarAPI/StarExecution';
 import { Comment } from 'Plugins/Models/Comment';
 import { TopBar, TopBarData } from '../Components/TopBar';
+import { ImageComponent2 } from '../Components/Image';
+import { getUserInfo } from 'Plugins/UserAPI/UserExecution'
 
 interface Favorite {
     id: number;
@@ -27,7 +27,6 @@ const getLikedCommentsByUser = async (userId: number): Promise<Comment[]> => {
     return likedComments;
 };
 
-
 export function UserPage() {
     const history = useHistory();
     const [comments, setComments] = useState<Comment[]>([]);
@@ -35,7 +34,7 @@ export function UserPage() {
     const [likedComments, setLikedComments] = useState<Comment[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const [activeSection, setActiveSection] = useState<string | null>(null);
-
+    const [avatar, setAvatar] = useState<string>('');
     const username = localStorage.getItem('username') || '';
     const userId = parseInt(localStorage.getItem('userId') || '0', 10);
     const avatarUrl = localStorage.getItem('avatarUrl') || ''; // 假设头像 URL 保存在 localStorage 中
@@ -58,6 +57,16 @@ export function UserPage() {
         fetchComments();
     }, [userId]);
 
+    useEffect(() => {
+        const fetchUserInfo = async () => {
+            const userInfo = await getUserInfo(userId);
+            if (userInfo.avatar) {
+                setAvatar(userInfo.avatar);
+            }
+        };
+        fetchUserInfo();
+    }, [userId]);
+
     const handleNavigation = (path: string) => {
         history.push(path);
     };
@@ -70,7 +79,7 @@ export function UserPage() {
         }
     };
 
-    const topBarData = new TopBarData('User Comments and Favorites', username, [
+    const topBarData = new TopBarData('THU Food', username, [
         { label: '主页', path: '/home' },
         { label: '用户', path: '/profile' },
         { label: '设置', path: '/settings' }
@@ -89,7 +98,17 @@ export function UserPage() {
                 {isLoggedIn ? (
                     <>
                         <Box sx={{ display: 'flex', alignItems: 'center', mb: 4 }}>
-                            <Avatar src={avatarUrl} alt={username} sx={{ width: 56, height: 56, mr: 2 }} />
+                            <Box
+                                sx={{
+                                    width: '128px',
+                                    height: '128px',
+                                    borderRadius: '50%',
+                                    overflow: 'hidden',
+                                    mr: 2,
+                                }}
+                            >
+                                <ImageComponent2 imageName={avatar} width="128px" height="128px" />
+                            </Box>
                             <Typography variant="h4">{username}</Typography>
                         </Box>
                         <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
