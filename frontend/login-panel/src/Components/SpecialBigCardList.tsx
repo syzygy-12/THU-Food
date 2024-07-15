@@ -20,7 +20,7 @@ const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, h
             <Grid container
                   spacing={2}
                   sx={{
-                      gap: "16px",
+                      gap: '8px',
                       paddingLeft: '64px',
                       paddingTop: '24px',
                       paddingRight: '64px',
@@ -28,7 +28,7 @@ const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, h
                   }}
             >
                 {cardInfoList.map((cardInfo, index) => (
-                    <Box key={index} sx={{ marginRight: index !== cardInfoList.length - 1 ? '16px' : '0' }}>
+                    <Box key={index} sx={{ marginRight: '0', marginTop: '16px' }}>
                         <SpecialBigCard cardInfo={cardInfo} handleNavigation={handleNavigation} />
                     </Box>
                 ))}

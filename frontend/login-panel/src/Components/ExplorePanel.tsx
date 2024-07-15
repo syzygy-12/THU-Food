@@ -58,7 +58,7 @@ const ExplorePanel: React.FC<ExplorePanelProps> = ({
         />
     );
 
-    if (sonCardInfoList.length >= 1 && sonCardInfoList[0].isFood) {
+    if (/*sonCardInfoList.length >= 1 && sonCardInfoList[0].isFood*/true) {
         return (
             <Box
                 sx={{

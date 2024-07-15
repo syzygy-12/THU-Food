@@ -163,3 +163,70 @@ header nav a:hover {
 .bigcardlist-scrollbar::-webkit-scrollbar-thumb:active {
     background: rgba(255, 255, 255, 0.55);
 }
+
+.card{
+    /* 相对定位 */
+    position: relative;
+    /* 自动放大占满剩余空间 */
+    flex: 1;
+    margin: 0 20px;
+    /* 设置视距 */
+    perspective: 1000px;
+}
+/* 投影效果 */
+.card::before{
+    content: "";
+    width: 100%;
+    height: 100%;
+    /* 绝对定位 */
+    position: absolute;
+    /* 投影 */
+    opacity: 1;
+    /* 设置旋转元素的基点位置 */
+    transform-origin: top center;
+    /* 设置过渡:时长 加速后减速 */
+    transition: 0.3s ease-in-out;
+}
+/* 鼠标移上,投影的变化 */
+.card:hover::before{
+    opacity: 0.6;
+    transform: rotateX(7deg) translateY(-6px) scale(1.3);
+}
+/* 封面 */
+.card-cover{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    /* 溢出隐藏 */
+    overflow: hidden;
+    /* 开启3D */
+    transform-style: preserve-3d;
+    /* 设置旋转元素的基点位置 */
+    transform-origin: top center;
+    /* 设置过渡 */
+    transition: transform 0.35s ease-in-out;
+}
+.card-cover::after{
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    /* 背景渐变(高光效果) */
+    background: linear-gradient(210deg,rgba(255,255,255,0) 40%,rgba(255,255,255,0.12) 50%,rgba(255,255,255,0) 60%);
+    /* 默认上移出可视范围 */
+    transform: translateY(-100%);
+    /* 设置过渡 */
+    transition: transform 0.85s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.card:hover .card-cover{
+    transform: rotateX(7deg) translateY(-6px);
+}
+.card:hover .card-cover::after{
+    transform: translateY(100%);
+}

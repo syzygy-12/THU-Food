@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Card, CardContent, Typography, Box } from '@mui/material';
 import { CardInfo } from 'Plugins/Models/Entry';
+import { ImageComponent2 } from './Image'
 
 interface SmallCardProps {
     cardInfo: CardInfo;
@@ -29,19 +30,8 @@ const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation 
     };
 
     return (
-        <Box
-            sx={{
-                position: 'relative',
-                zIndex: isHovered ? 2 : 1, // 使其置于顶层
-                width: SpecialBigCardWidth,
-                height: SpecialBigCardHeight,
-                transition: 'transform 0.3s ease-in-out, z-index 0.3s ease-in-out',
-                transform: isHovered ? 'scale(1.1)' : 'scale(1)', // 放大比例
-                marginTop: '8px'
-            }}
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
-        >
+        <div className="card" style={{height: SpecialBigCardHeight, width: SpecialBigCardWidth}}>
+            <div className="card-cover">
             <Card
                 onClick={() => handleNavigation(`/info/${cardInfo.id}`)}
                 sx={{
@@ -51,14 +41,17 @@ const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation 
                     alignItems: 'center',
                     justifyContent: 'center',
                     position: 'absolute',
+                    borderRadius: '0px',
+                    transition: 'transform 0.3s ease-in-out, z-index 0.3s ease-in-out',
+                    transform: isHovered ? 'scale(1.05)' : 'scale(1)', // 放大比例
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
                     top: 0,
                     left: 0,
                 }}
             >
                 <CardContent
                     sx={{
-                        paddingTop: '8px',
-                        paddingLeft: '12px',
+                        padding: 0,
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'flex-start',
@@ -66,12 +59,25 @@ const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation 
                         height: '100%',
                     }}
                 >
-                    <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '16px', margin: 0 }}>
-                        名称: {cardInfo.name} ID: {cardInfo.id}
-                    </Typography>
+                    <Box sx={{
+                        marginBottom: '16px',
+                        width: '100%',
+                        backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                        borderRadius: '8px 8px 0 0',
+                    }}>
+                        <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '16px', margin: '16px' }}>
+                            名称: {cardInfo.name} ID: {cardInfo.id}
+                        </Typography>
+                        <ImageComponent2
+                            imageName={cardInfo.image}
+                            height='100%'
+                            width='100%'
+                        />
+                    </Box>
                 </CardContent>
             </Card>
-        </Box>
+            </div>
+        </div>
     );
 };
 
