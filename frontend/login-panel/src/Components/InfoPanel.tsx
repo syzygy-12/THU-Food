@@ -49,6 +49,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
     const handleCommentSubmit = async (content: string) => {
         const commentExists = await testComment(userId, cardInfo.id, CommentType.CommentForEntry);
         if (!commentExists) {
+            if (!content.trim()) return;
             await createComment(content, userId, cardInfo.id, CommentType.CommentForEntry);
         } else {
             const comment = await queryComment(userId, cardInfo.id, CommentType.CommentForEntry);
@@ -67,8 +68,6 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
         <Box
             sx={{
                 paddingTop: '64px',
-                paddingLeft: '64px',
-                paddingRight: '64px',
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100vh',
@@ -114,7 +113,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                     <ScoreCard scoreHistogram={cardInfo.scoreHistogram} />
                 </Grid>
                 <Box>
-                    {/* 添加“想看”、“看过”按钮和评分 */}
+
                     <Box sx={{ display: 'flex', alignItems: 'center', marginTop: '16px' }}>
                         <Box sx={{ marginRight: '16px', display: 'flex', alignItems: 'center' }}>
                             <Typography variant="body2" sx={{ marginRight: '8px' }}>
@@ -154,6 +153,7 @@ const InfoPanel: React.FC<InfoPanelProps> = ({
                     {showComments && <CommentList comments={comments} userId={userId} />}
 
                 </Box>
+
 
             </Grid>
         </Box>

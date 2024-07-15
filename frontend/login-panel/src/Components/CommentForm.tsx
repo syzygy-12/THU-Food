@@ -48,11 +48,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ userId, objectId, onSubmit })
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <div></div>;
     }
 
     return (
-        <Box component="form" onSubmit={handleSubmit} sx={{ marginTop: '16px' }}>
+        <Box component="form" onSubmit={handleSubmit} sx={{ marginTop: '16px', width: '100%' }}>
             <Typography variant="h6">{isEditing ? '编辑评论' : '写评论'}</Typography>
             <TextField
                 label="评论"
@@ -63,9 +63,11 @@ const CommentForm: React.FC<CommentFormProps> = ({ userId, objectId, onSubmit })
                 rows={4}
                 margin="normal"
             />
-            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: '8px' }}>
+
+            <Button type="submit" variant="contained" color="primary" sx={{ marginTop: '8px', height: '100%', width: '100%' }}>
                 {isEditing ? '更新评论' : '提交'}
             </Button>
+
         </Box>
     );
 };

@@ -53,7 +53,7 @@ export const TopBar: React.FC<TopBarProps> = ({ data }) => {
     return (
         <AppBar position="fixed" sx={{ backgroundColor: data.backgroundColor }}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', flexGrow: 1 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center'}}>
                     <Typography variant="h6" component="div" sx={{ marginRight: 2 }}>
                         {data.title}
                     </Typography>
@@ -63,19 +63,21 @@ export const TopBar: React.FC<TopBarProps> = ({ data }) => {
                         </Button>
                     ))}
                 </Box>
-                <TextField
-                    placeholder="搜索"
-                    variant="outlined"
-                    size="small"
-                    sx={{
-                        backgroundColor: 'white',
-                        borderRadius: 1,
-                        marginRight: 2,
-                    }}
-                />
-                <Button color="inherit" onClick={handleMenuOpen} sx={{ textTransform: 'none' }}>
-                    欢迎 {data.username}
-                </Button>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <TextField
+                        placeholder="搜索"
+                        variant="outlined"
+                        size="small"
+                        sx={{
+                            backgroundColor: 'white',
+                            borderRadius: 1,
+                            marginRight: 2,
+                        }}
+                    />
+                    <Button color="inherit" onClick={handleMenuOpen} sx={{ textTransform: 'none' }}>
+                        欢迎 {data.username}
+                    </Button>
+                </Box>
                 <Menu
                     anchorEl={anchorEl}
                     open={Boolean(anchorEl)}

@@ -104,7 +104,7 @@ export function ExplorePage() {
             <TopBar data={topBarData} />
             <Box
                 sx={{
-                    height: '100px',
+                    height: '64hiypx',
                     width: '100%',
                 }}
             />

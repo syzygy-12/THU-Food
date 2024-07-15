@@ -10,7 +10,7 @@ interface CommentListProps {
 
 const CommentList: React.FC<CommentListProps> = ({ comments, userId }) => {
     return (
-        <Box sx={{ marginTop: '16px' }}>
+        <Box sx={{ marginTop: '16px', width: '100%' }}>
 
             <Typography variant="h6">评论列表</Typography>
 
