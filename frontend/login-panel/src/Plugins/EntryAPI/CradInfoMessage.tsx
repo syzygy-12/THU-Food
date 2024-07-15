@@ -32,6 +32,24 @@ export class CardInfoQueryByIdListMessage extends EntryMessage {
     }
 }
 
+export class CardInfoQueryBySearchMessage extends EntryMessage {
+    word: string
+    constructor(word: string) {
+        super();
+        this.word = word;
+    }
+}
+
+export class NameModifyMessage extends EntryMessage {
+    id: number
+    newName: string
+    constructor(id: number, newName: string) {
+        super();
+        this.id = id;
+        this.newName = newName;
+    }
+}
+
 export class ImageModifyMessage extends EntryMessage {
     id: number
     newImage: string

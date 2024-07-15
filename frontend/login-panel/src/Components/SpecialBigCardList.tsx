@@ -6,9 +6,10 @@ import SpecialBigCard from './SpecialBigCard';
 interface SpecialBigCardListProps {
     cardInfoList: CardInfo[];
     handleNavigation: (url: string) => void;
+    showPath: boolean
 }
 
-const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, handleNavigation }) => {
+const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, handleNavigation, showPath = false}) => {
     return (
         <Box
             sx={{
@@ -29,7 +30,7 @@ const SpecialBigCardList: React.FC<SpecialBigCardListProps> = ({ cardInfoList, h
             >
                 {cardInfoList.map((cardInfo, index) => (
                     <Box key={index} sx={{ marginRight: '0', marginTop: '16px' }}>
-                        <SpecialBigCard cardInfo={cardInfo} handleNavigation={handleNavigation} />
+                        <SpecialBigCard cardInfo={cardInfo} handleNavigation={handleNavigation} showPath={showPath}/>
                     </Box>
                 ))}
             </Grid>

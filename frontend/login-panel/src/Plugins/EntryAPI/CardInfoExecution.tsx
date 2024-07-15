@@ -1,8 +1,14 @@
 import { sendPostRequest } from 'Plugins/CommonUtils/PostRequest'
 import {
     CardInfoQueryByFatherMessage,
-    CardInfoQueryByGrandfatherMessage, CardInfoQueryByIdListMessage,
-    CardInfoQueryMessage, ImageModifyMessage, IsFoodModifyMessage, IsHiddenModifyMessage, IsNewModifyMessage,
+    CardInfoQueryByGrandfatherMessage,
+    CardInfoQueryByIdListMessage, CardInfoQueryBySearchMessage,
+    CardInfoQueryMessage,
+    ImageModifyMessage,
+    IsFoodModifyMessage,
+    IsHiddenModifyMessage,
+    IsNewModifyMessage,
+    NameModifyMessage,
 } from 'Plugins/EntryAPI/CradInfoMessage'
 import { CardInfo } from 'Plugins/Models/Entry'
 
@@ -38,6 +44,19 @@ export const getCardInfoByIdList = async (idList: number[]): Promise<CardInfo[]>
         return cardInfoList;
     }
     return [];
+}
+
+export const getCardInfoBySearch = async (word: string): Promise<CardInfo[]> => {
+    const message = new CardInfoQueryBySearchMessage(word);
+    const cardInfoList = JSON.parse(await sendPostRequest(message));
+    if (Array.isArray(cardInfoList)) {
+        return cardInfoList;
+    }
+    return [];
+}
+
+export const changeName = async (id: number, newName: string): Promise<boolean> => {
+    return await sendPostRequest(new NameModifyMessage(id, newName));
 }
 
 export const changeImage = async (id: number, image: string): Promise<boolean> => {

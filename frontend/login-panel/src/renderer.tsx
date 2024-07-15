@@ -13,6 +13,7 @@ import {CommentPage} from 'Pages/CommentPage'
 import { UserPage } from 'Pages/UserPage'
 import { SettingPage } from 'Pages/SettingPage'
 import { AdminPage } from 'Pages/AdminPage';
+import { SearchPage } from 'Pages/SearchPage'
 const Layout = () => {
     return (
         <HashRouter>
@@ -30,6 +31,7 @@ const Layout = () => {
                 <Route path="/comment/:id" exact component={CommentPage} />
                 <Route path="/settings" exact component={SettingPage} />
                 <Route path="/admin/:id" exact component={AdminPage} />
+                <Route path="/search/:word" exact component={SearchPage} />
             </Switch>
         </HashRouter>
     )

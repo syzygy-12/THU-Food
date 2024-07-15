@@ -15,11 +15,11 @@ export const userLogin = async (userName: string, password: string): Promise<Use
     return JSON.parse(await sendPostRequest(new UserLoginMessage(userName, password)));
 }
 
-export const userPasswordChange = async (userId: number, password: string, newPassword: string): Promise<Boolean> => {
+export const changeUserPassword = async (userId: number, password: string, newPassword: string): Promise<Boolean> => {
     return await sendPostRequest(new UserPasswordChangeMessage(userId, password, newPassword));
 }
 
-export const userAuthorityChange = async (userName: String, newAuthority: number): Promise<Boolean> => {
+export const changeUserAuthority = async (userName: String, newAuthority: number): Promise<Boolean> => {
     return await sendPostRequest(new UserAuthorityChangeMessage(userName, newAuthority));
 }
 

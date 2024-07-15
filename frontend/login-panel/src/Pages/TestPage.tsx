@@ -23,10 +23,10 @@ import {
     testStar,
 } from 'Plugins/StarAPI/StarExecution'
 import {
-    changeImage, changeIsFood, changeIsHidden, changeIsNew,
+    changeImage, changeIsFood, changeIsHidden, changeIsNew, changeName,
     getCardInfo,
     getCardInfoByFather,
-    getCardInfoByGrandfather,
+    getCardInfoByGrandfather, getCardInfoBySearch,
 } from 'Plugins/EntryAPI/CardInfoExecution'
 import ScoreCard from '../Components/ScoreCard'
 import SmallScoreCard from '../Components/SmallScoreCard'
@@ -119,6 +119,26 @@ export function TestPage() {
         console.log(ret)
     };
 
+    const handleClick5=  () => {
+        const ret = changeName(1,"清华大学");
+        console.log(ret)
+    };
+
+    const handleClick6=  () => {
+        const ret = getCardInfoBySearch("大学");
+        console.log(ret)
+    };
+
+    const handleClick7=  () => {
+        const ret = changeUserNickname(1,"哈哈哈哈");
+        console.log(ret)
+    };
+
+    const handleClick8=  () => {
+        const ret = getUserInfo(1);
+        console.log(ret)
+    };
+
     return (
         <div id="app">
 
@@ -136,6 +156,22 @@ export function TestPage() {
 
             <Button variant="contained" onClick={handleClick4} sx={{ ml: 2 }}>
                 查询广告
+            </Button>
+
+            <Button variant="contained" onClick={handleClick5} sx={{ ml: 2 }}>
+                改名
+            </Button>
+
+            <Button variant="contained" onClick={handleClick6} sx={{ ml: 2 }}>
+                搜索
+            </Button>
+
+            <Button variant="contained" onClick={handleClick7} sx={{ ml: 2 }}>
+                改昵称
+            </Button>
+
+            <Button variant="contained" onClick={handleClick8} sx={{ ml: 2 }}>
+                查询用户信息
             </Button>
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>

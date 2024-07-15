@@ -6,12 +6,13 @@ import { ImageComponent2 } from './Image'
 interface SmallCardProps {
     cardInfo: CardInfo;
     handleNavigation: (url: string) => void;
+    showPath: boolean
 }
 
 const SpecialBigCardWidth = 288;
 const SpecialBigCardHeight = 240;
 
-const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation }) => {
+const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation, showPath = false}) => {
     const [isHovered, setIsHovered] = useState(false);
     const hoverTimeout = useRef<NodeJS.Timeout | null>(null);
 
@@ -65,8 +66,13 @@ const SpecialiBigCard: React.FC<SmallCardProps> = ({ cardInfo, handleNavigation 
                         backgroundColor: 'rgba(255, 255, 255, 0.5)',
                         borderRadius: '8px 8px 0 0',
                     }}>
+                        {showPath && (
+                            <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '12px', color: 'gray', margin: '8px' }}>
+                                {cardInfo.path}
+                            </Typography>
+                        )}
                         <Typography sx={{ fontFamily: 'SimHei, sans-serif', fontSize: '16px', margin: '16px' }}>
-                            名称: {cardInfo.name} ID: {cardInfo.id}
+                            {cardInfo.name}
                         </Typography>
                         <ImageComponent2
                             imageName={cardInfo.image}

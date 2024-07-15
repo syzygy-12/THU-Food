@@ -20,7 +20,7 @@ function handleErrorResponse(error: any)  {
 
 export const sendPostRequest = async (message: API): Promise<any> => {
     try {
-        const token = localStorage.getItem('token') || '';
+        const token = localStorage.getItem('token') || 'emptyToken';
         const messageWithToken = {
             ...message,
             token: token

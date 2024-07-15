@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Box, TextField, Menu, MenuItem } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import SearchBar from './SearchBar'
 
 export class TopBarData {
     title: string;
@@ -65,16 +66,7 @@ export const TopBar: React.FC<TopBarProps> = ({ data }) => {
                     ))}
                 </Box>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <TextField
-                        placeholder="搜索"
-                        variant="outlined"
-                        size="small"
-                        sx={{
-                            backgroundColor: 'white',
-                            borderRadius: 1,
-                            marginRight: 2,
-                        }}
-                    />
+                    <SearchBar width="256px" height="40px" backgroundColor="#f0f0f0" handleNavigation={handleNavigation}/>
                     <Button color="inherit" onClick={handleMenuOpen} sx={{ textTransform: 'none' }}>
                         欢迎 {data.username}
                     </Button>
