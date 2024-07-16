@@ -64,11 +64,6 @@ object Routes:
           .flatMap{m=>
             m.fullPlan.map(_.asJson.toString)
           }
-      case "CommentLikesModifyMessage" =>
-        IO(decode[CommentLikesModifyMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for CommentLikesModifyMessage")))
-          .flatMap{m=>
-            m.fullPlan.map(_.asJson.toString)
-          }
       case "ScoreHistogramFlipMessage" =>
         IO(decode[ScoreHistogramFlipMessagePlanner](str).getOrElse(throw new Exception("Invalid JSON for ScoreHistogramFlipMessage")))
           .flatMap{m=>

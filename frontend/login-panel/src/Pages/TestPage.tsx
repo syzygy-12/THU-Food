@@ -114,6 +114,11 @@ export function TestPage() {
         console.log(ret)
     };
 
+    const handleClick9=  () => {
+        const ret = changeArticle(1, "sssss");
+        console.log(ret)
+    };
+
     return (
         <div id="app">
 
@@ -140,6 +145,11 @@ export function TestPage() {
             <Button variant="contained" onClick={handleClick10} sx={{ ml: 2 }}>
                 StarTestByUserIdAndObjectIdListMessage
             </Button>
+
+            <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
+                修改介绍（测试token）
+            </Button>
+
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                 <ScoreCard scoreHistogram={scoreHistogram} />

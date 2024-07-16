@@ -18,6 +18,10 @@ import org.http4s.headers.`Content-Type`
 import java.util.UUID
 
 object PortalService {
+
+  val messageBlacklist: Set[String] = Set("ScoreHistogramIncrementMessage",
+    "CommentLikesIncrementMessage", "EntryStarsIncrementMessage")
+
   def service(client: Client[IO]): HttpRoutes[IO] = HttpRoutes.of[IO] {
     case GET -> Root / "stream" / serviceName / streamName =>
       IO.println("Proxying request") >>
@@ -25,11 +29,15 @@ object PortalService {
 
     case req@POST -> Root / "api" / serviceName / messageName =>
       println(s"got message $serviceName $messageName")
-      handlePostRequest(client, req, serviceName, messageName).flatMap {
-        case Right(json) => Ok(json)
-        case Left(e) => internalServerError(e)
-      }.handleErrorWith { e =>
-        internalServerError(e)
+      if (messageBlacklist.contains(messageName)) {
+        internalServerError(new Exception(s"Message '$messageName' is blacklisted."))
+      } else {
+        handlePostRequest(client, req, serviceName, messageName).flatMap {
+          case Right(json) => Ok(json)
+          case Left(e) => internalServerError(e)
+        }.handleErrorWith { e =>
+          internalServerError(e)
+        }
       }
   }
 

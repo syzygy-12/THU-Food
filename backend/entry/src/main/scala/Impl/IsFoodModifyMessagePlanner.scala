@@ -1,12 +1,25 @@
 package Impl
 
+import APIs.UserAPI.TokenAuthorityQueryMessage
 import Common.API.{PlanContext, Planner}
+import Common.DBAPI.startTransaction
 import Utils.IsFoodModifyUtils.isFoodModify
 import cats.effect.IO
 import io.circe.generic.auto.*
+import Models.*
 
-case class IsFoodModifyMessagePlanner(id: Int, isFood: Boolean, override val planContext: PlanContext) extends Planner[Boolean] {
+case class IsFoodModifyMessagePlanner(id: Int, isFood: Boolean, token: String, override val planContext: PlanContext) extends Planner[Boolean] {
   override def plan(using PlanContext): IO[Boolean] = {
-    isFoodModify(id, isFood)
+    startTransaction {
+      val authorityIO = TokenAuthorityQueryMessage(token).send
+
+      authorityIO.flatMap { authority =>
+        if (authority == CanteenManagerType || authority == SuperManagerType) {
+          isFoodModify(id, isFood)
+        } else {
+          IO.raiseError(new Exception("用户权限不足"))
+        }
+      }
+    }
   }
 }
