@@ -4,3 +4,4 @@ node_modules
 src/Plugins
 public
 dist/
+bundle.js

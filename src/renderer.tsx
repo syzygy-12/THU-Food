@@ -15,7 +15,7 @@ import { AdminPage } from 'Pages/AdminPage'
 import { SearchPage } from 'Pages/SearchPage'
 const Layout = () => {
     return (
-        <HashRouter basename="/THU-Food">
+        <HashRouter>
             <Switch>
                 <Route path="/" exact component={Main} />
                 <Route path="/user-entrance" exact component={UserEntrance} />
