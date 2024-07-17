@@ -11,11 +11,11 @@ import { UserLogin } from 'Pages/UserLoginPage'
 import { TestPage } from 'Pages/TestPage'
 import { UserPage } from 'Pages/UserPage'
 import { SettingPage } from 'Pages/SettingPage'
-import { AdminPage } from 'Pages/AdminPage';
+import { AdminPage } from 'Pages/AdminPage'
 import { SearchPage } from 'Pages/SearchPage'
 const Layout = () => {
     return (
-        <HashRouter>
+        <HashRouter basename="/THU-Food">
             <Switch>
                 <Route path="/" exact component={Main} />
                 <Route path="/user-entrance" exact component={UserEntrance} />

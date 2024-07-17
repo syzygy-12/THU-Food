@@ -65,7 +65,7 @@ module.exports = {
     output: {
         filename: 'bundle.js',
         path: path.resolve(__dirname, '.'),
-        publicPath: '/'
+        publicPath: '/THU-Food/'
     },
     resolve: {
         alias: {
@@ -109,7 +109,10 @@ module.exports = {
         new webpack.DefinePlugin({
             __dirname: JSON.stringify('/')
         })
-    ]
+    ],
+    devServer: {
+        historyApiFallback: true // 支持SPA路由
+    }
 };
 
 async function main() {
