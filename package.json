@@ -1,6 +1,7 @@
 {
     "name": "login",
     "productName": "Login-Panel",
+    "homepage": "https://syzygy-12.github.io/THU-Food",
     "version": "1.0.0",
     "description": "My Electron application description",
     "main": ".webpack/main",
@@ -11,7 +12,9 @@
         "publish": "electron-forge publish",
         "lint": "eslint . --cache --ext .js,.jsx,.ts,.tsx --max-warnings 0",
         "prepare": "husky install",
-        "build": "webpack --config webpack.cicd.config.js"
+        "build": "webpack --config webpack.cicd.config.js",
+        "predeploy": "yarn build",
+        "deploy": "gh-pages -d dist"
     },
     "husky": {
         "hooks": {
@@ -115,6 +118,7 @@
         "eslint-import-resolver-typescript": "^2.4.0",
         "eslint-plugin-import": "^2.20.0",
         "fork-ts-checker-webpack-plugin": "^6.0.1",
+        "gh-pages": "^6.1.1",
         "husky": "^7.0.0",
         "lint-staged": "^11.1.1",
         "node-loader": "^2.0.0",
@@ -125,13 +129,15 @@
         "react-router-dom": "^5.2.0",
         "react-star-ratings": "^2.3.0",
         "style-loader": "^3.0.0",
-        "ts-loader": "^9.2.2",
-        "typescript": "^4.0.2",
+        "ts-loader": "^9.5.1",
+        "typescript": "^5.5.3",
         "wait-on": "^7.2.0",
         "webpack": "^5.93.0",
         "webpack-cli": "^5.1.4",
         "webpack-dev-server": "^5.0.4",
-        "xlsx": "^0.17.0"
+        "xlsx": "^0.17.0",
+        "path-browserify": "^1.0.1",
+        "process": "^0.11.10"
     },
     "dependencies": {
         "@emotion/react": "^11.4.1",
@@ -159,6 +165,7 @@
         "file-loader": "^6.2.0",
         "fs": "^0.0.1-security",
         "fs-extra": "^11.2.0",
+        "html-webpack-plugin": "^5.6.0",
         "idb-keyval": "^6.2.1",
         "js-base64": "^3.7.5",
         "jsonfile": "^6.1.0",
