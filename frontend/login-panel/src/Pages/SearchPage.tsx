@@ -48,6 +48,7 @@ export function SearchPage() {
 
     return (
         <div style={{
+            backgroundImage: `url(${background})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             height: '100vh',

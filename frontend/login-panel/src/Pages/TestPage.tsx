@@ -104,11 +104,6 @@ export function TestPage() {
         console.log(ret)
     };
 
-    const handleClick9 =  () => {
-        const ret = changeIsHidden(1, false);
-        console.log(ret)
-    };
-
     const handleClick10 = async () => {
         const ret = await testStarByUserIdAndObjectIdList(4, [75,1,76], StarType.LikeForComment);
         console.log(ret)
@@ -139,17 +134,12 @@ export function TestPage() {
             </Button>
 
             <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
-                修改 isHidden
+                修改介绍（测试token）
             </Button>
 
             <Button variant="contained" onClick={handleClick10} sx={{ ml: 2 }}>
                 StarTestByUserIdAndObjectIdListMessage
             </Button>
-
-            <Button variant="contained" onClick={handleClick9} sx={{ ml: 2 }}>
-                修改介绍（测试token）
-            </Button>
-
 
             <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                 <ScoreCard scoreHistogram={scoreHistogram} />

@@ -12,7 +12,7 @@ echo Waiting for 20 seconds...
 timeout /t 20 /nobreak
 
 rem 其他文件夹列表
-set folders=comment entry image star tw-portal user
+set folders=advertisement comment entry image star tw-portal user
 
 rem 遍历每个文件夹并在新终端中运行sbt命令
 for %%f in (%folders%) do (
