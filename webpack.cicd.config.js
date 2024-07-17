@@ -67,6 +67,7 @@ module.exports = {
         path: path.resolve(__dirname, '.'),
         publicPath: '/THU-Food/'
     },
+    target: 'web',
     resolve: {
         alias: {
             Globals: path.resolve(__dirname, 'src/Globals/'),
